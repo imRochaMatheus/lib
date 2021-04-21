@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Emprestimo;
 use Illuminate\Http\Request;
+use DataTime;
 
 class EmprestimoController extends Controller
 {
@@ -22,9 +23,12 @@ class EmprestimoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = $request->data_emprestimo; 
+        $limite = date('d/m/Y', strtotime("+15 days",strtotime($data))); 
+
+        
     }
 
     /**

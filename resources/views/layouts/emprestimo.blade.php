@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="data_emprestimo">Data do empréstimo: </label>
-                        <input type="date" class="form-control" name="data_empprestimo" placeholder="Autor" id="data_emprestimo" required>
+                        <input type="date" class="form-control" name="data_emprestimo" placeholder="Autor" id="data_emprestimo" required>
                     </div>
                 </div>
                
