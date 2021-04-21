@@ -61,10 +61,10 @@
                     </div>
                     <div class="col-md-4">
                         <label for="acesso">Acesso: </label>
-                        <select class="form-control" id="acesso" name="acesso" placeholder="Acesso" value = {{ old('acesso') }}>
+                        <select class="form-control" id="acesso" name="acesso" placeholder="Acesso" value = {{ old('acesso') }} >
                             <option value="1">Administrador</option>
                             <option value="2">Funcionário</option>
-                            <option value="3">Estudante</option>
+                            <option value="3" >Estudante</option>
                         </select>
                     </div>       
                 </div>
