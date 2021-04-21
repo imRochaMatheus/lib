@@ -22,9 +22,35 @@ class LivroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
+        $regras = 
+        [
+            'codigo' => 'required|unique:livros|numeric',
+            'titulo' => 'required',
+            'autor'=> 'required|max:55',
+            'editora'=> 'required',
+            'edicao' => 'required|numeric',
+            'volume' => 'required|numeric',
+            'descricao' => 'required|max:2000'
+
+        ];
+
+        $feedback = 
+        [
+            'required' => 'O campo :attribute é obrigatório',
+            'unique' => 'Código já cadastrado',
+            'max:55' => 'O :attribute deve conter no máximo 55 caracteres',
+            'numeric' => 'Utilize apenas números no campo :attribute',
+        ];
+
+        $request->validate($regras, $feedback);
+
+        Livro::create($request->all());
+
+        return redirect()->route('livro');
+
     }
 
     /**

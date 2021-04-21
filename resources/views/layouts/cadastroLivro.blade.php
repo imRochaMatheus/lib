@@ -17,12 +17,12 @@
                 <div class="row">
                     <div class="col-md-8">
                         <label for="codigo">Código: </label>
-                        <input type="text" class="form-control" name="codigo" placeholder="Código" id="codigo"  required value = {{ old('codigo') }}>
+                        <input type="text" class="form-control" name="codigo" placeholder="Código" id="codigo" autocomplete="off" required value = {{ old('codigo') }}>
                         {{ $errors->has('codigo') ? $errors->first('codigo') : ''}}
                     </div>
                     <div class="col-md-4">
                         <label for="titulo">Título:</label>
-                        <input type="text" class="form-control" name="titulo" placeholder="Título" id="titulo" required value = {{ old('titulo') }}>
+                        <input type="text" class="form-control" name="titulo"  autocomplete="off" placeholder="Título" id="titulo" required value = {{ old('titulo') }}>
                         {{ $errors->has('titulo') ? $errors->first('titulo') : ''}}
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="edicao">Edição:</label>
-                        <input type="number" class="form-control" name="edicao" placeholder="Edição..." id="edicao" required value = {{ old('edicao') }}>
+                        <input type="number" min="0" class="form-control" name="edicao" placeholder="Edição..." id="edicao" required value = {{ old('edicao') }}>
                         {{ $errors->has('edicao') ? $errors->first('edicao') : ''}}
                     </div>
                 </div>
@@ -52,15 +52,15 @@
                         {{ $errors->has('colume') ? $errors->first('volume') : ''}}
                     </div>
                     <div class="col-md-4">
-                        <label for="paginas">N° de páginas:</label>
-                        <input type="number" class="form-control" name="paginas" placeholder="Número de páginas" id="paginas" required value = {{ old('paginas') }}>
-                        {{ $errors->has('paginas') ? $errors->first('paginas') : ''}}
+                        <label for="numero_de_paginas">N° de páginas:</label>
+                        <input type="number" min="0" class="form-control" name="numero_de_paginas" placeholder="Número de páginas" id="numero_de_paginas" required value = {{ old('numero_de_paginas') }}>
+                        {{ $errors->has('numero_de_paginas') ? $errors->first('numero_de_paginas') : ''}}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <label for="descricao">Descrição:</label>
-                        <textarea type="text" class="form-control" name="volume" placeholder="Uma breve descrição..." id="volume" value = {{ old('volume') }}></textarea>
+                        <textarea  class="form-control" name="descricao" autocomplete="off" placeholder="Uma breve descrição..." id="descricao" value = {{ old('descricao') }}></textarea>
                         {{ $errors->has('descricao') ? $errors->first('desricao') : ''}}
                     </div>
                 </div>

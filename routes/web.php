@@ -21,5 +21,5 @@ Route::get('/cadastro', 'CadastroController@index')->name('cadastro');
 Route::post('/cadastro', 'CadastroController@create')->name('cadastro');
 
 Route::get('/cadastroLivro', 'LivroController@index')->name('livro');
-Route::post('/cadastroLivro', 'LivroController@index')->name('livro');
+Route::post('/cadastroLivro', 'LivroController@create')->name('livro');
 
