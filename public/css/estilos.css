@@ -2,3 +2,8 @@ body
 {
     background-color: #000;
 }
+
+#box-erro
+{
+    display: none;
+}

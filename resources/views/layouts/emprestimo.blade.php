@@ -2,8 +2,19 @@
 @section('conteudo')
 
 
-
-<div class="container col-md-8 mt-5">
+<div class="container col-md-8 mt-4">
+    <div id="box-erro" class="alert alert-danger">
+        <p>Estudante e/ou livro não cadastrados</p>
+    </div>
+    <?php
+        if(isset($_GET['erro']) && $_GET['erro'] != ''){ 
+    ?>
+        <script>
+            alerta();
+        </script>
+    <?php
+        }
+    ?>
     <div class="card">
         <div class="card-header">
             <center>
@@ -32,12 +43,16 @@
                         <input type="date" class="form-control" name="data_emprestimo" placeholder="Autor" id="data_emprestimo" required>
                     </div>
                 </div>
-               
                 <button type="submit" class="btn btn-primary mt-4">Cadastrar</button>
             </form>
         </div>
     </div>
 </div>
+
+@push('styles')
+    <link rel="stylesheet" href="{{asset('css/estilos.css')}}">
+@endpush
+
 
 
 

@@ -11,6 +11,8 @@
     <!-- Css -->
     <link rel="stylesheet" href="{{asset('css/estilos.css')}}">
 
+    @stack('styles')
+
     <title>Lib</title>
 </head>
 <body>
@@ -28,5 +30,8 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    @stack('scripts')
+    <script src="js/scripts.js"></script>
 </body>
 </html>

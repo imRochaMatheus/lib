@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Emprestimo;
 use Illuminate\Http\Request;
-use DataTime;
+use App\Estudante;
+use App\Livro;
 
 class EmprestimoController extends Controller
 {
@@ -13,9 +14,18 @@ class EmprestimoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view ('layouts.emprestimo');
+        if(isset($request->erro))
+        {
+            $erro = $request->erro;
+            return view ('layouts.emprestimo', ['$erro' => '$erro']);
+        }
+        else
+        {
+            return view ('layouts.emprestimo', ['erro' => '']);
+        };
+
     }
 
     /**
@@ -25,10 +35,25 @@ class EmprestimoController extends Controller
      */
     public function create(Request $request)
     {
-        $data = $request->data_emprestimo; 
-        $limite = date('d/m/Y', strtotime("+15 days",strtotime($data))); 
 
-        
+        $estudante = new Estudante();
+
+        $livro = new Livro();
+
+        $estudante = $estudante->where('matricula', $request->matricula)->get()->first();
+        $livro = $livro->where('codigo', $request->codigo)->get()->first();
+
+        if(isset($estudante->nome) && isset($livro->titulo)){
+
+            $data = $request->data_emprestimo; 
+
+            $limite = date('d/m/Y', strtotime("+15 days",strtotime($data))); 
+
+        }else{	
+
+            return redirect()->route('emprestimo', ['erro' => '404']);
+        };
+   
     }
 
     /**

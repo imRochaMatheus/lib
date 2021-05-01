@@ -13,16 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/cadastro', 'CadastroController@index')->name('cadastro');
 Route::post('/cadastro', 'CadastroController@create')->name('cadastro');
 
 Route::get('/cadastroLivro', 'LivroController@index')->name('livro');
 Route::post('/cadastroLivro', 'LivroController@create')->name('livro');
 
-Route::get('/emprestimo', 'EmprestimoController@index')->name('emprestimo');
+Route::get('/emprestimo/{erro?}', 'EmprestimoController@index')->name('emprestimo');
 Route::post('/emprestimo', 'EmprestimoController@create')->name('emprestimo');
 
