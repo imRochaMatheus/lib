@@ -1,0 +1,93 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --blue: #15C3D6;
+    --blue-medium: #17D6EB;
+    --blue-light: #96FEFF;
+    --brown: #8D734B;
+    --yellow: #FFD666;
+    --white: #FFF;
+    --white-medium: #EBF2F5;
+    --dark:  rgba(0, 0, 0, 0.5);
+}
+
+body {
+    color: var(--white);
+}
+
+body, input, button, textarea {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+::-webkit-scrollbar {
+    width: 0.35em;
+}
+  
+::-webkit-scrollbar-track {
+    background: var(--white-medium);
+    border-radius: 1em;
+}
+   
+::-webkit-scrollbar-thumb {
+    background: var(--yellow); 
+    opacity: 0.7;
+    border-radius: 1em;
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    opacity: 1;
+}
+
+form.cadastro {
+    padding: 1.5em;
+    
+    background-color: var(--white);
+    border-radius: 0.5em;
+
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+form.cadastro label {
+    color: var(--blue);
+    font-weight: 700;
+    font-size: 15.5px;
+}
+
+#cadastro-livro-form input, #cadastro-livro-form select, 
+#cadastro-usuario-form input, #cadastro-usuario-form select {
+    outline: none;
+    box-shadow: none;
+
+    transition: border 0.1s;
+}
+
+form.cadastro input:focus, form.cadastro select:focus {
+    outline: none;
+    border: 3px solid var(--yellow);
+}
+
+form.cadastro button {
+    background-color: var(--yellow);
+    color: var(--brown);
+    font-weight: 800;
+
+    height: 3em;
+
+    transition: background-color 0.2s, color 0.2s;
+}
+
+form.cadastro button:hover {
+    background: var(--blue-light);
+    color: var(--blue);
+}
+
+form.cadastro small {
+    color: var(--brown);
+    font-weight: 600;
+}

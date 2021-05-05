@@ -1,0 +1,32 @@
+.wrapper {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+}
+
+.main {
+    background-color: var(--white-medium);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 315px;
+    min-height: 100vh;
+    margin-left: 20%;
+}
+
+.content {
+    display: block;
+    padding: 2.5em;
+}
+
+.content > div {
+    display: flex;;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 850px) {
+    .main {
+        margin-left: 0;
+    }    
+}

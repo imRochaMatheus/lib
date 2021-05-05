@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts/login');
 });
 
 Route::get('/cadastro', 'CadastroController@index')->name('cadastro');
 Route::post('/cadastro', 'CadastroController@create')->name('cadastro');
 
-Route::get('/cadastroLivro', 'LivroController@index')->name('livro');
-Route::post('/cadastroLivro', 'LivroController@create')->name('livro');
+Route::get('/cadastro-livro', 'LivroController@index')->name('livro');
+Route::post('/cadastro-livro', 'LivroController@create')->name('livro');
 

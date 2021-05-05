@@ -1,80 +1,114 @@
-@include('layouts.partials.basico')
+@extends('layouts.partials.master')
 @section('conteudo')
+    <form id="cadastro-usuario-form" class="col-md-6 cadastro" action="{{route('cadastro')}}" method="POST">
+        @csrf
 
-
-
-<div class="container col-md-8 mt-5">
-    <div class="card">
-        <div class="card-header">
-            <center>
-                Cadastro de usuários
-            </center>      
+        <div class="row">
+            <div class="col-md-5 form-group">
+                <label for="acesso">Nível de Acesso:</label>
+                <select class="form-control" id="acesso" name="acesso" value="{{ old('acesso') }}" required>
+                    <option value="1" selected>Administrador</option>
+                    <option value="2">Funcionário</option>
+                    <option value="3">Estudante</option>
+                </select>
+            </div>
         </div>
-        <div class="card-body">
-            <form action="{{route('cadastro')}}" method="POST">
-                @csrf
 
-                <div class="row">
-                    <div class="col-md-8">
-                        <label for="Nome">Nome</label>
-                        <input type="text" class="form-control" name="nome" placeholder="nome" id="nome"  required value = {{ old('nome') }}>
-                        {{ $errors->has('nome') ? $errors->first('nome') : ''}}
-                    </div>
-                    <div class="col-md-4">
-                        <label for="matricula">Matricula:</label>
-                        <input type="text" class="form-control" name="matricula" placeholder="Matrícula..." id="matricula" required value = {{ old('matricula') }}>
-                        {{ $errors->has('matricula') ? $errors->first('matricula') : ''}}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8">
-                        <label for="telefone">Telefone: </label>
-                        <input type="text" class="form-control" name="telefone" placeholder="Telefone" id="telefone" required value = {{ old('telefone') }}>
-                        {{ $errors->has('telefone') ? $errors->first('telefone') : ''}}
-                    </div>
-                    <div class="col-md-4">
-                        <label for="cargo">Cargo:  </label>
-                        <select class="form-control" id="cargo" name="cargo" placeholder="Acesso" value = {{ old('cargo') }}>
-                            @for ($i = 0; $i < count($cargos); $i++)
-                                <option value = {{$cargos[$i]->id}}>{{$cargos[$i]->nome}}</option>  
-                            @endfor 
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8">
-                        <label for="email">Email: </label>
-                        <input type="email" class="form-control" name="email" placeholder="Email" id="email" required value = {{ old('email') }}>
-                        {{ $errors->has('email') ? $errors->first('email') : ''}}
-                    </div>
-                    <div class="col-md-4">
-                        <label for="senha">Senha:</label>
-                        <input type="password" class="form-control" name="senha" placeholder="Senha" id="senha" required>
-                        {{ $errors->has('senha') ? $errors->first('senha') : ''}}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8">
-                        <label for="confirmacao">Confirme sua senha:</label>
-                        <input type="password" class="form-control" name="confirmacao" placeholder="Repita sua senha" id="confirmacao_senha">
-                        {{ $errors->has('confirmacao') ? $errors->first('confirmacao') : ''}}
-                    </div>
-                    <div class="col-md-4">
-                        <label for="acesso">Acesso: </label>
-                        <select class="form-control" id="acesso" name="acesso" placeholder="Acesso" value = {{ old('acesso') }} >
-                            <option value="1">Administrador</option>
-                            <option value="2">Funcionário</option>
-                            <option value="3" >Estudante</option>
-                        </select>
-                    </div>       
-                </div>
-                <button type="submit" class="btn btn-primary mt-4">Cadastrar</button>
-            </form>
+        <div class="row">
+            <div class="col-md-5 form-group">
+                <label for="matricula">Matrícula:</label>
+                <input type="text" class="form-control" name="matricula" id="matricula" aria-describedby="matricula-error" value="{{ old('matricula') }}" required>
+                <small id="matriula-error" class="form-text">{{ $errors->has('matricula') ? $errors->first('matricula') : ''}}</small>
+            </div>
+            <div class="col-md-7 form-group">
+                <label for="cargo">Cargo:</label>
+                <select class="form-control" name="cargo" id="cargo" value="{{ old('cargo') }}" required>
+                    @for($i = 0; $i < count($cargos); $i++)
+                        <option value = {{ $cargos[$i]->id }}>{{ ucwords($cargos[$i]->nome) }}</option>  
+                    @endfor 
+                </select>
+            </div>
         </div>
-    </div>
-</div>
 
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="Nome">Nome:</label>
+                <input type="text" class="form-control" name="nome" id="nome" aria-describedby="nome-error" value="{{ old('nome') }}" required>
+                <small id="nome-error" class="form-text">{{ $errors->has('nome') ? $errors->first('nome') : ''}}</small>
+            </div>                    
+        </div>
 
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="tipo-telefone">Tipo de Telefone:</label>
+                <select class="form-control" id="tipo-telefone" name="tipo-telefone" required>
+                    <option value="1">Residencial</option>
+                    <option value="2" selected>Celular</option>
+                </select>
+            </div>
+            <div class="col-md-6 form-group">
+                <label for="telefone">Telefone:</label>
+                <input type="text" class="form-control" name="telefone" id="telefone" aria-describedby="telefone-error" value="{{ old('telefone') }}" required>
+                <small id="telefone-error" class="form-text">{{ $errors->has('telefone') ? $errors->first('telefone') : ''}}</small>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" name="email" id="email" aria-describedby="email-error" value="{{ old('email') }}" required>
+                <small id="email-error" class="form-text">{{ $errors->has('email') ? $errors->first('email') : ''}}</small>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" class="form-control" name="senha" id="senha" aria-describedby="senha-error" required>
+                <small id="email-error" class="form-text">{{ $errors->has('senha') ? $errors->first('senha') : ''}}</small>
+            </div>
+            <div class="col-md-6 form-group">
+                <label for="confirmacao">Confirme sua senha:</label>
+                <input type="password" class="form-control" name="confirmacao" id="confirmacao" aria-describedby="confirmacao-error" required>
+                <small id="email-error" class="form-text">{{ $errors->has('confirmacao') ? $errors->first('confirmacao') : ''}}</small>
+            </div> 
+        </div>
 
+        <button type="submit" class="btn btn-block mt-4">CADASTRAR</button>
+    </form>
+@stop
+
+@push('scripts')
+<script type="text/javascript">
+    $(function() {
+        $('#telefone').mask('(00) 0 0000-0000', {
+            clearIfNotMatch: true
+        });
+
+        $('#tipo-telefone').change(function() {
+            $('#telefone').val('');
+
+            if(this.value === '1') {
+                $('#telefone').mask('(00) 0000-0000', {
+                    clearIfNotMatch: true
+                });
+            } else {
+                $('#telefone').mask('(00) 0 0000-0000', {
+                    clearIfNotMatch: true
+                });
+            }
+        }); 
+
+        $('#cargo').parent().hide();
+        
+        $('#acesso').change(function() {
+            console.log(this.value)
+            if(this.value === '2') {
+                $('#cargo').parent().show();
+            } else {
+                $('#cargo').parent().hide();
+            }
+        });
+    });
+</script>
+@endpush

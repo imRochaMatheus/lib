@@ -11,10 +11,10 @@ use App\Cargo;
 
 class CadastroController extends Controller
 {
-    //
     public function index(){
 
-        $cargos = Cargo::all();
+        $cargos = Cargo::orderBy('nome')->get();
+
         return view('layouts.cadastro',
         [
             'cargos' => $cargos,
@@ -31,19 +31,20 @@ class CadastroController extends Controller
             'email'=> 'required|email',
             'cargo' => 'required',
             'acesso' => 'required',
-            'senha' => 'required|min:8|same:confirmacao',
+            'senha' => 'required|min:8',
             'confirmacao' => 'required|min:8|same:senha',
         ];
 
         $feedback = 
         [
-            'required' => 'O campo :attribute é obrigatório',
-             'unique' => ':attribute já cadastrada',
-             'max' => 'O :attribute deve conter no máximo 55 caracteres',
-             'email' => 'Informe um email válido',
-             'nivel_acesso' => 'Determine o nível de acesso',
-             'numeric' => 'Utilize apenas números no campo :attribute' ,  
-             'same' => 'Os campos senha e confirmação devem coincidir',
+            'required' => 'O campo é obrigatório',
+            'unique' => ':attribute já cadastrada',
+            'max' => 'O campo deve conter no máximo 55 caracteres',
+            'email' => 'Informe um email válido',
+            'nivel_acesso' => 'Determine o nível de acesso',
+            'numeric' => 'Utilize apenas números no campo :attribute' ,  
+            'same' => 'Os campos senha e confirmação devem coincidir',
+            'min' => 'O campo deve conter no mínimo 8 caracteres'
         ];
 
         $request->validate($regras, $feedback);
