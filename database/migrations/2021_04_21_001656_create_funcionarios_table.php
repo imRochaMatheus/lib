@@ -21,7 +21,7 @@ class CreateFuncionariosTable extends Migration
             $table->integer('matricula')->unique()->require;
             $table->unsignedBigInteger('id_usuario');
             $table->string('telefone',25)->require;
-            $table->integer('cargo')->require;
+            $table->integer('cargo')->default;
             $table->timestamps();
 
             $table->foreign('id_usuario')->references('id')->on('usuarios');

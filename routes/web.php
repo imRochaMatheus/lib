@@ -23,3 +23,6 @@ Route::post('/cadastro', 'CadastroController@create')->name('cadastro');
 Route::get('/cadastro-livro', 'LivroController@index')->name('livro');
 Route::post('/cadastro-livro', 'LivroController@create')->name('livro');
 
+Route::get('/emprestimo/{erro?}', 'EmprestimoController@index')->name('emprestimo');
+Route::post('/emprestimo', 'EmprestimoController@create')->name('emprestimo');
+
