@@ -1,4 +1,4 @@
-@include('layouts.partials.basico')
+@include('layouts.partials.master')
 @section('conteudo')
 
 
@@ -52,6 +52,7 @@
 @push('styles')
     <link rel="stylesheet" href="{{asset('css/estilos.css')}}">
 @endpush
+
 
 
 

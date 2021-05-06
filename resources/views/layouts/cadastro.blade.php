@@ -76,6 +76,7 @@
 
         <button type="submit" class="btn btn-block mt-4">CADASTRAR</button>
     </form>
+
 @stop
 
 @push('scripts')
