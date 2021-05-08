@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'loginController@index')->name('login');
-Route::post('/', 'loginController@validar')->name('login');
+Route::get('/', 'LoginController@index')->name('login');
+Route::post('/', 'LoginController@autenticar')->name('login');
 
 Route::prefix('auth')/*->middleware('autenticacao')*/->group(function(){
 
