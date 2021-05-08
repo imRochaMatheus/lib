@@ -4,7 +4,7 @@
         <div class="login-form-main">
             <div class="login-form-img"></div>
             <div class="login-form">
-                <form id="login-form">
+                <form id="login-form" action="{{route('login')}}" method="POST">
                     <div class="form-group">
                         <label for="email" aria-hidden="true" hidden>Email</label>
                         <input type="email" id="email" name="email" placeholder="Email" required />

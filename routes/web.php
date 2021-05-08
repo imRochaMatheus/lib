@@ -13,16 +13,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('layouts/login');
+Route::get('/', 'loginController@index')->name('login');
+Route::post('/', 'loginController@validar')->name('login');
+
+Route::prefix('auth')/*->middleware('autenticacao')*/->group(function(){
+
+    Route::prefix('on')/*->middleware('autenticacao')*/->group(function(){
+
+        Route::get('/cadastro', 'PainelController@index')->name('auth.on.dashboard');
+
+        Route::get('/cadastro', 'CadastroController@index')->name('auth.on.cadastro');
+        Route::post('/cadastro', 'CadastroController@create')->name('auth.on.cadastro');
+
+        Route::get('/cadastro-livro', 'LivroController@index')->name('auth.on.livro');
+        Route::post('/cadastro-livro', 'LivroController@create')->name('auth.on.livro');
+
+        Route::get('/emprestimo/{erro?}', 'EmprestimoController@index')->name('auth.on.emprestimo');
+        Route::post('/emprestimo', 'EmprestimoController@create')->name('auth.on.emprestimo');
+
+    });
+
+    Route::prefix('estudante')/*->middleware('')*/->group(function(){
+        Route::get('/painel', 'CadastroController@index')->name('auth.estudante.painel');
+    });
 });
-
-Route::get('/cadastro', 'CadastroController@index')->name('cadastro');
-Route::post('/cadastro', 'CadastroController@create')->name('cadastro');
-
-Route::get('/cadastro-livro', 'LivroController@index')->name('livro');
-Route::post('/cadastro-livro', 'LivroController@create')->name('livro');
-
-Route::get('/emprestimo/{erro?}', 'EmprestimoController@index')->name('emprestimo');
-Route::post('/emprestimo', 'EmprestimoController@create')->name('emprestimo');
-
