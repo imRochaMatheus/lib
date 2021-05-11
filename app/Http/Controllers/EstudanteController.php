@@ -13,8 +13,16 @@ class EstudanteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('layouts.dashboardEstudante');
+    {   
+        session_start();
+        return view('layouts.dashboardEstudante'
+        ,[
+            'nome' => $_SESSION['nome'],
+            'email' => $_SESSION['email'],
+            'cargo' => $_SESSION['cargo'],
+            'acesso' => $_SESSION['acesso']
+            
+        ]);
     }
 
     /**

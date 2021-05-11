@@ -14,7 +14,14 @@ class FuncionarioController extends Controller
      */
     public function index()
     {
-        return view('layouts.dashboardFuncionario');
+        session_start();
+        return view('layouts.dashboardFuncionario',[
+         'nome' => $_SESSION['nome'],
+         'email' => $_SESSION['email'],
+         'cargo' => $_SESSION['cargo'],
+         'acesso' => $_SESSION['acesso']
+         
+         ]);
     }
 
     /**
