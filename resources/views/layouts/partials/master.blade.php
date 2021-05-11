@@ -97,7 +97,7 @@
                     $('#open-sidebar').prop('checked', true);
                 });
 
-                $('body, html').click(function(e) {
+                /*$('body, html').click(function(e) {
                     e.stopPropagation();
                     console.log(e.target)
                     console.log($("#sidebar"))
@@ -108,7 +108,7 @@
                         });
                         $("#open-sidebar").prop('checked', false);
                     }
-                });
+                });*/
             });
         </script>
     </body>
