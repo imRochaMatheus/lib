@@ -20,7 +20,7 @@ Route::prefix('auth')/*->middleware('autenticacao')*/->group(function(){
 
     Route::prefix('on')/*->middleware('autenticacao')*/->group(function(){
 
-        Route::get('/cadastro', 'PainelController@index')->name('auth.on.dashboard');
+        Route::get('/dashboard', 'FuncionarioController@index')->name('auth.on.dashboard');
 
         Route::get('/cadastro', 'CadastroController@index')->name('auth.on.cadastro');
         Route::post('/cadastro', 'CadastroController@create')->name('auth.on.cadastro');
@@ -32,8 +32,7 @@ Route::prefix('auth')/*->middleware('autenticacao')*/->group(function(){
         Route::post('/emprestimo', 'EmprestimoController@create')->name('auth.on.emprestimo');
 
     });
-
     Route::prefix('estudante')/*->middleware('')*/->group(function(){
-        Route::get('/painel', 'CadastroController@index')->name('auth.estudante.painel');
+        Route::get('/painel', 'EstudanteController@index')->name('auth.estudante.painel');
     });
 });

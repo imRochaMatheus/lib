@@ -14,7 +14,7 @@ class EstudanteController extends Controller
      */
     public function index()
     {
-        //
+        return view('layouts.dashboardEstudante');
     }
 
     /**

@@ -52,6 +52,7 @@ class LoginController extends Controller
                     $nome = explode(" ", $nome);
                     $nome = $nome[0].' '.$nome[1];
                     $_SESSION['nome'] = $nome;
+                    $_SESSION['cargo'] = $admin->cargo;
                 break;
                 case 2:
                     $fnc = new Funcionario();
@@ -60,6 +61,7 @@ class LoginController extends Controller
                     $nome = explode(" ", $nome);
                     $nome = $nome[0].' '.$nome[1];
                     $_SESSION['nome'] = $nome;
+                    $_SESSION['cargo'] = $funcionario->cargo;
                 break;
                 case 3:
                     $std = new Estudante();
@@ -74,7 +76,7 @@ class LoginController extends Controller
             }
 
             if( $_SESSION['acesso'] == 1){
-                return redirect()->route('auth.admin.dashboard');
+                return redirect()->route('auth.on.dashboard');
 
             }else if($_SESSION['acesso'] == 2){
 

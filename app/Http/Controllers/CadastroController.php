@@ -90,7 +90,8 @@ class CadastroController extends Controller
                     'email' => $request->email,
                 ]);
         }
-
+        //CRIAR PAGINA DE SUCESSO AO CADASTRAR
+        
         return redirect()->route('cadastro');
     }
 }
