@@ -14,7 +14,6 @@ class FuncionarioController extends Controller
      */
     public function index()
     {
-        session_start();
         return view('layouts.dashboardFuncionario', $_SESSION);
     }
 

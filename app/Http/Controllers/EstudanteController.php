@@ -14,7 +14,6 @@ class EstudanteController extends Controller
      */
     public function index()
     {   
-        session_start();
         return view('layouts.dashboardEstudante',$_SESSION);
     }
 
