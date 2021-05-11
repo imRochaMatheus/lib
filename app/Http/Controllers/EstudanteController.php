@@ -15,14 +15,7 @@ class EstudanteController extends Controller
     public function index()
     {   
         session_start();
-        return view('layouts.dashboardEstudante'
-        ,[
-            'nome' => $_SESSION['nome'],
-            'email' => $_SESSION['email'],
-            'cargo' => $_SESSION['cargo'],
-            'acesso' => $_SESSION['acesso']
-            
-        ]);
+        return view('layouts.dashboardEstudante',$_SESSION);
     }
 
     /**
