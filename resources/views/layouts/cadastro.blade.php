@@ -1,6 +1,6 @@
 @extends('layouts.partials.master')
 @section('conteudo')
-    <form id="cadastro-usuario-form" class="col-md-6 cadastro" action="{{route('cadastro')}}" method="POST">
+    <form id="cadastro-usuario-form" class="col-md-6 cadastro" action="{{route('auth.on.cadastro')}}" method="POST">
         @csrf
 
         <div class="row">
@@ -76,6 +76,7 @@
 
         <button type="submit" class="btn btn-block mt-4">CADASTRAR</button>
     </form>
+
 @stop
 
 @push('scripts')

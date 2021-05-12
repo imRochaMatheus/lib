@@ -9,8 +9,10 @@
                 <i class="fas fa-user-circle"></i>
             </div>
             <div class="user-info">
-                <span class="user-name">Matheus <strong>Rocha</strong></span>
-                <span class="user-role">Coordenador</span>
+                <span class="user-name">{{$nome}} <strong>{{$sobrenome}}</strong></span>
+                @isset($cargo)
+                    <span class="user-role">{{$cargo}}</span>
+                @endisset
             </div>
         </div>
         <div class="sidebar-menu">
@@ -34,44 +36,48 @@
                         </ul>
                     </div>
                 </li>
-                <li class="sidebar-dropdown">
-                    <a href="#">
-                        <i class="fas fa-print"></i>
-                        <span>Relatórios</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="#">Empréstimo</a>
-                            </li>
-                            <li>
-                                <a href="#">Devolução</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="sidebar-dropdown">
-                    <a href="#">
-                        <i class="fas fa-users"></i>
-                        <span>Usuários</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="#">Cadastrar</a>
-                            </li>
-                            <li>
-                                <a href="#">Conceder Permissão</a>
-                            </li>
-                            <li>
-                                <a href="#">Editar</a>
-                            </li>
-                            <li>
-                                <a href="#">Remover</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                @if($acesso == 1 || $acesso == 2)
+                    <li class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="fas fa-print"></i>
+                            <span>Relatórios</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li>
+                                    <a href="#">Empréstimo</a>
+                                </li>
+                                <li>
+                                    <a href="#">Devolução</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+                @if($acesso == 1)
+                    <li class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="fas fa-users"></i>
+                            <span>Usuários</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li>
+                                    <a href="#">Cadastrar</a>
+                                </li>
+                                <li>
+                                    <a href="#">Conceder Permissão</a>
+                                </li>
+                                <li>
+                                    <a href="#">Editar</a>
+                                </li>
+                                <li>
+                                    <a href="#">Remover</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

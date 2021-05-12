@@ -28,17 +28,20 @@
     </head>
     <body>
         <div class="wrapper">
-            @if(2 == 2)
+            @isset($nome)
                 @include('layouts.partials.sidebar')
-            @endif
+            @endisset
             <div class="main">
-                @if(2 == 2)
+                @isset($nome)
                     <nav id="navbar" class="navbar">
                         <button class="btn sidebar-toggle-button">
                             <i class="fas fa-bars"></i>
                         </button>
+                        <a href="#" class="logout-button">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
                     </nav>
-                @endif
+                @endisset
                 <main class="content">
                     <div class="container-fluid p-0">
                         @yield('conteudo')

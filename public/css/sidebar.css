@@ -53,6 +53,11 @@
     padding-right: 0.2em;
 }
 
+.sidebar-wrapper .sidebar-header .user-info {
+    display: flex;
+    flex-direction: column;
+}
+
 .sidebar-wrapper .sidebar-header .user-info strong {
     color: var(--yellow);
 }

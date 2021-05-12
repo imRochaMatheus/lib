@@ -28,7 +28,7 @@ class CadastroController extends Controller
             'nome' => 'required',
             'matricula' => 'required|unique:Estudantes|numeric',
             'telefone'=> 'required|max:55',
-            'email'=> 'required|email|unique:Funcionarios|unique:Estudante',
+            'email'=> 'required|email|unique:Funcionarios|unique:Estudantes',
             'cargo' => 'required',
             'acesso' => 'required',
             'senha' => 'required|min:8',
@@ -90,7 +90,8 @@ class CadastroController extends Controller
                     'email' => $request->email,
                 ]);
         }
-
+        //CRIAR PAGINA DE SUCESSO AO CADASTRAR
+        
         return redirect()->route('cadastro');
     }
 }

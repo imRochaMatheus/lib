@@ -1,0 +1,23 @@
+.block, .welcome-block, .chart {
+    border: 0;
+}
+
+.block, .welcome-block {
+    max-height: 7em;
+}
+
+.welcome-block {
+    background: var(--yellow);
+    color: var(--brown);
+}
+
+.block {
+    background-color: var(--white);
+    color: var(--dark);
+}
+
+.chart {
+    background-color: var(--white);
+    min-height: 20em;
+    max-height: 20em;
+}
