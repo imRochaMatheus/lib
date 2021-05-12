@@ -9,7 +9,9 @@
                 <i class="fas fa-user-circle"></i>
             </div>
             <div class="user-info">
-                <span class="user-name">{{$nome}} <strong>{{$sobrenome}}</strong></span>
+                @if(isset($nome) && isset($sobrenome))
+                    <span class="user-name">{{$nome}} <strong>{{$sobrenome}}</strong></span>
+                @endif
                 @isset($cargo)
                     <span class="user-role">{{$cargo}}</span>
                 @endisset
@@ -36,7 +38,7 @@
                         </ul>
                     </div>
                 </li>
-                @if($acesso == 1 || $acesso == 2)
+                @if(isset($acesso) && ($acesso == 1 || $acesso == 2))
                     <li class="sidebar-dropdown">
                         <a href="#">
                             <i class="fas fa-print"></i>
@@ -54,7 +56,7 @@
                         </div>
                     </li>
                 @endif
-                @if($acesso == 1)
+                @if(isset($acesso) && $acesso == 1)
                     <li class="sidebar-dropdown">
                         <a href="#">
                             <i class="fas fa-users"></i>

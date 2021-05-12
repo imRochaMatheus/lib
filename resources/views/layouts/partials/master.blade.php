@@ -28,11 +28,11 @@
     </head>
     <body>
         <div class="wrapper">
-            @isset($nome)
+            @unless(Route::currentRouteName() == 'login')
                 @include('layouts.partials.sidebar')
-            @endisset
+            @endunless
             <div class="main">
-                @isset($nome)
+                @unless(Route::currentRouteName() == 'login')
                     <nav id="navbar" class="navbar">
                         <button class="btn sidebar-toggle-button">
                             <i class="fas fa-bars"></i>
@@ -41,7 +41,7 @@
                             <i class="fas fa-sign-out-alt"></i>
                         </a>
                     </nav>
-                @endisset
+                @endunless
                 <main class="content">
                     <div class="container-fluid p-0">
                         @yield('conteudo')
@@ -70,7 +70,8 @@
         @stack('scripts')
         <script type="text/javascript">
             $(function() {
-                if(1 == 2) {
+                let pathname = window.location.pathname
+                if(pathname == '/') {
                     $('.main').css({
                         'margin': 0,
                         'background-color': 'var(--blue)'

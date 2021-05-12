@@ -16,6 +16,17 @@
     color: var(--dark);
 }
 
+.welcome-block .card-body .card-content,
+.block .card-body .card-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-body .card-content .card-content-img i {
+    font-size: 3.5em;
+}
+
 .chart {
     background-color: var(--white);
     min-height: 20em;

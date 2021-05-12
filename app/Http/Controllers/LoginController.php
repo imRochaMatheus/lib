@@ -75,7 +75,7 @@ class LoginController extends Controller
                 break;
             }
 
-            if( $_SESSION['acesso'] == 1){
+            if($_SESSION['acesso'] == 1){
                 return redirect()->route('auth.on.dashboard');
 
             }else if($_SESSION['acesso'] == 2){
