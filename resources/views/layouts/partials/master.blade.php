@@ -37,7 +37,7 @@
                         <button class="btn sidebar-toggle-button">
                             <i class="fas fa-bars"></i>
                         </button>
-                        <a href="#" class="logout-button">
+                        <a href="{{Route('logout')}}" class="logout-button">
                             <i class="fas fa-sign-out-alt"></i>
                         </a>
                     </nav>
