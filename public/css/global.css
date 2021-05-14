@@ -60,7 +60,9 @@ form.cadastro label {
 }
 
 #cadastro-livro-form input, #emprestimo-form input,
-#cadastro-usuario-form input, #cadastro-usuario-form select {
+#cadastro-usuario-form input, #cadastro-usuario-form select,
+#buscar-emprestimo-form input, #buscar-emprestimo-form select,
+#buscar-livro-form input {
     outline: none;
     box-shadow: none;
 
@@ -77,9 +79,11 @@ form.cadastro button {
     color: var(--brown);
     font-weight: 800;
 
-    height: 3em;
-
     transition: background-color 0.2s, color 0.2s;
+}
+
+form.cadastro button:not(.search-button) {
+    height: 3em;
 }
 
 form.cadastro button:hover {

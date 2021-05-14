@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Livro;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LivroController extends Controller
 {
@@ -14,7 +15,31 @@ class LivroController extends Controller
      */
     public function index()
     {
-        return view('layouts.cadastroLivro');
+        return view('layouts.consultarLivro', $_SESSION);
+    }
+
+    public function getAll(Request $request)
+    {
+        $regras = 
+        [
+            'codigo' => 'required|numeric'
+        ];
+
+        $feedback = 
+        [
+            'required' => 'O campo é obrigatório',
+            'numeric' => 'Utilize apenas números',
+        ];
+
+        $request->validate($regras, $feedback);
+
+        $livros = DB::table('livros')
+                    ->join('exemplares', 'livros.id', '=', 'exemplares.id_livro')
+                    ->where('livro.codigo', $request->codigo)
+                    ->select('livro.codigo', 'livro.titulo', 'livro.autor', 'livro.editora', 'livro.edicao', 'livro.volume', 'exemplares.status', 'examplares.observacao')
+                    ->get();
+
+        return redirect()->route('auth.on.livro.consultar', ['livros' => $livros]);
     }
 
     /**

@@ -30,15 +30,23 @@
                     <div class="sidebar-submenu">
                         <ul>
                             <li>
-                                <a href="#">Empréstimo</a>
+                                <a href="{{ route('auth.on.livro.consultar') }}">Devolução</a>
+                            </li>
+                            @if(isset($acesso) && $acesso != 3)
+                                <li>
+                                    <a href="{{ route('auth.on.emprestimo.consultar') }}">Empréstimo</a>
+                                </li>
+                            @endisset
+                            <li>
+                                <a href="#">Exemplar</a>
                             </li>
                             <li>
-                                <a href="#">Devolução</a>
+                                <a href="#">Renovação</a>
                             </li>
                         </ul>
                     </div>
                 </li>
-                @if(isset($acesso) && ($acesso == 1 || $acesso == 2))
+                @if(isset($acesso) && $acesso != 3)
                     <li class="sidebar-dropdown">
                         <a href="#">
                             <i class="fas fa-print"></i>
@@ -48,6 +56,9 @@
                             <ul>
                                 <li>
                                     <a href="#">Empréstimo</a>
+                                </li>
+                                <li>
+                                    <a href="#">Exemplar</a>
                                 </li>
                                 <li>
                                     <a href="#">Devolução</a>
@@ -69,12 +80,6 @@
                                 </li>
                                 <li>
                                     <a href="#">Conceder Permissão</a>
-                                </li>
-                                <li>
-                                    <a href="#">Editar</a>
-                                </li>
-                                <li>
-                                    <a href="#">Remover</a>
                                 </li>
                             </ul>
                         </div>

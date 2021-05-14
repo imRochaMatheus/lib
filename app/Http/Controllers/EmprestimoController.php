@@ -28,6 +28,11 @@ class EmprestimoController extends Controller
 
     }
 
+    public function searchIndex()
+    {
+        return view('layouts.consultarEmprestimo', $_SESSION);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

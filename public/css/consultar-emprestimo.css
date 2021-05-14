@@ -1,0 +1,24 @@
+#emprestimo-table thead th {
+    color: var(--brown);
+    background-color: var(--yellow);
+    border-color: var(--yellow);
+}
+
+#emprestimo-table tbody {
+    color: var(--dark);
+}
+
+#emprestimo-table tbody tr td {
+    vertical-align: middle;
+}
+
+#emprestimo-table tbody tr .status {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+#emprestimo-table tbody tr .action ul li {
+    display: inline;
+    padding: 0 0.5em;
+    font-size: 1.3em;
+}
