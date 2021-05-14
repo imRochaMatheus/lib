@@ -8,7 +8,7 @@
                         <div class="card-body">
                             <div class="card-content">
                                 <div class="card-content-info">
-                                    <h5 class="card-title"><strong>Bem-vindo, {{$nome}}!</strong></h5>
+                                    <h5 class="card-title"><strong>Bem-vindo(a), {{$nome}}!</strong></h5>
                                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                                 </div>
                                 <div class="card-content-img">

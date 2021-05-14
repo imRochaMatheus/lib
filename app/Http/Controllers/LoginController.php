@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Usuario;
 use App\Funcionario;
 use App\Estudante;
+use App\Cargo;
 
 class LoginController extends Controller
 {
@@ -47,21 +48,25 @@ class LoginController extends Controller
             switch ($usuario->nivel_de_acesso){
                 case 1:
                     $adm = new Funcionario();
+                    $crg = new Cargo();
                     $admin = $adm->where('email', $email)->get()->first();
+                    $cargo = $crg->where('id', $admin->cargo)->get()->first();
                     $nome = $admin->nome;
                     $nome = explode(" ", $nome);
                     $_SESSION['nome'] = $nome[0];
                     $_SESSION['sobrenome'] = $nome[count($nome)-1];
-                    $_SESSION['cargo'] = $admin->cargo;
+                    $_SESSION['cargo'] = $cargo->nome;
                 break;
                 case 2:
                     $fnc = new Funcionario();
+                    $crg = new Cargo();
                     $funcionario = $fnc->where('email', $email)->get()->first();
+                    $cargo = $crg->where('id', $admin->cargo)->get()->first();
                     $nome = $funcionario->nome;
                     $nome = explode(" ", $nome);
                     $_SESSION['nome'] = $nome[0];
                     $_SESSION['sobrenome'] = $nome[count($nome)-1];
-                    $_SESSION['cargo'] = $funcionario->cargo;
+                    $_SESSION['cargo'] = $cargo->nome;
                 break;
                 case 3:
                     $std = new Estudante();
@@ -90,6 +95,15 @@ class LoginController extends Controller
         }else{
             return redirect()->route('login');
         }
+    }
+
+    public function sair(){
+
+        session_start();
+        session_destroy();
+
+        return redirect()->route('login');
+
     }
 
 }
