@@ -2,6 +2,7 @@
     color: var(--brown);
     background-color: var(--yellow);
     border-color: var(--yellow);
+    text-align: center;
 }
 
 #emprestimo-table tbody {
@@ -9,6 +10,7 @@
 }
 
 #emprestimo-table tbody tr td {
+    text-align: center;
     vertical-align: middle;
 }
 
@@ -19,6 +21,5 @@
 
 #emprestimo-table tbody tr .action ul li {
     display: inline;
-    padding: 0 0.5em;
     font-size: 1.3em;
 }
