@@ -15,6 +15,11 @@ class LivroController extends Controller
      */
     public function index()
     {
+        return view('layouts.cadastroLivro', $_SESSION);
+    }
+
+    public function searchIndex()
+    {
         return view('layouts.consultarLivro', $_SESSION);
     }
 

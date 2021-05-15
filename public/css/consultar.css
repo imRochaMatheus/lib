@@ -1,30 +1,33 @@
-#emprestimo-table thead th {
+.table thead th {
     color: var(--brown);
     background-color: var(--yellow);
     border-color: var(--yellow);
     text-align: center;
 }
 
-#emprestimo-table tbody {
+.table tbody {
     color: var(--dark);
 }
 
-#emprestimo-table tbody tr td {
+.table tbody tr td {
     text-align: center;
     vertical-align: middle;
 }
 
-#emprestimo-table tbody tr .status {
+.table tbody tr .status {
     text-align: center;
     font-size: 1.5em;
 }
 
-#emprestimo-table tbody tr .action ul li {
-    display: inline;
+.table tbody tr .action ul {
+    list-style: none;
+}
+
+.table tbody tr .action ul li {
     font-size: 1.3em;
 }
 
-#emprestimo-table tbody tr .action ul li a {
+.table tbody tr .action ul li a {
     padding: 0;
     font-size: 1em;
     text-decoration: none;
@@ -32,7 +35,7 @@
     transition: all 0.2s;
 }
 
-#emprestimo-table tbody tr .action ul li a:hover{
+.table tbody tr .action ul li a:hover{
     opacity: 0.7;
 }
 
@@ -62,13 +65,19 @@
     color: var(--blue);
 }
 
-a.novo-emprestimo {
-    background-color: var(--blue-medium);
+a.novo-emprestimo, a.novo-exemplar {
+    background-color: var(--blue);
     color: var(--white);
     transition: all 0.2s;
 }
 
-a.novo-emprestimo:hover {
-    color: var(--white);
+a.novo-emprestimo:hover, a.novo-exemplar:hover {
+    background-color: var(--blue-light);
+    color: var(--blue);
     opacity: 0.7;
+}
+
+#modal-ver-mais .label {
+    font-weight: 700;
+    color: var(--blue);
 }

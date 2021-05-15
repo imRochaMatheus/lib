@@ -193,7 +193,7 @@
 @endsection
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/consultar-emprestimo.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/consultar.css') }}">
 @endpush
 
 @push('scripts')

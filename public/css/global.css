@@ -44,7 +44,7 @@ body, input, button, textarea {
     opacity: 1;
 }
 
-form.cadastro {
+form.cadastro:not(#editar-livro-form) {
     padding: 1.5em;
     
     background-color: var(--white);
