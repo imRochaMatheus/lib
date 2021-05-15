@@ -1,0 +1,83 @@
+.table thead th {
+    color: var(--brown);
+    background-color: var(--yellow);
+    border-color: var(--yellow);
+    text-align: center;
+}
+
+.table tbody {
+    color: var(--dark);
+}
+
+.table tbody tr td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table tbody tr .status {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.table tbody tr .action ul {
+    list-style: none;
+}
+
+.table tbody tr .action ul li {
+    font-size: 1.3em;
+}
+
+.table tbody tr .action ul li a {
+    padding: 0;
+    font-size: 1em;
+    text-decoration: none;
+    color: var(--brown);
+    transition: all 0.2s;
+}
+
+.table tbody tr .action ul li a:hover{
+    opacity: 0.7;
+}
+
+.modal {
+    color: var(--dark);
+}
+
+.modal .modal-content .modal-header .modal-title {
+    font-weight: 800;
+    color: var(--yellow);
+}
+
+.modal .modal-content .modal-body .livro {
+    font-weight: 600;
+    color: var(--blue);
+}
+
+.modal .modal-content .modal-footer .operacao-btn {
+    background-color: var(--yellow);
+    color: var(--brown);
+    font-weight: 700;
+    transform: all 0.2s;
+}
+
+.modal .modal-content .modal-footer .operacao-btn:hover {
+    background-color: var(--blue-light);
+    color: var(--blue);
+}
+
+a.novo-emprestimo, a.novo-exemplar {
+    background-color: var(--blue);
+    color: var(--white);
+    transition: all 0.2s;
+}
+
+a.novo-emprestimo:hover, a.novo-exemplar:hover {
+    background-color: var(--blue-light);
+    color: var(--blue);
+    opacity: 0.7;
+}
+
+#modal-ver-mais .label {
+    font-weight: 700;
+    color: var(--blue);
+}

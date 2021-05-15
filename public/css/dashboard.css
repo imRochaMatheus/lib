@@ -16,6 +16,10 @@
     color: var(--dark);
 }
 
+.block:hover {
+    cursor: pointer;
+}
+
 .welcome-block .card-body .card-content,
 .block .card-body .card-content {
     display: flex;
@@ -25,6 +29,20 @@
 
 .card-body .card-content .card-content-img i {
     font-size: 3.5em;
+    transition: all 0.3s;
+}
+
+.block .card-body .card-content .card-content-info .card-title {
+    transition: all 0.3s;
+}
+
+.block:hover .card-body .card-content .card-content-info .card-title,
+.block:hover .card-body .card-content .card-content-img i {
+    color: var(--blue);
+}
+
+a.block-link {
+    text-decoration: none;
 }
 
 .chart {

@@ -1,0 +1,16 @@
+.adicionar-livro-button {
+    background-color: var(--blue);
+    color: var(--white);
+    font-weight: 800;
+
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.adicionar-livro-button:hover {
+    background-color: var(--blue-light);
+    color: var(--blue);
+}
+
+.livro2, .livro3, .livro4, .livro5 {
+    display: none;
+}

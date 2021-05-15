@@ -19,6 +19,11 @@ class LivroController extends Controller
         return view('layouts.cadastroLivro', $_SESSION);
     }
 
+    public function searchIndex()
+    {
+        return view('layouts.consultarLivro', $_SESSION);
+    }
+
     public function getAll(Request $request)
     {
         $regras = 
@@ -98,7 +103,7 @@ class LivroController extends Controller
             $exemplar->save();
         }
 
-        return redirect()->route('auth.on.livro');
+        return redirect()->route('auth.on.livro.cadastrar');
 
     }
 

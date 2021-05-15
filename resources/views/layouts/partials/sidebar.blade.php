@@ -29,19 +29,13 @@
                     </a>
                     <div class="sidebar-submenu">
                         <ul>
-                            <li>
-                                <a href="{{ route('auth.on.livro.consultar') }}">Devolução</a>
-                            </li>
                             @if(isset($acesso) && $acesso != 3)
                                 <li>
                                     <a href="{{ route('auth.on.emprestimo.consultar') }}">Empréstimo</a>
                                 </li>
                             @endisset
                             <li>
-                                <a href="#">Exemplar</a>
-                            </li>
-                            <li>
-                                <a href="#">Renovação</a>
+                                <a href="{{ route('auth.on.livro.consultar') }}">Livro</a>
                             </li>
                         </ul>
                     </div>
@@ -55,13 +49,13 @@
                         <div class="sidebar-submenu">
                             <ul>
                                 <li>
+                                    <a href="#">Devolução</a>
+                                </li>
+                                <li>
                                     <a href="#">Empréstimo</a>
                                 </li>
                                 <li>
-                                    <a href="#">Exemplar</a>
-                                </li>
-                                <li>
-                                    <a href="#">Devolução</a>
+                                    <a href="#">Livro</a>
                                 </li>
                             </ul>
                         </div>
@@ -76,7 +70,7 @@
                         <div class="sidebar-submenu">
                             <ul>
                                 <li>
-                                    <a href="#">Cadastrar</a>
+                                    <a href="{{ route('auth.on.cadastro') }}">Cadastrar</a>
                                 </li>
                                 <li>
                                     <a href="#">Conceder Permissão</a>

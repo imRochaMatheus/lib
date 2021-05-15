@@ -59,8 +59,7 @@ class LoginController extends Controller
                     $nome = explode(" ", $nome);
                     $_SESSION['nome'] = $nome[0];
                     $_SESSION['sobrenome'] = $nome[count($nome)-1];
-                    $_SESSION['cargo'] = $cargo->nome;
-                    
+                    $_SESSION['cargo'] = ucfirst($cargo->nome);
                 break;
                 case 2:
                     $usuario_id = DB::table('funcionarios')->where('email', $usuario->email)->get('id');
@@ -73,7 +72,7 @@ class LoginController extends Controller
                     $nome = explode(" ", $nome);
                     $_SESSION['nome'] = $nome[0];
                     $_SESSION['sobrenome'] = $nome[count($nome)-1];
-                    $_SESSION['cargo'] = $cargo->nome;
+                    $_SESSION['cargo'] = ucfirst($cargo->nome);
                 break;
                 case 3:
                     $estudante_id = DB::table('estudantes')->where('email', $usuario->email)->get('id');
@@ -83,8 +82,7 @@ class LoginController extends Controller
                     $nome = $estudante->nome;
                     $nome = explode(" ", $nome);
                     $_SESSION['nome'] = $nome[0];
-                    $_SESSION['sobrenome'] = $nome[count($nome)-1];
-                   
+                    $_SESSION['sobrenome'] = ucfirst($nome[count($nome)-1]);
                 break;
                 default:
                 break;

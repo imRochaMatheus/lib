@@ -22,12 +22,14 @@ class EmprestimoController extends Controller
         if(isset($request->erro))
         {
             $erro = $request->erro;
-            return view ('layouts.emprestimo', ['$erro' => '$erro']);
+            $params = array_merge(['$erro' => '$erro'], $_SESSION);
         }
         else
         {
-            return view ('layouts.emprestimo', ['erro' => '']);
-        };
+            $params = array_merge(['$erro' => ''], $_SESSION);
+        }
+
+        return view('layouts.emprestimo', $params);
 
     }
 
