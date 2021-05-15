@@ -90,19 +90,15 @@ class LivroController extends Controller
         $exmp = DB::table('livros')
                 ->where('codigo', $request->codigo)->get()->first();
    
-
-        $exemplar = new Exemplar();
-        $exemplar->id_livro = $exmp->id;
-        $exemplar->status = true;
-        $exemplar->observacao = 'N/A';
-
-
         for($i = 0; $i < 3; $i++){
+            $exemplar = new Exemplar();
+            $exemplar->id_livro = $exmp->id;
+            $exemplar->status = true;
+            $exemplar->observacao = 'Nenhuma Observação';
             $exemplar->save();
         }
-        dd('OK');
 
-        return redirect()->route('livro');
+        return redirect()->route('auth.on.livro');
 
     }
 
