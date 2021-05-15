@@ -98,9 +98,7 @@ class LivroController extends Controller
 
 
         for($i = 0; $i < 3; $i++){
-            $count[$i] = new Exemplar();
-            $count[$i] = $exemplar;
-            $count[$i]->save();
+            $exemplar->save();
         }
         dd('OK');
 
