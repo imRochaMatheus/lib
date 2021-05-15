@@ -55,7 +55,7 @@ class LoginController extends Controller
                     $nome = explode(" ", $nome);
                     $_SESSION['nome'] = $nome[0];
                     $_SESSION['sobrenome'] = $nome[count($nome)-1];
-                    $_SESSION['cargo'] = $cargo->nome;
+                    $_SESSION['cargo'] = ucfirst($cargo->nome);
                 break;
                 case 2:
                     $fnc = new Funcionario();
@@ -66,7 +66,7 @@ class LoginController extends Controller
                     $nome = explode(" ", $nome);
                     $_SESSION['nome'] = $nome[0];
                     $_SESSION['sobrenome'] = $nome[count($nome)-1];
-                    $_SESSION['cargo'] = $cargo->nome;
+                    $_SESSION['cargo'] = ucfirst($cargo->nome);
                 break;
                 case 3:
                     $std = new Estudante();
@@ -74,7 +74,7 @@ class LoginController extends Controller
                     $nome = $estudante->nome;
                     $nome = explode(" ", $nome);
                     $_SESSION['nome'] = $nome[0];
-                    $_SESSION['sobrenome'] = $nome[count($nome)-1];
+                    $_SESSION['sobrenome'] = ucfirst($nome[count($nome)-1]);
                 break;
                 default:
                 break;

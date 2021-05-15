@@ -40,6 +40,14 @@
                         <small id="codigo-error" class="form-text">{{ $errors->has('codigo') ? $errors->first('codigo') : ''}}</small>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{{ route('auth.on.emprestimo.realizar') }}" class="btn novo-emprestimo" role="button">
+                            <i class="fas fa-plus"></i> <strong>Novo Empréstimo</strong>
+                        </a>
+                    </div>
+                </div>
             </form>
         </div>
 
@@ -63,16 +71,37 @@
                         <td>Patrick Rothfuss</td>
                         <td>12/05/2021</td>
                         <td>19/05/2021</td>
-                        <td class="status"><i class="fas fa-circle text-success"></i></td>
+                        <td class="status">
+                            <i class="fas fa-circle text-success" data-toggle="tooltip" title="Devolvido"></i>
+                        </td>
                         <td class="action">
-                            <ul>
-                                <li>
-                                    <i class="fas fa-reply"></i>
-                                </li>
-                                <li>
-                                    <i class="fas fa-exchange-alt"></i>
-                                </li>
-                            </ul>
+                            @if(1 == 2)
+                                <ul>
+                                    <li>
+                                        <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
+                                            <i class="fas fa-reply"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
+                                            <i class="fas fa-exchange-alt"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            @else
+                                <ul>
+                                    <li>
+                                        <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
+                                            <i class="fas fa-reply"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
+                                            <i class="fas fa-exchange-alt"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -81,20 +110,84 @@
                         <td>Patrick Rothfuss</td>
                         <td>12/05/2021</td>
                         <td>19/05/2021</td>
-                        <td class="status"><i class="fas fa-circle text-success"></i></td>
+                        <td class="status">
+                            <i class="fas fa-circle text-danger" data-toggle="tooltip" title="Não Devolvido"></i>
+                        </td>
                         <td class="action">
-                            <ul>
-                                <li>
-                                    <i class="fas fa-reply"></i>
-                                </li>
-                                <li>
-                                    <i class="fas fa-exchange-alt"></i>
-                                </li>
-                            </ul>
+                            @if(2 == 2)
+                                <ul>
+                                    <li data-toggle="tooltip" title="Devolver">
+                                        <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="modal" data-target="#modal-devolver">
+                                            <i class="fas fa-reply"></i>
+                                        </a>
+                                    </li>
+                                    <li data-toggle="tooltip" title="Renovar">
+                                        <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="modal" data-target="#modal-renovar">
+                                            <i class="fas fa-exchange-alt"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            @else
+                                <ul>
+                                    <li>
+                                        <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
+                                            <i class="fas fa-reply"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
+                                            <i class="fas fa-exchange-alt"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            @endif
                         </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        <div class="modal fade" id="modal-devolver" tabindex="-1" role="dialog" aria-labelledby="modal-devolver" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <form method="POST">
+                        <input type="hidden" id="id-livro" name="id-livro" value="1">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Devolver Livro</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Deseja devolver o livro <span class="livro">[123456] O Nome do Vento</span>?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn operacao-btn">Devolver</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-renovar" tabindex="-1" role="dialog" aria-labelledby="modal-renovar" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <form method="POST">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Renovar Livro</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Deseja renovar o livro <span class="livro">[123456] O Nome do Vento</span> por mais <strong>7 dias</strong>?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn operacao-btn">Renovar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

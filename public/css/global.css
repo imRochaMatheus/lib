@@ -74,7 +74,7 @@ form.cadastro input:focus, form.cadastro select:focus {
     border: 3px solid var(--yellow);
 }
 
-form.cadastro button {
+form.cadastro button:not(.adicionar-livro-button) {
     background-color: var(--yellow);
     color: var(--brown);
     font-weight: 800;
@@ -82,11 +82,11 @@ form.cadastro button {
     transition: background-color 0.2s, color 0.2s;
 }
 
-form.cadastro button:not(.search-button) {
+form.cadastro button:not(.search-button):not(.adicionar-livro-button) {
     height: 3em;
 }
 
-form.cadastro button:hover {
+form.cadastro button:hover:not(.adicionar-livro-button) {
     background: var(--blue-light);
     color: var(--blue);
 }

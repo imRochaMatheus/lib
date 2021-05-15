@@ -33,9 +33,8 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
         //Route::post('/cadastro-livro', 'LivroController@create')->name('auth.on.livro');
 
         Route::get('/buscar-emprestimo', 'EmprestimoController@searchIndex')->name('auth.on.emprestimo.consultar');
-
-        //Route::get('/emprestimo/{erro?}', 'EmprestimoController@index')->name('auth.on.emprestimo');
-        //Route::post('/emprestimo', 'EmprestimoController@create')->name('auth.on.emprestimo');
+        Route::get('/emprestimo/{erro?}', 'EmprestimoController@index')->name('auth.on.emprestimo.realizar');
+        Route::post('/emprestimo', 'EmprestimoController@create')->name('auth.on.emprestimo.realizar');
 
     });
     Route::prefix('estudante')/*->middleware('')*/->group(function(){
