@@ -1,6 +1,6 @@
 @extends('layouts.partials.master')
 @section('conteudo')
-    <form id="cadastro-livro-form" class="col-md-6 cadastro" action="{{route('livro')}}" method="POST">
+    <form id="cadastro-livro-form" class="col-md-6 cadastro" action="{{route('auth.on.livro')}}" method="POST">
         @csrf
 
         <div class="row">
@@ -8,6 +8,11 @@
                 <label for="codigo">Código:</label>
                 <input type="text" class="form-control" name="codigo" id="codigo" autocomplete="off" aria-describedby="codigo-error" value="{{ old('codigo') }}" required>
                 <small id="codigo-error" class="form-text">{{ $errors->has('codigo') ? $errors->first('codigo') : ''}}</small>
+            </div>
+            <div class="col-md-4">
+                <label for="codigo">N° exemplares:</label>
+                <input type="text" class="form-control" name="n_exemplares" id="n_exemplares" autocomplete="off" aria-describedby="codigo-error" value="{{ old('n_exemplares') }}" required>
+                <small id="codigo-error" class="form-text">{{ $errors->has('n_exemplares') ? $errors->first('n_exemplares') : ''}}</small>
             </div>
         </div>
 

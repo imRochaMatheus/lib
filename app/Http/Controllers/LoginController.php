@@ -9,6 +9,8 @@ use App\Funcionario;
 use App\Estudante;
 use App\Cargo;
 
+use Illuminate\Support\Facades\DB;
+
 class LoginController extends Controller
 {
     //
@@ -47,6 +49,8 @@ class LoginController extends Controller
 
             switch ($usuario->nivel_de_acesso){
                 case 1:
+                    $usuario_id = DB::table('funcionarios')->where('email', $usuario->email)->get('id');
+                    $_SESSION['id'] = $usuario_id[0]->id;
                     $adm = new Funcionario();
                     $crg = new Cargo();
                     $admin = $adm->where('email', $email)->get()->first();
@@ -56,8 +60,11 @@ class LoginController extends Controller
                     $_SESSION['nome'] = $nome[0];
                     $_SESSION['sobrenome'] = $nome[count($nome)-1];
                     $_SESSION['cargo'] = $cargo->nome;
+                    
                 break;
                 case 2:
+                    $usuario_id = DB::table('funcionarios')->where('email', $usuario->email)->get('id');
+                    $_SESSION['id'] = $usuario_id[0]->id;
                     $fnc = new Funcionario();
                     $crg = new Cargo();
                     $funcionario = $fnc->where('email', $email)->get()->first();
@@ -69,12 +76,15 @@ class LoginController extends Controller
                     $_SESSION['cargo'] = $cargo->nome;
                 break;
                 case 3:
+                    $estudante_id = DB::table('estudantes')->where('email', $usuario->email)->get('id');
+                    $_SESSION['id'] = $estudante_id[0]->id;
                     $std = new Estudante();
                     $estudante = $std->where('email', $email)->get()->first();
                     $nome = $estudante->nome;
                     $nome = explode(" ", $nome);
                     $_SESSION['nome'] = $nome[0];
                     $_SESSION['sobrenome'] = $nome[count($nome)-1];
+                   
                 break;
                 default:
                 break;

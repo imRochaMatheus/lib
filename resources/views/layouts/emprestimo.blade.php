@@ -1,6 +1,6 @@
 @extends('layouts.partials.master')
 @section('conteudo')
-    <form id="emprestimo-form" class="col-md-6 cadastro" action="{{route('emprestimo')}}" method="POST">
+    <form id="emprestimo-form" class="col-md-6 cadastro" action="{{route('auth.on.emprestimo')}}" method="POST">
         @csrf
 
         <div class="row">
@@ -11,9 +11,19 @@
             </div>
             <div class="col-md-6 form-group">
                 <label for="codigo">Código do Livro:</label>
-                <input type="text" class="form-control" name="codigo" id="codigo" autocomplete="on" aria-describedby="codigo-error" value="{{ old('codigo') }}" required>
+                <input type="text" class="form-control" name="codigo1" id="codigo1" autocomplete="off" aria-describedby="codigo-error" value="{{ old('codigo') }}" required>
                 <small id="codigo-error" class="form-text">{{ $errors->has('codigo') ? $errors->first('codigo') : ''}}</small>
             </div>
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="codigo">Código do Livro:</label>
+            <input type="text" class="form-control" name="codigo2" id="codigo2" autocomplete="off" aria-describedby="codigo-error" value="{{ old('codigo2') }}" >
+            <small id="codigo-error" class="form-text">{{ $errors->has('codigo2') ? $errors->first('codigo2') : ''}}</small>
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="codigo">Código do Livro:</label>
+            <input type="text" class="form-control" name="codigo3" id="codigo3" autocomplete="off" aria-describedby="codigo-error" value="{{ old('codigo2') }}" >
+            <small id="codigo-error" class="form-text">{{ $errors->has('codigo3') ? $errors->first('codigo3') : ''}}</small>
         </div>
         <div class="row">
             <div class="col-md-6 form-group">

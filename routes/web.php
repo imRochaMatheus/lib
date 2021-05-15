@@ -29,13 +29,14 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
         Route::get('/consultar-livro', 'LivroController@index')->name('auth.on.livro.consultar');
         Route::post('/consultar-livro', 'LivroController@getAll')->name('auth.on.livro.consultar');
 
-        //Route::get('/cadastro-livro', 'LivroController@index')->name('auth.on.livro');
-        //Route::post('/cadastro-livro', 'LivroController@create')->name('auth.on.livro');
+        Route::get('/cadastro-livro', 'LivroController@index')->name('auth.on.livro');
+        Route::post('/cadastro-livro', 'LivroController@create')->name('auth.on.livro');
 
         Route::get('/buscar-emprestimo', 'EmprestimoController@searchIndex')->name('auth.on.emprestimo.consultar');
+        Route::post('/buscar-emprestimo', 'EmprestimoController@show')->name('auth.on.emprestimo.consultar');
 
-        //Route::get('/emprestimo/{erro?}', 'EmprestimoController@index')->name('auth.on.emprestimo');
-        //Route::post('/emprestimo', 'EmprestimoController@create')->name('auth.on.emprestimo');
+        Route::get('/emprestimo/{erro?}', 'EmprestimoController@index')->name('auth.on.emprestimo');
+        Route::post('/emprestimo', 'EmprestimoController@create')->name('auth.on.emprestimo');
 
     });
     Route::prefix('estudante')/*->middleware('')*/->group(function(){

@@ -6,6 +6,9 @@ use App\Emprestimo;
 use Illuminate\Http\Request;
 use App\Estudante;
 use App\Livro;
+use App\Emprestimo_contem_exemplar;
+
+use Illuminate\Support\Facades\DB;
 
 class EmprestimoController extends Controller
 {
@@ -44,20 +47,45 @@ class EmprestimoController extends Controller
         $estudante = new Estudante();
 
         $livro = new Livro();
-
+        
+        $qtd = [];
+        $flag = false;
         $estudante = $estudante->where('matricula', $request->matricula)->get()->first();
-        $livro = $livro->where('codigo', $request->codigo)->get()->first();
+        
+        for($i = 1; $i < 6; $i++){
+            $codigo = "codigo$i";
+            $book = $livro->where('codigo', $request->$codigo)->get()->first();
+            if($book != null){ 
+                array_push($qtd, $i);
+                $flag = true;
+            }else{
+                array_push($qtd, null);
+            }
+        }
 
-        if(isset($estudante->nome) && isset($livro->titulo)){
+        if(isset($estudante->nome) && $flag){
 
-            $data = $request->data_emprestimo; 
+            $data = date('Y-m-d', strtotime($request->data_emprestimo)); 
+            $limite = date('Y-m-d', strtotime("+15 days",strtotime($data))); 
+            $emprestimo = new Emprestimo();
+            $emprestimo->matricula = $request->matricula;
+            $estudante = DB::table('estudantes')
+                    ->where('matricula', $emprestimo->matricula)->get('id');
+            $emprestimo->id_estudante = $estudante[0]->id;
+            $emprestimo->id_funcionario = $_SESSION['id'];
+            $emprestimo->data_emprestimo = $request->data_emprestimo;
+            $emprestimo->data_limite = $limite;
 
-            $limite = date('d/m/Y', strtotime("+15 days",strtotime($data))); 
-
+            //$emprestimo->save();
+            
         }else{	
-
-            return redirect()->route('emprestimo', ['erro' => '404']);
+            return redirect()->route('auth.on.emprestimo', ['erro' => '404']);
         };
+
+        for($i = 1; $i < sizeof($qtd + 1); $i++){
+            $emp = new Emprestimo_contem_exemplar();
+           
+        }
    
     }
 
@@ -67,6 +95,7 @@ class EmprestimoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         //
@@ -78,9 +107,12 @@ class EmprestimoController extends Controller
      * @param  \App\Emprestimo  $emprestimo
      * @return \Illuminate\Http\Response
      */
-    public function show(Emprestimo $emprestimo)
+    public function show(Request $request)
     {
         //
+        $student = new Estudante();
+
+
     }
 
     /**
