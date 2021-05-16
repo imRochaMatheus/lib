@@ -162,7 +162,7 @@
                             <p>Deseja devolver o livro <span class="livro">[123456] O Nome do Vento</span>?
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn operacao-btn">Devolver</button>
+                            <button type="submit" class="btn operacao-btn">DEVOLVER</button>
                         </div>
                     </form>
                 </div>
@@ -183,7 +183,7 @@
                             <p>Deseja renovar o livro <span class="livro">[123456] O Nome do Vento</span> por mais <strong>7 dias</strong>?
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn operacao-btn">Renovar</button>
+                            <button type="submit" class="btn operacao-btn">RENOVAR</button>
                         </div>
                     </form>
                 </div>

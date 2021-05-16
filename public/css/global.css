@@ -44,7 +44,7 @@ body, input, button, textarea {
     opacity: 1;
 }
 
-form.cadastro:not(#editar-livro-form) {
+form.cadastro:not(#editar-livro-form):not(#alterar-permissao-form) {
     padding: 1.5em;
     
     background-color: var(--white);
@@ -62,7 +62,8 @@ form.cadastro label {
 #cadastro-livro-form input, #emprestimo-form input,
 #cadastro-usuario-form input, #cadastro-usuario-form select,
 #buscar-emprestimo-form input, #buscar-emprestimo-form select,
-#buscar-livro-form input {
+#buscar-livro-form input,
+#alterar-permissao-form select {
     outline: none;
     box-shadow: none;
 

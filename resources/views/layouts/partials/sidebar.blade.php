@@ -73,7 +73,7 @@
                                     <a href="{{ route('auth.on.cadastro') }}">Cadastrar</a>
                                 </li>
                                 <li>
-                                    <a href="#">Conceder Permissão</a>
+                                    <a href="{{ route('auth.on.funcionario.consultar') }}">Conceder Permissão</a>
                                 </li>
                             </ul>
                         </div>

@@ -36,6 +36,9 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
         Route::get('/emprestimo/{erro?}', 'EmprestimoController@index')->name('auth.on.emprestimo.realizar');
         Route::post('/emprestimo', 'EmprestimoController@create')->name('auth.on.emprestimo.realizar');
 
+        Route::get('/consultar-funcionario', function() {
+            return view('layouts.consultarFuncionario', $_SESSION);
+        })->name('auth.on.funcionario.consultar');
     });
     Route::prefix('estudante')/*->middleware('')*/->group(function(){
         Route::get('/painel', 'EstudanteController@index')->name('auth.estudante.painel');
