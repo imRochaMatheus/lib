@@ -1,8 +1,9 @@
 @extends('layouts.partials.master')
 @section('conteudo')
+    
     <form id="cadastro-livro-form" class="col-md-6 cadastro" action="{{ route('auth.on.livro.cadastrar') }}" method="POST">
         @csrf
-
+       
         <div class="row">
             <div class="col-md-5">
                 <label for="codigo">Código:</label>

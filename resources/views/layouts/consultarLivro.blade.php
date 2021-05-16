@@ -1,5 +1,6 @@
 @extends('layouts.partials.master')
 @section('conteudo')
+
     <div class="col-md-12">
         <div class="row">
             <form id="buscar-livro-form" class="col-md-6 offset-md-3 mb-4 cadastro" action="{{ route('auth.on.livro.consultar') }}" method="POST">
@@ -46,65 +47,72 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>123456</td>
-                        <td>O Nome do Vento</td>
-                        <td>Patrick Rothfuss</td>
-                        <td>Rocharis & Machadoris</td>
-                        <td>1ª</td>
-                        <td>1</td>
-                        <td>670</td>
-                        <td>10</td>
-                        <td class="action">
-                            <ul>
-                                <li data-toggle="tooltip" title="Ver mais">
-                                    <a 
-                                        href="#"
-                                        class="btn btn-link"
-                                        role="button"
-                                        aria-disabled="true"
-                                        data-toggle="modal"
-                                        data-target="#modal-ver-mais"
-                                        data-codigo="123456"
-                                        data-exemplares="1000"
-                                        data-emprestimos="10"
-                                        data-nome="O Nome do Vento"
-                                        data-autor="Patrick Rothfuss"
-                                        data-editora="Rocharis & Machadoris"
-                                        data-edicao="1"
-                                        data-volume="1"
-                                        data-paginas="670"
-                                        data-descricao="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar sed lorem vel pharetra. Nulla ultricies, tellus a viverra maximus, felis turpis eleifend ante, rhoncus luctus ante orci et ante. Duis aliquet, erat nec malesuada ornare, orci sem posuere augue, vitae semper lectus purus mollis tortor. Ut malesuada orci non rutrum consequat. Sed efficitur id diam non scelerisque. Mauris sed lacinia tortor. Nam finibus ullamcorper hendrerit. Suspendisse convallis metus id commodo blandit. Fusce a mi egestas, fermentum nulla quis, lobortis nisl. Aliquam in felis id neque viverra pulvinar. Suspendisse sapien purus, sodales in dolor at, convallis laoreet augue. Cras ut dui vel enim semper aliquam vulputate a neque. Proin convallis, eros vehicula egestas auctor, nisi velit tempus nisi, ut pellentesque mi dui eget nisl. Vivamus vel elit eget orci interdum porta ac nec odio."
-                                    >
-                                        <i class="fas fa-search-plus"></i>
-                                    </a>
-                                </li>
-                                @if(isset($acesso) && $acesso != 3)
-                                    <li data-toggle="tooltip" title="Editar">
-                                        <a 
-                                            href="#"
-                                            class="btn btn-link"
-                                            role="button"
-                                            aria-disabled="true"
-                                            data-toggle="modal"
-                                            data-target="#modal-editar"
-                                            data-codigo="123456"
-                                            data-exemplares="1000"
-                                            data-nome="O Nome do Vento"
-                                            data-autor="Patrick Rothfuss"
-                                            data-editora="Rocharis & Machadoris"
-                                            data-edicao="1"
-                                            data-volume="1"
-                                            data-paginas="670"
-                                            data-descricao="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar sed lorem vel pharetra. Nulla ultricies, tellus a viverra maximus, felis turpis eleifend ante, rhoncus luctus ante orci et ante. Duis aliquet, erat nec malesuada ornare, orci sem posuere augue, vitae semper lectus purus mollis tortor. Ut malesuada orci non rutrum consequat. Sed efficitur id diam non scelerisque. Mauris sed lacinia tortor. Nam finibus ullamcorper hendrerit. Suspendisse convallis metus id commodo blandit. Fusce a mi egestas, fermentum nulla quis, lobortis nisl. Aliquam in felis id neque viverra pulvinar. Suspendisse sapien purus, sodales in dolor at, convallis laoreet augue. Cras ut dui vel enim semper aliquam vulputate a neque. Proin convallis, eros vehicula egestas auctor, nisi velit tempus nisi, ut pellentesque mi dui eget nisl. Vivamus vel elit eget orci interdum porta ac nec odio."
-                                        >
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                    </li>
-                                @endif
-                            </ul>
-                        </td>
-                    </tr>
+                    @if(isset($livros) && count($livros) > 0)
+                        @foreach ($livros as $livro)
+                            <tr>
+                                <td>{{$livro->codigo}}</td>
+                                <td>{{$livro->titulo}}</td>
+                                <td>{{$livro->autor}}</td>
+                                <td>{{$livro->editora}}</td>
+                                <td>{{$livro->edicao}}</td>
+                                <td>{{$livro->volume}}</td>
+                                <td>{{$livro->numero_de_paginas}}</td>
+                                <td>{{$livro->numero_de_emprestimos}}</td>
+                                <td class="action">
+                                    <ul>
+                                        <li data-toggle="tooltip" title="Ver mais">
+                                            <a 
+                                                href="#"
+                                                class="btn btn-link"
+                                                role="button"
+                                                aria-disabled="true"
+                                                data-toggle="modal"
+                                                data-target="#modal-ver-mais"
+                                                data-codigo="{{$livro->codigo}}"
+                                                data-emprestimos="{{$livro->numero_de_emprestimos}}"
+                                                data-nome="{{$livro->titulo}}"
+                                                data-autor="{{$livro->autor}}"
+                                                data-editora="{{$livro->editora}}"
+                                                data-edicao="{{$livro->edicao}}"
+                                                data-volume="{{$livro->volume}}"
+                                                data-paginas="{{$livro->numero_de_paginas}}"
+                                                data-descricao="{{$livro->descricao}}"
+                                            >
+                                                <i class="fas fa-search-plus"></i>
+                                            </a>
+                                        </li>
+                                        @if(isset($acesso) && $acesso != 3)
+                                            <li data-toggle="tooltip" title="Editar">
+                                                <a 
+                                                    href="#"
+                                                    class="btn btn-link"
+                                                    role="button"
+                                                    aria-disabled="true"
+                                                    data-toggle="modal"
+                                                    data-target="#modal-editar"
+                                                    data-codigo="{{$livro->codigo}}"
+                                                    data-emprestimos="{{$livro->numero_de_emprestimos}}"
+                                                    data-nome="{{$livro->titulo}}"
+                                                    data-autor="{{$livro->autor}}"
+                                                    data-editora="{{$livro->editora}}"
+                                                    data-edicao="{{$livro->edicao}}"
+                                                    data-volume="{{$livro->volume}}"
+                                                    data-paginas="{{$livro->numero_de_paginas}}"
+                                                    data-descricao="{{$livro->descricao}}"
+                                                >
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </td>
+                            </tr>                        
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="9">Nenhum registro encontrado</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         </div>
@@ -113,7 +121,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">[123456] O Nome do Vento</h4>
+                        <h4 class="modal-title"></h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -323,6 +331,7 @@
                 let paginas = button.data('paginas');
                 let descricao = button.data('descricao');
 
+                modal.find('.modal-title').text(`[${codigo}] ${nome}`);
                 modal.find('.codigo').text(codigo);
                 modal.find('.exemplares').text(exemplares);
                 modal.find('.emprestimos').text(emprestimos);
@@ -348,8 +357,6 @@
                 let volume = button.data('volume');
                 let paginas = button.data('paginas');
                 let descricao = button.data('descricao');
-
-                console.log('netrou')
 
                 modal.find('input[name="codigo"]').val(codigo);
                 modal.find('input[name="n_exemplares"]').val(exemplares);

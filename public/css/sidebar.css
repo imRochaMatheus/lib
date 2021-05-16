@@ -33,11 +33,16 @@
     letter-spacing: 0.2em;
     font-size: 1.5em;
     font-weight: 900;
+    color: var(--white);
 }
 
 .sidebar-wrapper .sidebar-brand i {
     font-size: 0.95em;
     color: var(--yellow);
+}
+
+.sidebar-wrapper .sidebar-brand a {
+    text-decoration: none;
 }
 
 .sidebar-wrapper .sidebar-header {

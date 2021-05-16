@@ -2,7 +2,15 @@
     <input type="checkbox" id="open-sidebar" hidden>
     <div class="sidebar-content">
         <div class="sidebar-brand">
-            <span>BIBLI<i class="fas fa-power-off"></i>N</span>
+            @if(isset($acesso) && $acesso != 3)
+                <a href="{{ route('auth.on.dashboard') }}">
+                    <span>BIBLI<i class="fas fa-power-off"></i>N</span>
+                </a>
+            @else
+                <a href="{{ route('auth.estudante.painel') }}">
+                    <span>BIBLI<i class="fas fa-power-off"></i>N</span>
+                </a>
+            @endif
         </div>
         <div class="sidebar-header">
             <div class="user-icon">

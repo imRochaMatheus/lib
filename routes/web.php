@@ -26,7 +26,7 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
         Route::get('/cadastro', 'CadastroController@index')->name('auth.on.cadastro');
         Route::post('/cadastro', 'CadastroController@create')->name('auth.on.cadastro');
 
-        Route::get('/consultar-livro', 'LivroController@searchIndex')->name('auth.on.livro.consultar');
+        Route::get('/consultar-livro/{livro?}', 'LivroController@searchIndex')->name('auth.on.livro.consultar');
         Route::post('/consultar-livro', 'LivroController@getAll')->name('auth.on.livro.consultar');
 
         Route::get('/cadastro-livro', 'LivroController@index')->name('auth.on.livro.cadastrar');

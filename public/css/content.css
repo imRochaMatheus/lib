@@ -17,6 +17,7 @@
 .content {
     display: block;
     padding: 2.5em;
+    height: 100%;
 }
 
 .content > div {
