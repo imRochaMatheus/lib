@@ -14,16 +14,6 @@
                 <input type="date" class="form-control" name="data_emprestimo" id="data_emprestimo" required>
             </div>
         </div>
-        <div class="col-md-6 form-group">
-            <label for="codigo">Código do Livro:</label>
-            <input type="text" class="form-control" name="codigo2" id="codigo2" autocomplete="off" aria-describedby="codigo-error" value="{{ old('codigo2') }}" >
-            <small id="codigo-error" class="form-text">{{ $errors->has('codigo2') ? $errors->first('codigo2') : ''}}</small>
-        </div>
-        <div class="col-md-6 form-group">
-            <label for="codigo">Código do Livro:</label>
-            <input type="text" class="form-control" name="codigo3" id="codigo3" autocomplete="off" aria-describedby="codigo-error" value="{{ old('codigo2') }}" >
-            <small id="codigo-error" class="form-text">{{ $errors->has('codigo3') ? $errors->first('codigo3') : ''}}</small>
-        </div>
         <div class="row">
             <div class="col-md-6">
                 <label for="codigo1">Código do Livro:</label>
@@ -43,25 +33,25 @@
         <div class="row">
             <div class="col-md-6 form-group livro2">
                 <label for="codigo2">Código do Livro 2:</label>
-                <input type="text" class="form-control" name="codigo2" id="codigo2" autocomplete="on" aria-describedby="codigo2-error" value="{{ old('codigo2') }}" required>
+                <input type="text" class="form-control" name="codigo2" id="codigo2" autocomplete="on" aria-describedby="codigo2-error" value="{{ old('codigo2') }}" >
                 <small id="codigo2-error" class="form-text">{{ $errors->has('codigo2') ? $errors->first('codigo2') : ''}}</small>
             </div>
             <div class="col-md-6 form-group livro3">
                 <label for="codigo3">Código do Livro 3:</label>
-                <input type="text" class="form-control" name="codigo3" id="codigo3" autocomplete="on" aria-describedby="codigo3-error" value="{{ old('codigo3') }}" required>
+                <input type="text" class="form-control" name="codigo3" id="codigo3" autocomplete="on" aria-describedby="codigo3-error" value="{{ old('codigo3') }}" >
                 <small id="codigo3-error" class="form-text">{{ $errors->has('codigo3') ? $errors->first('codigo3') : ''}}</small>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 form-group livro4">
                 <label for="codigo2">Código do Livro 4:</label>
-                <input type="text" class="form-control" name="codigo2" id="codigo2" autocomplete="on" aria-describedby="codigo2-error" value="{{ old('codigo2') }}" required>
-                <small id="codigo2-error" class="form-text">{{ $errors->has('codigo2') ? $errors->first('codigo2') : ''}}</small>
+                <input type="text" class="form-control" name="codigo4" id="codigo4" autocomplete="on" aria-describedby="codigo4-error" value="{{ old('codigo4') }}" >
+                <small id="codigo2-error" class="form-text">{{ $errors->has('codigo4') ? $errors->first('codigo4') : ''}}</small>
             </div>
             <div class="col-md-6 form-group livro5">
                 <label for="codigo3">Código do Livro 5:</label>
-                <input type="text" class="form-control" name="codigo3" id="codigo3" autocomplete="on" aria-describedby="codigo3-error" value="{{ old('codigo3') }}" required>
-                <small id="codigo3-error" class="form-text">{{ $errors->has('codigo3') ? $errors->first('codigo3') : ''}}</small>
+                <input type="text" class="form-control" name="codigo5" id="codigo5" autocomplete="on" aria-describedby="codigo5-error" value="{{ old('codigo5') }}" >
+                <small id="codigo5-error" class="form-text">{{ $errors->has('codigo5') ? $errors->first('codigo5') : ''}}</small>
             </div>
         </div>
         <button type="submit" class="btn btn-block mt-4">CADASTRAR</button>

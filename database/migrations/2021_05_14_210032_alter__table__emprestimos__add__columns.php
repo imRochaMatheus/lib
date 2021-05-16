@@ -15,6 +15,7 @@ class AlterTableEmprestimosAddColumns extends Migration
     {
         //
         Schema::table('emprestimos', function (Blueprint $table) {
+            
             $table->date('data_devolucao')->nullable();
             $table->double('multa')->nullable();
             

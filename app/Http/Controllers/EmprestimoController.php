@@ -6,6 +6,7 @@ use App\Emprestimo;
 use Illuminate\Http\Request;
 use App\Estudante;
 use App\Livro;
+use App\Exemplar;
 use App\Emprestimo_contem_exemplar;
 
 use Illuminate\Support\Facades\DB;
@@ -65,6 +66,7 @@ class EmprestimoController extends Controller
             }
         }
 
+        $dados_emprestimo = new Emprestimo();
         if(isset($estudante->nome) && $flag){
 
             $data = date('Y-m-d', strtotime($request->data_emprestimo)); 
@@ -77,18 +79,42 @@ class EmprestimoController extends Controller
             $emprestimo->id_funcionario = $_SESSION['id'];
             $emprestimo->data_emprestimo = $request->data_emprestimo;
             $emprestimo->data_limite = $limite;
-
-            //$emprestimo->save();
+            $dados_emprestimo = $emprestimo;
+            $emprestimo->save();
+            $flag = false;
             
         }else{	
+            $flag = false;
             return redirect()->route('auth.on.emprestimo', ['erro' => '404']);
+            
         };
 
-        for($i = 1; $i < sizeof($qtd + 1); $i++){
+        for($i = 1; $i < sizeof($qtd)+1; $i++){
+
             $emp = new Emprestimo_contem_exemplar();
-           
-        }
-   
+            $codigo = "codigo$i";
+            $book = DB::table('livros')->where('codigo', $request->$codigo)->get()->first();
+                $id_livro = $book->id; 
+                $exemplar = DB::table('exemplares')->where('id_livro', $id_livro)->where('status', true)->get()->first();
+            if($exemplar != null){
+                $id_exemplar = $exemplar->id;
+                $emp->exemplar_id = $id_exemplar;
+                $emprest_id = DB::table('emprestimos')->where('id_estudante',$dados_emprestimo->id_estudante)
+                            ->where('id_funcionario',$dados_emprestimo->id_funcionario)
+                            ->where('matricula', $request->matricula)
+                            ->where('data_emprestimo', $request->data_emprestimo)->get()->first();
+                $emprestimo_id = $emprest_id->id;
+                $emp->emprestimo_id = $emprestimo_id;
+                $emp->status = false;
+                $emp->data_devolucao = $request->data_emprestimo;
+                DB::table('exemplares')->where('id', $id_exemplar)->update(['status' => false]);                
+                $emp->save();
+            }
+            else{
+                dd('Não há mais exemplares disponíveis');
+            }
+            
+        }   
     }
 
     /**
