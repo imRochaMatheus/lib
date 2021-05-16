@@ -11,4 +11,6 @@ class Emprestimo extends Model
     [
         'data_devolucao'
     ];
+
+    public $timestamps = false;
 }

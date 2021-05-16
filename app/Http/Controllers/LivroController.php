@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Livro;
+use App\Exemplar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -54,7 +55,6 @@ class LivroController extends Controller
      */
     public function create(Request $request)
     {
-
         $regras = 
         [
             'codigo' => 'required|unique:livros|numeric',
@@ -77,9 +77,33 @@ class LivroController extends Controller
 
         $request->validate($regras, $feedback);
 
-        Livro::create($request->all());
+        $livro = new Livro();
+        $livro->codigo = $request->codigo;
+        $livro->autor = $request->autor;
+        $livro->titulo = $request->titulo;
+        $livro->autor = $request->autor;
+        $livro->editora = $request->editora;
+        $livro->edicao = $request->edicao;
+        $livro->volume = $request->volume;
+        $livro->descricao = $request->descricao;
+        $livro->numero_de_paginas = $request->numero_de_paginas;
+        $livro->n_exemplares = $request->n_exemplares;
 
-        return redirect()->route('livro');
+        $livro->save();
+
+        $exmp = new Exemplar();
+        $exmp = DB::table('livros')
+                ->where('codigo', $request->codigo)->get()->first();
+   
+        for($i = 0; $i < 3; $i++){
+            $exemplar = new Exemplar();
+            $exemplar->id_livro = $exmp->id;
+            $exemplar->status = true;
+            $exemplar->observacao = 'Nenhuma Observação';
+            $exemplar->save();
+        }
+
+        return redirect()->route('auth.on.livro.cadastrar');
 
     }
 

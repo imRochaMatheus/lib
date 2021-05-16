@@ -21,7 +21,8 @@ class CadastroController extends Controller
     }
 
     public function create(Request $request){
-        
+   
+
         $regras = 
         [
             'nome' => 'required',
@@ -91,6 +92,6 @@ class CadastroController extends Controller
         }
         //CRIAR PAGINA DE SUCESSO AO CADASTRAR
         
-        return redirect()->route('cadastro');
+        return redirect()->route('auth.on.dashboard');
     }
 }

@@ -11,9 +11,13 @@ class Exemplar extends Model
 
     protected $fillable = 
     [
+        'id_livro',
         'status',
-        'observacao'
+        'observacao',
+        
     ];
+
+    public $timestamps = false;
 
     public function livro()
     {
