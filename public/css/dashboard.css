@@ -3,7 +3,8 @@
 }
 
 .block, .welcome-block {
-    max-height: 7em;
+    min-height: 8em;
+    max-height: 8em;
 }
 
 .welcome-block {

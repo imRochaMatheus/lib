@@ -41,13 +41,15 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <a href="{{ route('auth.on.emprestimo.realizar') }}" class="btn novo-emprestimo" role="button">
-                            <i class="fas fa-plus"></i> <strong>Novo Empréstimo</strong>
-                        </a>
+                @if(isset($acesso) && $acesso != 3)
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{{ route('auth.on.emprestimo.realizar') }}" class="btn novo-emprestimo" role="button">
+                                <i class="fas fa-plus"></i> <strong>Novo Empréstimo</strong>
+                            </a>
+                        </div>
                     </div>
-                </div>
+                @endif
             </form>
         </div>
 
@@ -77,11 +79,13 @@
                         <td class="action">
                             @if(1 == 2)
                                 <ul>
-                                    <li>
-                                        <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
-                                            <i class="fas fa-reply"></i>
-                                        </a>
-                                    </li>
+                                    @if(isset($acesso) && $acesso != 3)
+                                        <li>
+                                            <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
+                                                <i class="fas fa-reply"></i>
+                                            </a>
+                                        </li>
+                                    @endif
                                     <li>
                                         <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
                                             <i class="fas fa-exchange-alt"></i>
@@ -90,11 +94,13 @@
                                 </ul>
                             @else
                                 <ul>
-                                    <li>
-                                        <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
-                                            <i class="fas fa-reply"></i>
-                                        </a>
-                                    </li>
+                                    @if(isset($acesso) && $acesso != 3)
+                                        <li>
+                                            <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
+                                                <i class="fas fa-reply"></i>
+                                            </a>
+                                        </li>
+                                    @endif
                                     <li>
                                         <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
                                             <i class="fas fa-exchange-alt"></i>
@@ -116,11 +122,13 @@
                         <td class="action">
                             @if(2 == 2)
                                 <ul>
-                                    <li data-toggle="tooltip" title="Devolver">
-                                        <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="modal" data-target="#modal-devolver">
-                                            <i class="fas fa-reply"></i>
-                                        </a>
-                                    </li>
+                                    @if(isset($acesso) && $acesso != 3)
+                                        <li data-toggle="tooltip" title="Devolver">
+                                            <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="modal" data-target="#modal-devolver">
+                                                <i class="fas fa-reply"></i>
+                                            </a>
+                                        </li>
+                                    @endif
                                     <li data-toggle="tooltip" title="Renovar">
                                         <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="modal" data-target="#modal-renovar">
                                             <i class="fas fa-exchange-alt"></i>
@@ -129,11 +137,13 @@
                                 </ul>
                             @else
                                 <ul>
-                                    <li>
-                                        <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
-                                            <i class="fas fa-reply"></i>
-                                        </a>
-                                    </li>
+                                    @if(isset($acesso) && $acesso != 3)
+                                        <li>
+                                            <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
+                                                <i class="fas fa-reply"></i>
+                                            </a>
+                                        </li>
+                                    @endif
                                     <li>
                                         <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
                                             <i class="fas fa-exchange-alt"></i>

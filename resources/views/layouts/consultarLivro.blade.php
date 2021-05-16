@@ -18,13 +18,15 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <a href="{{ route('auth.on.livro.cadastrar') }}" class="btn novo-exemplar" role="button">
-                            <i class="fas fa-plus"></i> <strong>Novo Livro</strong>
-                        </a>
+                @if(isset($acesso) && $acesso != 3)
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{{ route('auth.on.livro.cadastrar') }}" class="btn novo-exemplar" role="button">
+                                <i class="fas fa-plus"></i> <strong>Novo Livro</strong>
+                            </a>
+                        </div>
                     </div>
-                </div>
+                @endif
             </form>
         </div>
 
@@ -77,27 +79,29 @@
                                         <i class="fas fa-search-plus"></i>
                                     </a>
                                 </li>
-                                <li data-toggle="tooltip" title="Editar">
-                                    <a 
-                                        href="#"
-                                        class="btn btn-link"
-                                        role="button"
-                                        aria-disabled="true"
-                                        data-toggle="modal"
-                                        data-target="#modal-editar"
-                                        data-codigo="123456"
-                                        data-exemplares="1000"
-                                        data-nome="O Nome do Vento"
-                                        data-autor="Patrick Rothfuss"
-                                        data-editora="Rocharis & Machadoris"
-                                        data-edicao="1"
-                                        data-volume="1"
-                                        data-paginas="670"
-                                        data-descricao="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar sed lorem vel pharetra. Nulla ultricies, tellus a viverra maximus, felis turpis eleifend ante, rhoncus luctus ante orci et ante. Duis aliquet, erat nec malesuada ornare, orci sem posuere augue, vitae semper lectus purus mollis tortor. Ut malesuada orci non rutrum consequat. Sed efficitur id diam non scelerisque. Mauris sed lacinia tortor. Nam finibus ullamcorper hendrerit. Suspendisse convallis metus id commodo blandit. Fusce a mi egestas, fermentum nulla quis, lobortis nisl. Aliquam in felis id neque viverra pulvinar. Suspendisse sapien purus, sodales in dolor at, convallis laoreet augue. Cras ut dui vel enim semper aliquam vulputate a neque. Proin convallis, eros vehicula egestas auctor, nisi velit tempus nisi, ut pellentesque mi dui eget nisl. Vivamus vel elit eget orci interdum porta ac nec odio."
-                                    >
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                </li>
+                                @if(isset($acesso) && $acesso != 3)
+                                    <li data-toggle="tooltip" title="Editar">
+                                        <a 
+                                            href="#"
+                                            class="btn btn-link"
+                                            role="button"
+                                            aria-disabled="true"
+                                            data-toggle="modal"
+                                            data-target="#modal-editar"
+                                            data-codigo="123456"
+                                            data-exemplares="1000"
+                                            data-nome="O Nome do Vento"
+                                            data-autor="Patrick Rothfuss"
+                                            data-editora="Rocharis & Machadoris"
+                                            data-edicao="1"
+                                            data-volume="1"
+                                            data-paginas="670"
+                                            data-descricao="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar sed lorem vel pharetra. Nulla ultricies, tellus a viverra maximus, felis turpis eleifend ante, rhoncus luctus ante orci et ante. Duis aliquet, erat nec malesuada ornare, orci sem posuere augue, vitae semper lectus purus mollis tortor. Ut malesuada orci non rutrum consequat. Sed efficitur id diam non scelerisque. Mauris sed lacinia tortor. Nam finibus ullamcorper hendrerit. Suspendisse convallis metus id commodo blandit. Fusce a mi egestas, fermentum nulla quis, lobortis nisl. Aliquam in felis id neque viverra pulvinar. Suspendisse sapien purus, sodales in dolor at, convallis laoreet augue. Cras ut dui vel enim semper aliquam vulputate a neque. Proin convallis, eros vehicula egestas auctor, nisi velit tempus nisi, ut pellentesque mi dui eget nisl. Vivamus vel elit eget orci interdum porta ac nec odio."
+                                        >
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </li>
+                                @endif
                             </ul>
                         </td>
                     </tr>
