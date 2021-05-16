@@ -31,11 +31,11 @@
                         <ul>
                             @if(isset($acesso) && $acesso != 3)
                                 <li>
-                                    <a href="{{ route('auth.on.emprestimo.consultar') }}">Realizar Empréstimo</a>
+                                    <a href="{{ route('auth.on.emprestimo.consultar') }}">Empréstimo</a>
                                 </li>
                             @endisset
                             <li>
-                                <a href="{{ route('auth.on.livro.consultar') }}">Consultar Livro</a>
+                                <a href="{{ route('auth.on.livro.consultar') }}">Livro</a>
                             </li>
                         </ul>
                     </div>
