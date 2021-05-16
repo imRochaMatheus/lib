@@ -1,5 +1,6 @@
 @extends('layouts.partials.master')
 @section('conteudo')
+
     <div class="col-md-12">
         <div class="row">
             <form id="buscar-livro-form" class="col-md-6 offset-md-3 mb-4 cadastro" action="{{ route('auth.on.livro.consultar') }}" method="POST">
@@ -44,63 +45,66 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>123456</td>
-                        <td>O Nome do Vento</td>
-                        <td>Patrick Rothfuss</td>
-                        <td>Rocharis & Machadoris</td>
-                        <td>1ª</td>
-                        <td>1</td>
-                        <td>670</td>
-                        <td>10</td>
-                        <td class="action">
-                            <ul>
-                                <li data-toggle="tooltip" title="Ver mais">
-                                    <a 
-                                        href="#"
-                                        class="btn btn-link"
-                                        role="button"
-                                        aria-disabled="true"
-                                        data-toggle="modal"
-                                        data-target="#modal-ver-mais"
-                                        data-codigo="123456"
-                                        data-exemplares="1000"
-                                        data-emprestimos="10"
-                                        data-nome="O Nome do Vento"
-                                        data-autor="Patrick Rothfuss"
-                                        data-editora="Rocharis & Machadoris"
-                                        data-edicao="1"
-                                        data-volume="1"
-                                        data-paginas="670"
-                                        data-descricao="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar sed lorem vel pharetra. Nulla ultricies, tellus a viverra maximus, felis turpis eleifend ante, rhoncus luctus ante orci et ante. Duis aliquet, erat nec malesuada ornare, orci sem posuere augue, vitae semper lectus purus mollis tortor. Ut malesuada orci non rutrum consequat. Sed efficitur id diam non scelerisque. Mauris sed lacinia tortor. Nam finibus ullamcorper hendrerit. Suspendisse convallis metus id commodo blandit. Fusce a mi egestas, fermentum nulla quis, lobortis nisl. Aliquam in felis id neque viverra pulvinar. Suspendisse sapien purus, sodales in dolor at, convallis laoreet augue. Cras ut dui vel enim semper aliquam vulputate a neque. Proin convallis, eros vehicula egestas auctor, nisi velit tempus nisi, ut pellentesque mi dui eget nisl. Vivamus vel elit eget orci interdum porta ac nec odio."
-                                    >
-                                        <i class="fas fa-search-plus"></i>
-                                    </a>
-                                </li>
-                                <li data-toggle="tooltip" title="Editar">
-                                    <a 
-                                        href="#"
-                                        class="btn btn-link"
-                                        role="button"
-                                        aria-disabled="true"
-                                        data-toggle="modal"
-                                        data-target="#modal-editar"
-                                        data-codigo="123456"
-                                        data-exemplares="1000"
-                                        data-nome="O Nome do Vento"
-                                        data-autor="Patrick Rothfuss"
-                                        data-editora="Rocharis & Machadoris"
-                                        data-edicao="1"
-                                        data-volume="1"
-                                        data-paginas="670"
-                                        data-descricao="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar sed lorem vel pharetra. Nulla ultricies, tellus a viverra maximus, felis turpis eleifend ante, rhoncus luctus ante orci et ante. Duis aliquet, erat nec malesuada ornare, orci sem posuere augue, vitae semper lectus purus mollis tortor. Ut malesuada orci non rutrum consequat. Sed efficitur id diam non scelerisque. Mauris sed lacinia tortor. Nam finibus ullamcorper hendrerit. Suspendisse convallis metus id commodo blandit. Fusce a mi egestas, fermentum nulla quis, lobortis nisl. Aliquam in felis id neque viverra pulvinar. Suspendisse sapien purus, sodales in dolor at, convallis laoreet augue. Cras ut dui vel enim semper aliquam vulputate a neque. Proin convallis, eros vehicula egestas auctor, nisi velit tempus nisi, ut pellentesque mi dui eget nisl. Vivamus vel elit eget orci interdum porta ac nec odio."
-                                    >
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
+                    @foreach ($livros as $item)
+                        <tr>
+                            <td>{{$item->codigo}}</td>
+                            <td>{{$item->titulo}}</td>
+                            <td>{{$item->autor}}</td>
+                            <td>{{$item->editora}}</td>
+                            <td>{{$item->edicao}}</td>
+                            <td>{{$item->volume}}</td>
+                            <td>{{$item->numero_de_paginas}}</td>
+                            <td>{{$item->numero_de_emprestimos}}</td>
+                            <td class="action">
+                                <ul>
+                                    <li data-toggle="tooltip" title="Ver mais">
+                                        <a 
+                                            href="#"
+                                            class="btn btn-link"
+                                            role="button"
+                                            aria-disabled="true"
+                                            data-toggle="modal"
+                                            data-target="#modal-ver-mais"
+                                            data-codigo="{{$item->codigo}}"
+                                            data-emprestimos="{{$item->numero_de_emprestimos}}"
+                                            data-nome="{{$item->titulo}}"
+                                            data-autor="{{$item->autor}}"
+                                            data-editora="{{$item->editora}}"
+                                            data-edicao="{{$item->edicao}}"
+                                            data-volume="{{$item->volume}}"
+                                            data-paginas="{{$item->numero_de_paginas}}"
+                                            data-descricao="{{$item->descricao}}"
+                                        >
+                                            <i class="fas fa-search-plus"></i>
+                                        </a>
+                                    </li>
+                                    <li data-toggle="tooltip" title="Editar">
+                                        <a 
+                                            href="#"
+                                            class="btn btn-link"
+                                            role="button"
+                                            aria-disabled="true"
+                                            data-toggle="modal"
+                                            data-target="#modal-editar"
+                                            data-codigo="{{$item->codigo}}"
+                                            data-emprestimos="{{$item->numero_de_emprestimos}}"
+                                            data-nome="{{$item->titulo}}"
+                                            data-autor="{{$item->autor}}"
+                                            data-editora="{{$item->editora}}"
+                                            data-edicao="{{$item->edicao}}"
+                                            data-volume="{{$item->volume}}"
+                                            data-paginas="{{$item->numero_de_paginas}}"
+                                            data-descricao="{{$item->descricao}}"
+                                        >
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        
+                    @endforeach
+                   
                 </tbody>
             </table>
         </div>

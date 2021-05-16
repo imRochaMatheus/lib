@@ -16,12 +16,25 @@ class LivroController extends Controller
      */
     public function index()
     {
+       
         return view('layouts.cadastroLivro', $_SESSION);
     }
 
-    public function searchIndex()
+    public function searchIndex(Request $request)
     {
-        return view('layouts.consultarLivro', $_SESSION);
+        if(!empty($request->livros)){
+
+            $livros = DB::table('livros')
+            ->where('codigo', $request->livros)
+            ->select('codigo', 'titulo', 'autor', 'editora', 'edicao', 'volume','numero_de_paginas','numero_de_emprestimos', 'descricao')
+            ->get();
+            
+            return view('layouts.consultarLivro', $_SESSION, ['livros' => $livros, 'action' => 1]); 
+
+        }else{
+            $livros = DB::table('livros')->get()->all();
+            return view('layouts.consultarLivro', $_SESSION, ['livros' => $livros]); 
+        }
     }
 
     public function getAll(Request $request)
@@ -33,19 +46,13 @@ class LivroController extends Controller
 
         $feedback = 
         [
-            'required' => 'O campo é obrigatório',
+            'required' => 'O campo :attribute é obrigatório',
             'numeric' => 'Utilize apenas números',
         ];
 
         $request->validate($regras, $feedback);
 
-        $livros = DB::table('livros')
-                    ->join('exemplares', 'livros.id', '=', 'exemplares.id_livro')
-                    ->where('livro.codigo', $request->codigo)
-                    ->select('livro.codigo', 'livro.titulo', 'livro.autor', 'livro.editora', 'livro.edicao', 'livro.volume', 'exemplares.status', 'examplares.observacao')
-                    ->get();
-
-        return redirect()->route('auth.on.livro.consultar', ['livros' => $livros]);
+        return redirect()->route('auth.on.livro.consultar', ['livros' => $request->codigo]);
     }
 
     /**
