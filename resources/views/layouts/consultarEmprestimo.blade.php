@@ -1,5 +1,6 @@
 @extends('layouts.partials.master')
 @section('conteudo')
+
     <div class="col-md-12">
         <div class="row">
             <form id="buscar-emprestimo-form" class="col-md-6 offset-md-3 mb-4 cadastro" action="{{ route('auth.on.emprestimo.consultar') }}" method="POST">
@@ -59,7 +60,9 @@
                     <tr>
                         <th scope="col">Código</th>
                         <th scope="col">Título</th>
-                        <th scope="col">Autor</th>
+                        <th scope="col">Estudante</th>
+                        <th scope="col">Matrícula</th>
+                        <th scope="col">Funcionario</th>
                         <th scope="col">Empréstimo</th>
                         <th scope="col">Limite</th>
                         <th scope="col">Status</th>
@@ -67,92 +70,59 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>123456</td>
-                        <td>O Nome do Vento</td>
-                        <td>Patrick Rothfuss</td>
-                        <td>12/05/2021</td>
-                        <td>19/05/2021</td>
-                        <td class="status">
-                            <i class="fas fa-circle text-success" data-toggle="tooltip" title="Devolvido"></i>
-                        </td>
-                        <td class="action">
-                            @if(1 == 2)
-                                <ul>
-                                    @if(isset($acesso) && $acesso != 3)
-                                        <li>
-                                            <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
-                                                <i class="fas fa-reply"></i>
-                                            </a>
-                                        </li>
-                                    @endif
-                                    <li>
-                                        <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
-                                            <i class="fas fa-exchange-alt"></i>
-                                        </a>
-                                    </li>
-                                </ul>
+                    @foreach ($emprestimos as $item)
+                        <tr>
+                            <td>{{$item->codigo_livro}}</td>
+                            <td>{{$item->titulo}}</td>
+                            <td>{{$item->nome_estudante}}</td>
+                            <td>{{$item->matricula_estudante}}</td>
+                            <td>{{$item->nome_funcionario}}</td>
+                            <td>{{$item->data_emprestimo}}</td>
+                            <td>{{$item->data_limite}}</td>
+                            @if ($item->status)
+                                <td class="status">
+                                    <i class="fas fa-circle text-success" data-toggle="tooltip" title="Devolvido"></i>    
+                                 </td>
                             @else
-                                <ul>
-                                    @if(isset($acesso) && $acesso != 3)
-                                        <li>
-                                            <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
-                                                <i class="fas fa-reply"></i>
-                                            </a>
-                                        </li>
-                                    @endif
-                                    <li>
-                                        <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
-                                            <i class="fas fa-exchange-alt"></i>
-                                        </a>
-                                    </li>
-                                </ul>
+                                <td class="status">
+                                    <i class="fas fa-circle text-danger" data-toggle="tooltip" title="Devolvido"></i>    
+                                </td>
                             @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>123456</td>
-                        <td>O Nome do Vento</td>
-                        <td>Patrick Rothfuss</td>
-                        <td>12/05/2021</td>
-                        <td>19/05/2021</td>
-                        <td class="status">
-                            <i class="fas fa-circle text-danger" data-toggle="tooltip" title="Não Devolvido"></i>
-                        </td>
-                        <td class="action">
-                            @if(2 == 2)
-                                <ul>
-                                    @if(isset($acesso) && $acesso != 3)
-                                        <li data-toggle="tooltip" title="Devolver">
-                                            <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="modal" data-target="#modal-devolver">
-                                                <i class="fas fa-reply"></i>
-                                            </a>
-                                        </li>
-                                    @endif
-                                    <li data-toggle="tooltip" title="Renovar">
-                                        <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="modal" data-target="#modal-renovar">
-                                            <i class="fas fa-exchange-alt"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            @else
-                                <ul>
-                                    @if(isset($acesso) && $acesso != 3)
+                            <td class="action">
+                                @if(1 == 2)
+                                    <ul>
+                                        @if(isset($acesso) && $acesso != 3)
+                                            <li>
+                                                <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
+                                                    <i class="fas fa-reply"></i>
+                                                </a>
+                                            </li>
+                                        @endif
                                         <li>
-                                            <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
-                                                <i class="fas fa-reply"></i>
+                                            <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
+                                                <i class="fas fa-exchange-alt"></i>
                                             </a>
                                         </li>
-                                    @endif
-                                    <li>
-                                        <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
-                                            <i class="fas fa-exchange-alt"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            @endif
-                        </td>
-                    </tr>
+                                    </ul>
+                                @else
+                                    <ul>
+                                        @if(isset($acesso) && $acesso != 3)
+                                            <li>
+                                                <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
+                                                    <i class="fas fa-reply"></i>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        <li>
+                                            <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
+                                                <i class="fas fa-exchange-alt"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach  
                 </tbody>
             </table>
         </div>
