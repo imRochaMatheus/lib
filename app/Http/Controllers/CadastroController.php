@@ -16,7 +16,7 @@ class CadastroController extends Controller
         $cargos = Cargo::orderBy('nome')->get();
 
         $params = array_merge(['cargos' => $cargos], $_SESSION);
-
+        
         return view('layouts.cadastro', $params);
     }
 
