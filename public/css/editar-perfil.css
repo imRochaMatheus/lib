@@ -1,0 +1,9 @@
+#editar-perfil-form img {
+    width: inherit;
+    height: inherit;
+    border-radius: 100%;
+}
+
+#editar-perfil-form input[type='file'] {
+    color: var(--brown);
+}

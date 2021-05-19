@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'LoginController@index')->name('login');
 Route::post('/', 'LoginController@autenticar')->name('login');
 Route::get('/logout', 'LoginController@sair')->name('logout');
+Route::get('/recuperar-senha', function() {
+    return view('layouts.recuperarSenha');
+})->name('recuperarSenha');
 
 Route::prefix('auth')->middleware('autenticacao')->group(function(){
 
@@ -39,6 +42,10 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
         Route::get('/consultar-funcionario', function() {
             return view('layouts.consultarFuncionario', $_SESSION);
         })->name('auth.on.funcionario.consultar');
+
+        Route::get('/editar-perfil', function() {
+            return view('layouts.editarPerfil', $_SESSION);
+        })->name('auth.on.cadastro.editar');
     });
     Route::prefix('estudante')/*->middleware('')*/->group(function(){
         Route::get('/painel', 'EstudanteController@index')->name('auth.estudante.painel');

@@ -1,7 +1,7 @@
 @extends('layouts.partials.master')
 @section('conteudo')
     <div class="login-form-wrapper col-md-8">
-        <div class="login-form-main">
+        <div class="form-main">
             <div class="login-form-img"></div>
             <div class="login-form">
                 <form id="login-form" action="{{route('login')}}" method="POST">
@@ -24,9 +24,9 @@
                         <input type="checkbox" class="custom-control-input" id="connected" name="connected">
                         <label class="custom-control-label" for="connected">Manter-me conectado</label>
                     </div>
-                    <button type="submit" class="login-form-btn">ENTRAR</button>
+                    <button type="submit" class="form-btn">ENTRAR</button>
                     <div class="forgot-pwd">
-                        <a href="#">Esqueci minha senha</a>
+                        <a href="{{ route('recuperarSenha') }}">Esqueci minha senha</a>
                     </div>
                 </form>
             </div>

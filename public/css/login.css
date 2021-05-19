@@ -1,4 +1,4 @@
-.login-form-wrapper {
+.login-form-wrapper, .recuperar-senha-form-wrapper {
     background-color: var(--white-medium);
     border-radius: 1em;
     box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
@@ -13,7 +13,13 @@
     max-height: 73vh;
 }
 
-.login-form-main {
+.recuperar-senha-form-wrapper {
+    height: 45vh;
+    max-height: 45vh;
+    margin-top: 7%;
+}
+
+.form-main {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -21,7 +27,7 @@
     width: 100%;
 }
 
-.login-form-img, .login-form {
+.login-form-img, .login-form, .recuperar-senha-form-img, .recuperar-senha-form {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,44 +36,57 @@
     height: 80%;
 }
 
-#login-form .form-group input, #login-form .login-form-btn {
+#login-form .form-group input, #login-form .form-btn,
+#recuperar-senha-form .form-group input, #recuperar-senha-form .form-btn {
     width: 100%;
     padding: 0.75em 3.5em;
     border: none;
     border-radius: 2em;
 }
 
-#login-form .form-group input {
-    width: 100%;
-    padding: 0.75em 3.5em;
+#login-form .form-group input,
+#recuperar-senha-form .form-group input {
     display: inline-block;
     outline: 0;
     transition: all 0.2s;
     color: var(--dark);
 }
 
-#login-form .form-group input:focus {
+#login-form .form-group input:focus,
+#recuperar-senha-form .form-group input:focus {
     border: 3px solid var(--yellow);
 }
 
-#login-form .form-group input:focus + i {
+#login-form .form-group input:focus + i,
+#recuperar-senha-form .form-group input:focus + i {
     color: var(--yellow);
+}
+
+#login-form .form-group input:focus + i,
+#recuperar-senha-form .form-group input:focus + i {
     top: 1.2em;
 }
 
-#login-form .form-group {
+#login-form .form-group,
+#recuperar-senha-form .form-group {
     position: relative;
 }
 
-#login-form .form-group i {
-    position: absolute;
-    left: 1.8em;
-    top: 1em;
+#login-form .form-group i,
+#recuperar-senha-form .form-group i {
     color: var(--dark);
     transition: all 0.2s;
 }
 
-#login-form .login-form-btn {
+#login-form .form-group i,
+#recuperar-senha-form .form-group i {
+    position: absolute;
+    left: 1.8em;
+    top: 1em;
+}
+
+#login-form .form-btn,
+#recuperar-senha-form .form-btn  {
     background-color: var(--yellow);
     color: var(--brown);
     font-weight: 800;
@@ -75,7 +94,8 @@
     outline: 0;
 }
 
-#login-form .login-form-btn:hover {
+#login-form .form-btn:hover,
+#recuperar-senha-form .form-btn:hover {
     background: var(--blue-light);
     color: var(--blue);
 }
@@ -105,38 +125,48 @@
     border-color: var(--blue);
 }
 
-#login-form .forgot-pwd {
+#login-form .forgot-pwd,
+#recuperar-senha-form .login-link {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 1em;
 }
 
-#login-form .forgot-pwd a {
+#login-form .forgot-pwd a,
+#recuperar-senha-form .login-link a {
     text-decoration: none;
     font-size: 0.8em;
     color: var(--dark);
     transition: all 0.2s;
 }
 
-#login-form .forgot-pwd a:hover {
+#login-form .forgot-pwd a:hover,
+#recuperar-senha-form .login-link a:hover {
     color: var(--brown);
 }
 
-.login-form-img {
+.login-form-img, .recuperar-senha-form-img {
     background-color: var(--white-medium);
-    background-image: url('../images/books-login.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
 }
 
+.login-form-img {
+    background-image: url('../images/books-login.png');
+}
+
+.recuperar-senha-form-img {
+    background-image: url('../images/recuperar-senha.png');
+}
+
 @media only screen and (max-width: 600px) {
-    .login-form-img {
+    .login-form-img, .recuperar-senha-form-img {
         display: none;
     }
 
-    .login-form-wrapper {
+    .form-wrapper {
         height: 50vh;
     }
 }

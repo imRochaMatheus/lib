@@ -28,16 +28,16 @@
     </head>
     <body>
         <div class="wrapper">
-            @unless(Route::currentRouteName() == 'login')
+            @unless(preg_match("/login|recuperarSenha/", Route::currentRouteName()) > 0)
                 @include('layouts.partials.sidebar')
             @endunless
             <div class="main">
-                @unless(Route::currentRouteName() == 'login')
+                @unless(preg_match("/login|recuperarSenha/", Route::currentRouteName()) > 0)
                     <nav id="navbar" class="navbar">
                         <button class="btn sidebar-toggle-button">
                             <i class="fas fa-bars"></i>
                         </button>
-                        <a href="{{Route('logout')}}" class="logout-button">
+                        <a href="{{ route('logout') }}" class="logout-button">
                             <i class="fas fa-sign-out-alt"></i>
                         </a>
                     </nav>
@@ -71,7 +71,7 @@
         <script type="text/javascript">
             $(function() {
                 let pathname = window.location.pathname
-                if(pathname == '/') {
+                if(pathname == '/' || pathname == '/recuperar-senha') {
                     $('.main').css({
                         'margin': 0,
                         'background-color': 'var(--blue)'

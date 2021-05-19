@@ -54,8 +54,38 @@
 }
 
 .sidebar-wrapper .sidebar-header .user-icon {
-    font-size: 3em;
-    padding-right: 0.2em;
+    margin-right: 0.5em;
+}
+
+.sidebar-wrapper .sidebar-header .user-icon a {
+    text-decoration: none;
+}
+
+.sidebar-wrapper .sidebar-header .user-icon img,
+.sidebar-wrapper .sidebar-header .user-icon .thumb-editar {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+}
+
+.sidebar-wrapper .sidebar-header .user-icon .thumb-editar {
+    background-color: var(--dark);
+    color: var(--white);
+
+    display: none;
+
+    position: absolute;
+    top: 5.3em;
+
+    transition: all 0.2s;
+}
+
+.sidebar-wrapper .sidebar-header .user-icon:hover .thumb-editar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
 }
 
 .sidebar-wrapper .sidebar-header .user-info {

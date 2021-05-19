@@ -14,7 +14,12 @@
         </div>
         <div class="sidebar-header">
             <div class="user-icon">
-                <i class="fas fa-user-circle"></i>
+                <a href="{{ route('auth.on.cadastro.editar') }}">
+                    <img src="{{ asset('images/avatar.png') }}">
+                    <div class="thumb-editar">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                </a>
             </div>
             <div class="user-info">
                 @if(isset($nome) && isset($sobrenome))
