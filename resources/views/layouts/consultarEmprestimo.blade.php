@@ -70,59 +70,74 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($emprestimos as $item)
-                        <tr>
-                            <td>{{$item->codigo_livro}}</td>
-                            <td>{{$item->titulo}}</td>
-                            <td>{{$item->nome_estudante}}</td>
-                            <td>{{$item->matricula_estudante}}</td>
-                            <td>{{$item->nome_funcionario}}</td>
-                            <td>{{$item->data_emprestimo}}</td>
-                            <td>{{$item->data_limite}}</td>
-                            @if ($item->status)
-                                <td class="status">
-                                    <i class="fas fa-circle text-success" data-toggle="tooltip" title="Devolvido"></i>    
-                                 </td>
-                            @else
-                                <td class="status">
-                                    <i class="fas fa-circle text-danger" data-toggle="tooltip" title="Devolvido"></i>    
-                                </td>
-                            @endif
-                            <td class="action">
-                                @if(1 == 2)
-                                    <ul>
-                                        @if(isset($acesso) && $acesso != 3)
-                                            <li>
-                                                <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
-                                                    <i class="fas fa-reply"></i>
-                                                </a>
-                                            </li>
-                                        @endif
-                                        <li>
-                                            <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
-                                                <i class="fas fa-exchange-alt"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
+                    @if(isset($emprestimos) && count($emprestimos) > 0)
+                        @foreach ($emprestimos as $item)
+                            <tr>
+                                <td>{{$item->codigo_livro}}</td>
+                                <td>{{$item->titulo}}</td>
+                                <td>{{$item->nome_estudante}}</td>
+                                <td>{{$item->matricula_estudante}}</td>
+                                <td>{{$item->nome_funcionario}}</td>
+                                <td>{{$item->data_emprestimo}}</td>
+                                <td>{{$item->data_limite}}</td>
+                                @if ($item->status)
+                                    <td class="status">
+                                        <i class="fas fa-circle text-success" data-toggle="tooltip" title="Devolvido"></i>    
+                                    </td>
                                 @else
-                                    <ul>
-                                        @if(isset($acesso) && $acesso != 3)
+                                    <td class="status">
+                                        <i class="fas fa-circle text-danger" data-toggle="tooltip" title="Não Devolvido"></i>    
+                                    </td>
+                                @endif
+                                <td class="action">
+                                    @if($item->status)
+                                        <ul>
+                                            @if(isset($acesso) && $acesso != 3)
+                                                <li data-toggle="tooltip" title="Devolver">
+                                                    <a 
+                                                        href="#"
+                                                        class="btn btn-link"
+                                                        role="button"
+                                                        aria-disabled="true"
+                                                        data-toggle="modal"
+                                                        data-target="#modal-devolver"
+                                                        data-codigo="{{$item->codigo}}"
+                                                        data-nome="{{$livro->titulo}}"
+                                                    >
+                                                        <i class="fas fa-reply"></i>
+                                                    </a>
+                                                </li>
+                                            @endif
                                             <li>
-                                                <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
-                                                    <i class="fas fa-reply"></i>
+                                                <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
+                                                    <i class="fas fa-exchange-alt"></i>
                                                 </a>
                                             </li>
-                                        @endif
-                                        <li>
-                                            <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
-                                                <i class="fas fa-exchange-alt"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                @endif
-                            </td>
+                                        </ul>
+                                    @else
+                                        <ul>
+                                            @if(isset($acesso) && $acesso != 3)
+                                                <li>
+                                                    <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
+                                                        <i class="fas fa-reply"></i>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                            <li>
+                                                <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
+                                                    <i class="fas fa-exchange-alt"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach  
+                    @else
+                        <tr>
+                            <td colspan="9">Nenhum registro encontrado</td>
                         </tr>
-                    @endforeach  
+                    @endif
                 </tbody>
             </table>
         </div>
@@ -130,8 +145,8 @@
         <div class="modal fade" id="modal-devolver" tabindex="-1" role="dialog" aria-labelledby="modal-devolver" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <form method="POST">
-                        <input type="hidden" id="id-livro" name="id-livro" value="1">
+                    <form id="devolver-form" route="{{ route('auth.on.emprestimo.devolver') }}" method="POST">
+                        <input type="hidden" id="codigo_exemplar" name="codigo_exemplar">
                         <div class="modal-header">
                             <h4 class="modal-title">Devolver Livro</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -139,7 +154,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Deseja devolver o livro <span class="livro">[123456] O Nome do Vento</span>?
+                            <p>Deseja devolver o livro <span class="livro"></span>?
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn operacao-btn">DEVOLVER</button>
@@ -191,6 +206,18 @@
                     $('.codigo').show();
                 }
             });
+
+            $('#modal-devolver').on('show.bs.modal', function (event) {
+                let button = $(event.relatedTarget);
+                let modal = $(this);
+
+                let codigo = button.data('codigo');
+                let nome = button.data('nome');
+
+                modal.find('.livro').text(`[${codigo}] ${nome}`);
+                modal.find('input[name="codigo-exemplar"]').val(codigo);
+            });
+
         });
     </script>
 @endpush

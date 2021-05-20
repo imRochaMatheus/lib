@@ -83,6 +83,7 @@ class LoginController extends Controller
                     $nome = explode(" ", $nome);
                     $_SESSION['nome'] = $nome[0];
                     $_SESSION['sobrenome'] = ucfirst($nome[count($nome)-1]);
+                    $_SESSION['cargo'] = 'Estudante';
                 break;
                 default:
                 break;

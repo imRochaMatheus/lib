@@ -165,6 +165,54 @@ class EmprestimoController extends Controller
 
     }
 
+    public function devolver(Request $request)
+    {
+        /* devolve o exemplar */
+        $emprestimo_contem_exemplar = new Emprestimo_contem_exemplar();
+        $exemplar = $emprestimo_contem_exemplar->where('codigo_exemplar', $request->codigo_exemplar)->first();
+        $exemplar->status = 1;
+        $exemplar->data_devolucao = date('Y-m-d');
+        $exemplar->save();
+
+        /* checa se existem outros exemplares associados ao mesmo empréstimo e,
+           em caso positivo, verifica se todos ja foram devolvidos */
+        $todos_exemplares = $emprestimo_contem_exemplar->where('emprestimo_id', $exemplar->emprestimo_id)
+                                                        ->where('codigo_exemplar', '!=', $exemplar->codigo_exemplar)
+                                                        ->get();
+        $devolvidos = true;
+        for($exemplares as $exemplar) {
+            if($exemplar->status == 0) {
+                $devolvidos = false;
+                break;
+            }
+        }
+
+        /* busca pelo empréstimo relacionado */
+        $emprestimo = new Emprestimo();
+        $emprestimo = $emprestimo->where('id', $exemplar->id_emprestimo)->first();
+
+        /* se em atraso, calcula a multa */
+        $tem_multa = false;
+        $data_limite = $emprestimo->data_limite;
+        $data_atual = new DateTime('now');
+        
+        if($data_limite < $data_atual) {
+            $multa = $data_limite->diff($data_atual)->days;
+            $emprestimo->multa = $multa;
+            $tem_multa = true;
+        }
+
+        /* se todos os demais exemplares foram devolvidos,
+           então define a data de devolução (pois é o último exemplar sendo devolvido) */
+        if($devolvidos) {
+            $emprestimo->data_devolucao = (new DateTime('now'))->format('Y-m-d');
+        }
+
+        if($tem_multa && $devolvidos) {
+            $emprestimo->save();
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

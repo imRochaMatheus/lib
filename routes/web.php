@@ -38,6 +38,7 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
         Route::get('/buscar-emprestimo', 'EmprestimoController@show')->name('auth.on.emprestimo.consultar');
         Route::get('/emprestimo/{erro?}', 'EmprestimoController@index')->name('auth.on.emprestimo.realizar');
         Route::post('/emprestimo', 'EmprestimoController@create')->name('auth.on.emprestimo.realizar');
+        Route::post('/devolucao', 'EmprestimoController@devolver')->name('auth.on.emprestimo.devolver');
 
         Route::get('/consultar-funcionario', function() {
             return view('layouts.consultarFuncionario', $_SESSION);
@@ -46,6 +47,11 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
         Route::get('/editar-perfil', function() {
             return view('layouts.editarPerfil', $_SESSION);
         })->name('auth.on.cadastro.editar');
+
+        Route::get('/gerar-relatorio/{tipo}', function($tipo) {
+            $params = array_merge($_SESSION, ['tipo' => $tipo]);
+            return view('layouts.gerarRelatorio', $params);
+        })->name('auth.on.relatorio.gerar');
     });
     Route::prefix('estudante')/*->middleware('')*/->group(function(){
         Route::get('/painel', 'EstudanteController@index')->name('auth.estudante.painel');

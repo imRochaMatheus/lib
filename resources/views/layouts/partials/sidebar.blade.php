@@ -62,13 +62,13 @@
                         <div class="sidebar-submenu">
                             <ul>
                                 <li>
-                                    <a href="#">Devolução</a>
+                                    <a href="{{ route('auth.on.relatorio.gerar', ['tipo' => 'devolucao']) }}">Devolução</a>
                                 </li>
                                 <li>
-                                    <a href="#">Empréstimo</a>
+                                    <a href="{{ route('auth.on.relatorio.gerar', ['tipo' => 'emprestimo']) }}">Empréstimo</a>
                                 </li>
                                 <li>
-                                    <a href="#">Livro</a>
+                                    <a href="{{ route('auth.on.relatorio.gerar', ['tipo' => 'livro']) }}">Livro</a>
                                 </li>
                             </ul>
                         </div>
