@@ -102,9 +102,10 @@ class LivroController extends Controller
         $exmp = DB::table('livros')
                 ->where('codigo', $request->codigo)->get()->first();
    
-        for($i = 0; $i < 3; $i++){
+        for($i = 0; $i < $request->n_exemplares; $i++){
             $exemplar = new Exemplar();
             $exemplar->id_livro = $exmp->id;
+            $exemplar->codigo_exemplar = "$request->codigo$i";
             $exemplar->status = true;
             $exemplar->observacao = 'Nenhuma Observação';
             $exemplar->save();

@@ -10,7 +10,7 @@
                     <div class="col-md-4 form-group">
                         <label for="buscar-por">Buscar por:</label>
                         <select class="form-control" id="buscar-por" name="buscar-por" required>
-                            <option value="1" selected>Matrícula</option>
+                            <option value="1" >Matrícula</option>
                             <option value="2">Livro</option>
                         </select>
                     </div>
