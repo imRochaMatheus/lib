@@ -2,14 +2,14 @@
 @section('conteudo')
     <div class="col-md-12">
         <div class="row">
-            <form id="buscar-funcionario-form" class="col-md-6 offset-md-3 mb-4 cadastro" action="{{ route('auth.on.livro.consultar') }}" method="POST">
+            <form id="buscar-funcionario-form" class="col-md-6 offset-md-3 mb-4 cadastro" action="{{ route('auth.on.funcionario.consultar') }}" method="POST">
                 @csrf
 
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label for="matricula">Matrícula:</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="matricula" id="matricula" autocomplete="off" aria-describedby="matricula-error" value="{{ old('matricula') }}" required>
+                            <input type="text" class="form-control" name="matricula" id="matricula" autocomplete="off" aria-describedby="matricula-error" value="{{ old('matricula') }}">
                             <div class="input-group-append">
                                 <button class="btn search-button" type="submit"><i class="fas fa-search"></i></button>
                             </div>
@@ -33,32 +33,46 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>216115518</td>
-                        <td class="status">
-                            <i class="fas fa-circle text-success" data-toggle="tooltip" title="Ativo"></i>
-                        </td>
-                        <td>Matheus Almeida da Rocha</td>
-                        <td>Atendente</td>
-                        <td>Administrador</td>
-                        <td class="action">
-                            <ul>
-                                <li data-toggle="tooltip" title="Alterar Permissão">
-                                    <a 
-                                        href="#"
-                                        class="btn btn-link"
-                                        role="button"
-                                        aria-disabled="true"
-                                        data-toggle="modal"
-                                        data-target="#modal-alterar-permissao"
-                                        data-id-usuario="1"
-                                    >
-                                        <i class="fas fa-key"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
+                    @if(isset($funcionarios) && count($funcionarios) > 0)
+                        @foreach($funcionarios as $funcionario)
+                            <tr>
+                                <td>{{ $funcionario->matricula }}</td>
+                                @if($funcionario->status)
+                                    <td class="status">
+                                        <i class="fas fa-circle text-success" data-toggle="tooltip" title="Ativo"></i>
+                                    </td>
+                                @else
+                                    <td class="status">
+                                        <i class="fas fa-circle text-danger" data-toggle="tooltip" title="Inativo"></i>
+                                    </td>
+                                @endif
+                                <td>{{ $funcionario->nome }}</td>
+                                <td>{{ $funcionario->cargo }}</td>
+                                <td>{{ $funcionario->nivel_de_acesso }}</td>
+                                <td class="action">
+                                    <ul>
+                                        <li data-toggle="tooltip" title="Alterar Permissão">
+                                            <a 
+                                                href="#"
+                                                class="btn btn-link"
+                                                role="button"
+                                                aria-disabled="true"
+                                                data-toggle="modal"
+                                                data-target="#modal-alterar-permissao"
+                                                data-id-usuario="1"
+                                            >
+                                                <i class="fas fa-key"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="6">Nenhum registro encontrado</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         </div>

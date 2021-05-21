@@ -93,6 +93,23 @@
                                     @if($item->status)
                                         <ul>
                                             @if(isset($acesso) && $acesso != 3)
+                                                <li>
+                                                    <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true">
+                                                        <i class="fas fa-reply"></i>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                            @if($item->multa == 0 && $item->qtd_renovacoes > 0)
+                                                <li>
+                                                    <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true">
+                                                        <i class="fas fa-exchange-alt"></i>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    @else
+                                        <ul>
+                                            @if(isset($acesso) && $acesso != 3)
                                                 <li data-toggle="tooltip" title="Devolver">
                                                     <a 
                                                         href="#"
@@ -108,26 +125,22 @@
                                                     </a>
                                                 </li>
                                             @endif
-                                            <li>
-                                                <a href="#" class="btn btn-link" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
-                                                    <i class="fas fa-exchange-alt"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    @else
-                                        <ul>
-                                            @if(isset($acesso) && $acesso != 3)
-                                                <li>
-                                                    <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Devolver">
-                                                        <i class="fas fa-reply"></i>
+                                            @if($item->multa == 0 && $item->qtd_renovacoes > 0)
+                                                <li data-toggle="tooltip" title="Renovar">
+                                                    <a 
+                                                        href="#"
+                                                        class="btn btn-link"
+                                                        role="button"
+                                                        aria-disabled="true"
+                                                        data-toggle="modal"
+                                                        data-target="#modal-renovar"
+                                                        data-codigo="{{$item->codigo}}"
+                                                        data-nome="{{$livro->titulo}}"
+                                                    >
+                                                        <i class="fas fa-exchange-alt"></i>
                                                     </a>
                                                 </li>
                                             @endif
-                                            <li>
-                                                <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true" data-toggle="tooltip" title="Renovar">
-                                                    <i class="fas fa-exchange-alt"></i>
-                                                </a>
-                                            </li>
                                         </ul>
                                     @endif
                                 </td>
@@ -145,7 +158,7 @@
         <div class="modal fade" id="modal-devolver" tabindex="-1" role="dialog" aria-labelledby="modal-devolver" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <form id="devolver-form" route="{{ route('auth.on.emprestimo.devolver') }}" method="POST">
+                    <form id="devolver-form" action="{{ route('auth.on.emprestimo.devolver') }}" method="POST">
                         <input type="hidden" id="codigo_exemplar" name="codigo_exemplar">
                         <div class="modal-header">
                             <h4 class="modal-title">Devolver Livro</h4>
@@ -167,7 +180,8 @@
         <div class="modal fade" id="modal-renovar" tabindex="-1" role="dialog" aria-labelledby="modal-renovar" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <form method="POST">
+                    <form id="renovar-form" action="{{ route('auth.on.emprestimo.renovar') }}" method="POST">
+                        <input type="hidden" id="codigo_exemplar" name="codigo_exemplar">
                         <div class="modal-header">
                             <h4 class="modal-title">Renovar Livro</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -175,7 +189,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Deseja renovar o livro <span class="livro">[123456] O Nome do Vento</span> por mais <strong>7 dias</strong>?
+                            <p>Deseja renovar o livro <span class="livro"></span> por mais <strong>7 dias</strong>?
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn operacao-btn">RENOVAR</button>
@@ -208,6 +222,17 @@
             });
 
             $('#modal-devolver').on('show.bs.modal', function (event) {
+                let button = $(event.relatedTarget);
+                let modal = $(this);
+
+                let codigo = button.data('codigo');
+                let nome = button.data('nome');
+
+                modal.find('.livro').text(`[${codigo}] ${nome}`);
+                modal.find('input[name="codigo-exemplar"]').val(codigo);
+            });
+
+            $('#modal-renovar').on('show.bs.modal', function (event) {
                 let button = $(event.relatedTarget);
                 let modal = $(this);
 

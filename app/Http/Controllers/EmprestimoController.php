@@ -161,53 +161,54 @@ class EmprestimoController extends Controller
         return view('layouts.consultarEmprestimo', $params);
 
     }
-    /*
+    
     public function devolver(Request $request)
     {
-        
-        $emprestimo_contem_exemplar = new Emprestimo_contem_exemplar();
-        $exemplar = $emprestimo_contem_exemplar->where('codigo_exemplar', $request->codigo_exemplar)->first();
-        $exemplar->status = 1;
-        $exemplar->data_devolucao = date('Y-m-d');
-        $exemplar->save();
-
-        
-        $todos_exemplares = $emprestimo_contem_exemplar->where('emprestimo_id', $exemplar->emprestimo_id)
-                                                        ->where('codigo_exemplar', '!=', $exemplar->codigo_exemplar)
-                                                        ->get();
-        $devolvidos = true;
-        for($exemplares as $exemplar) {
-            if($exemplar->status == 0) {
-                $devolvidos = false;
-                break;
-            };
-        };
-
-   
-        $emprestimo = new Emprestimo();
-        $emprestimo = $emprestimo->where('id', $exemplar->id_emprestimo)->first();
-
-       
-        $tem_multa = false;
-        $data_limite = $emprestimo->data_limite;
-        $data_atual = new DateTime('now');
-        
-        if($data_limite < $data_atual) {
-            $multa = $data_limite->diff($data_atual)->days;
-            $emprestimo->multa = $multa;
-            $tem_multa = true;
+        try {
+            DB::beginTransaction();
+            /* devolve o exemplar */
+            $emprestimo_contem_exemplar = new Emprestimo_contem_exemplar();
+            $exemplar = $emprestimo_contem_exemplar->where('codigo_exemplar', $request->codigo_exemplar)->first();
+            $exemplar->status = 1;
+            $exemplar->data_devolucao = (new DateTime('now'))->format('Y-m-d');
+            $exemplar->save();
+    
+            /* busca pelo empréstimo relacionado */
+            $emprestimo = new Emprestimo();
+            $emprestimo = $emprestimo->where('id', $exemplar->id_emprestimo)->first();
+    
+            /* se em atraso, calcula a multa */
+            $data_limite = $exemplar->data_limite;
+            $data_atual = new DateTime('now');
+            
+            if($data_limite < $data_atual) {
+                $multa = $data_limite->diff($data_atual)->days;
+                $emprestimo->multa = $multa;
+                $emprestimo->save();
+            }
+            DB::commit();
+        } catch(Exception $e) {
+            echo $e->getMessage();
+            DB::rollback();
         }
 
-      
-        if($devolvidos) {
-            $emprestimo->data_devolucao = (new DateTime('now'))->format('Y-m-d');
-        }
-
-        if($tem_multa && $devolvidos) {
-            $emprestimo->save();
-        }
+        return redirect()->back();
     }
-    */
+
+    public function renovar(Request $request)
+    {
+        DB::transaction(function() {
+            $emprestimo_contem_exemplar = new Emprestimo_contem_exemplar();
+            $exemplar = $emprestimo_contem_exemplar->where('codigo_exemplar', $request->codigo_exemplar)->first();
+            $exemplar->qtd_renovacoes = $exemplar->qtd_renovacoes - 1;
+            $exemplar->data_limite = $exemplar->data_limite->add(new DateInterval('P7D'));
+            $exemplar->save();
+        });    
+        
+        return redirect()->back();
+>>>>>>> front-end
+    }
+    
     /**
      * Show the form for editing the specified resource.
      *
