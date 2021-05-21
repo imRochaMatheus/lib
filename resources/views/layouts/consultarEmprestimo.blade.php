@@ -56,7 +56,104 @@
 
         <div class="row table-responsive">
             
-            
+            <table id="emprestimo-table" class="col-md-12 table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Código</th>
+                        <th scope="col">Título</th>
+                        <th scope="col">Estudante</th>
+                        <th scope="col">Matrícula</th>
+                        <th scope="col">Funcionario</th>
+                        <th scope="col">Empréstimo</th>
+                        <th scope="col">Limite</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(isset($emprestimos) && count($emprestimos) > 0)
+                        @foreach ($emprestimos as $item)
+                            <tr>
+                                <td>{{$item->codigo_livro}}</td>
+                                <td>{{$item->titulo}}</td>
+                                <td>{{$item->nome_estudante}}</td>
+                                <td>{{$item->matricula_estudante}}</td>
+                                <td>{{$item->nome_funcionario}}</td>
+                                <td>{{$item->data_emprestimo}}</td>
+                                <td>{{$item->data_limite}}</td>
+                                @if ($item->status)
+                                    <td class="status">
+                                        <i class="fas fa-circle text-success" data-toggle="tooltip" title="Devolvido"></i>    
+                                    </td>
+                                @else
+                                    <td class="status">
+                                        <i class="fas fa-circle text-danger" data-toggle="tooltip" title="Não Devolvido"></i>    
+                                    </td>
+                                @endif
+                                <td class="action">
+                                    @if($item->status)
+                                        <ul>
+                                            @if(isset($acesso) && $acesso != 3)
+                                                <li>
+                                                    <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true">
+                                                        <i class="fas fa-reply"></i>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                            @if($item->multa == 0 && $item->qtd_renovacoes > 0)
+                                                <li>
+                                                    <a href="#" class="btn btn-link disabled" role="button" aria-disabled="true">
+                                                        <i class="fas fa-exchange-alt"></i>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    @else
+                                        <ul>
+                                            @if(isset($acesso) && $acesso != 3)
+                                                <li data-toggle="tooltip" title="Devolver">
+                                                    <a 
+                                                        href="#"
+                                                        class="btn btn-link"
+                                                        role="button"
+                                                        aria-disabled="true"
+                                                        data-toggle="modal"
+                                                        data-target="#modal-devolver"
+                                                        data-codigo="{{$item->codigo}}"
+                                                        data-nome="{{$livro->titulo}}"
+                                                    >
+                                                        <i class="fas fa-reply"></i>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                            @if($item->multa == 0 && $item->qtd_renovacoes > 0)
+                                                <li data-toggle="tooltip" title="Renovar">
+                                                    <a 
+                                                        href="#"
+                                                        class="btn btn-link"
+                                                        role="button"
+                                                        aria-disabled="true"
+                                                        data-toggle="modal"
+                                                        data-target="#modal-renovar"
+                                                        data-codigo="{{$item->codigo}}"
+                                                        data-nome="{{$livro->titulo}}"
+                                                    >
+                                                        <i class="fas fa-exchange-alt"></i>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach  
+                    @else
+                        <tr>
+                            <td colspan="9">Nenhum registro encontrado</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
         </div>
 
         <div class="modal fade" id="modal-devolver" tabindex="-1" role="dialog" aria-labelledby="modal-devolver" aria-hidden="true">
