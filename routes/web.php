@@ -39,10 +39,10 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
         Route::get('/emprestimo/{erro?}', 'EmprestimoController@index')->name('auth.on.emprestimo.realizar');
         Route::post('/emprestimo', 'EmprestimoController@create')->name('auth.on.emprestimo.realizar');
         Route::post('/devolucao', 'EmprestimoController@devolver')->name('auth.on.emprestimo.devolver');
+        Route::post('/renovar', 'EmprestimoController@renovar')->name('auth.on.emprestimo.renovar');
 
-        Route::get('/consultar-funcionario', function() {
-            return view('layouts.consultarFuncionario', $_SESSION);
-        })->name('auth.on.funcionario.consultar');
+        Route::get('/consultar-funcionario', 'FuncionarioController@searchIndex')->name('auth.on.funcionario.consultar');
+        Route::post('/consultar-funcionario', 'FuncionarioController@searchIndex')->name('auth.on.funcionario.consultar');
 
         Route::get('/editar-perfil', function() {
             return view('layouts.editarPerfil', $_SESSION);

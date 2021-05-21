@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Funcionario;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+
 class FuncionarioController extends Controller
 {
     /**
@@ -15,6 +17,39 @@ class FuncionarioController extends Controller
     public function index()
     {
         return view('layouts.dashboardFuncionario', $_SESSION);
+    }
+
+    public function searchIndex(Request $request)
+    {
+        if(empty($request->matricula)) {
+            $funcionarios = DB::table('funcionarios')
+            ->join('usuarios', 'funcionarios.id_usuario', '=', 'usuarios.id')
+            ->join('cargos', 'funcionarios.cargo', '=', 'cargos.id')
+            ->select('funcionarios.matricula', 'usuarios.status', 'funcionarios.nome', 'cargos.nome AS cargo', 'usuarios.nivel_de_acesso')
+            ->get();
+        } else {
+            $funcionarios = DB::table('funcionarios')
+            ->join('usuarios', 'funcionarios.id_usuario', '=', 'usuarios.id')
+            ->join('cargos', 'funcionarios.cargo', '=', 'cargos.id')
+            ->where('funcionarios.matricula', $request->matricula)
+            ->select('funcionarios.matricula', 'usuarios.status', 'funcionarios.nome', 'cargos.nome AS cargo', 'usuarios.nivel_de_acesso')
+            ->get();            
+        }
+
+        foreach($funcionarios as $funcionario) {
+            if($funcionario->nivel_de_acesso == 1) {
+                $funcionario->nivel_de_acesso = 'Administrador';
+            } elseif($funcionario->nivel_de_acesso == 2) {
+                $funcionario->nivel_de_acesso = 'Funcionário';
+            } else {
+                $funcionario->nivel_de_acesso = 'Estudante';
+            }
+
+            $funcionario->cargo = ucfirst($funcionario->cargo);
+        }
+        
+        $params = array_merge($_SESSION, ['funcionarios' => $funcionarios]);
+        return view('layouts.consultarFuncionario', $params); 
     }
 
     /**
