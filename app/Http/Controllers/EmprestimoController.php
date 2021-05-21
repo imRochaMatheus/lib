@@ -48,7 +48,6 @@ class EmprestimoController extends Controller
     {
 
         $estudante = new Estudante();
-
         $livro = new Livro();
         
         $qtd = [];
@@ -150,32 +149,29 @@ class EmprestimoController extends Controller
     public function show(Request $request)
     {
         //
+        
         $emprestimos = DB::table('emprestimos')
                     ->join('funcionarios', 'emprestimos.id_funcionario','=', 'funcionarios.id')
                     ->join('estudantes', 'emprestimos.id_estudante','=', 'estudantes.id')
-                    ->join('emprestimo_contem_exemplar', 'emprestimo_contem_exemplar.emprestimo_id', '=', 'emprestimos.id')
-                    ->join('exemplares', 'emprestimo_contem_exemplar.exemplar_id','=','exemplares.id')
-                    ->join('livros', 'exemplares.id_livro', '=', 'livros.id')
-                    ->select('livros.codigo as codigo_livro', 'livros.titulo','emprestimos.id as id_emprestimo','emprestimos.data_emprestimo', 'emprestimos.data_limite' , 'emprestimo_contem_exemplar.exemplar_id as id_exemplar',
-                    'estudantes.nome as nome_estudante','estudantes.matricula as matricula_estudante', 'funcionarios.nome as nome_funcionario','exemplares.status')
+                    ->select('estudantes.id as id_estudante', 'emprestimos.id as id_emprestimo','emprestimos.data_emprestimo', 
+                    'estudantes.nome as nome_estudante','estudantes.matricula as matricula_estudante', 'funcionarios.id as id_funcionario','funcionarios.nome as nome_funcionario')
                     ->get();
 
         $params = array_merge(['emprestimos' => $emprestimos], $_SESSION);
         return view('layouts.consultarEmprestimo', $params);
 
     }
-
+    /*
     public function devolver(Request $request)
     {
-        /* devolve o exemplar */
+        
         $emprestimo_contem_exemplar = new Emprestimo_contem_exemplar();
         $exemplar = $emprestimo_contem_exemplar->where('codigo_exemplar', $request->codigo_exemplar)->first();
         $exemplar->status = 1;
         $exemplar->data_devolucao = date('Y-m-d');
         $exemplar->save();
 
-        /* checa se existem outros exemplares associados ao mesmo empréstimo e,
-           em caso positivo, verifica se todos ja foram devolvidos */
+        
         $todos_exemplares = $emprestimo_contem_exemplar->where('emprestimo_id', $exemplar->emprestimo_id)
                                                         ->where('codigo_exemplar', '!=', $exemplar->codigo_exemplar)
                                                         ->get();
@@ -184,14 +180,14 @@ class EmprestimoController extends Controller
             if($exemplar->status == 0) {
                 $devolvidos = false;
                 break;
-            }
-        }
+            };
+        };
 
-        /* busca pelo empréstimo relacionado */
+   
         $emprestimo = new Emprestimo();
         $emprestimo = $emprestimo->where('id', $exemplar->id_emprestimo)->first();
 
-        /* se em atraso, calcula a multa */
+       
         $tem_multa = false;
         $data_limite = $emprestimo->data_limite;
         $data_atual = new DateTime('now');
@@ -202,8 +198,7 @@ class EmprestimoController extends Controller
             $tem_multa = true;
         }
 
-        /* se todos os demais exemplares foram devolvidos,
-           então define a data de devolução (pois é o último exemplar sendo devolvido) */
+      
         if($devolvidos) {
             $emprestimo->data_devolucao = (new DateTime('now'))->format('Y-m-d');
         }
@@ -212,7 +207,7 @@ class EmprestimoController extends Controller
             $emprestimo->save();
         }
     }
-
+    */
     /**
      * Show the form for editing the specified resource.
      *

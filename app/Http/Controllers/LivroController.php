@@ -16,7 +16,6 @@ class LivroController extends Controller
      */
     public function index()
     {
-       session_start();
         return view('layouts.cadastroLivro', $_SESSION);
     }
 
@@ -32,7 +31,6 @@ class LivroController extends Controller
             return view('layouts.consultarLivro', $_SESSION, ['livros' => $livros, 'action' => 1]); 
 
         }else{
-            session_start();
             $livros = DB::table('livros')->get()->all();
             return view('layouts.consultarLivro', $_SESSION, ['livros' => $livros]); 
         }
