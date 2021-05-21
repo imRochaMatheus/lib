@@ -24,6 +24,7 @@ class CreateLivrosTable extends Migration
             $table->integer('volume')->default(1);
             $table->integer('numero_de_paginas')->nullable;
             $table->integer('numero_de_emprestimos')->default(0);
+            $table->integer('numero_de_exemplares')->default(0);
             $table->string('descricao', 2000)->nullable;
             $table->timestamps();
         });

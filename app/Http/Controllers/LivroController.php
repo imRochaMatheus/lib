@@ -16,7 +16,7 @@ class LivroController extends Controller
      */
     public function index()
     {
-       
+       session_start();
         return view('layouts.cadastroLivro', $_SESSION);
     }
 
@@ -32,6 +32,7 @@ class LivroController extends Controller
             return view('layouts.consultarLivro', $_SESSION, ['livros' => $livros, 'action' => 1]); 
 
         }else{
+            session_start();
             $livros = DB::table('livros')->get()->all();
             return view('layouts.consultarLivro', $_SESSION, ['livros' => $livros]); 
         }
@@ -83,35 +84,38 @@ class LivroController extends Controller
         ];
 
         $request->validate($regras, $feedback);
+    
+        try{
+            \DB::beginTransaction();
+                $livro = new Livro();
+                $livro->codigo = $request->codigo;
+                $livro->autor = $request->autor;
+                $livro->titulo = $request->titulo;
+                $livro->autor = $request->autor;
+                $livro->editora = $request->editora;
+                $livro->edicao = $request->edicao;
+                $livro->volume = $request->volume;
+                $livro->descricao = $request->descricao;
+                $livro->numero_de_paginas = $request->numero_de_paginas;
+                $livro->numero_de_exemplares = $request->n_exemplares;
+                $livro->save();
+                $exmp = new Exemplar();
+                $exmp = DB::table('livros')->where('codigo', $request->codigo)->get()->first();
 
-        $livro = new Livro();
-        $livro->codigo = $request->codigo;
-        $livro->autor = $request->autor;
-        $livro->titulo = $request->titulo;
-        $livro->autor = $request->autor;
-        $livro->editora = $request->editora;
-        $livro->edicao = $request->edicao;
-        $livro->volume = $request->volume;
-        $livro->descricao = $request->descricao;
-        $livro->numero_de_paginas = $request->numero_de_paginas;
-        $livro->n_exemplares = $request->n_exemplares;
-
-        $livro->save();
-
-        $exmp = new Exemplar();
-        $exmp = DB::table('livros')
-                ->where('codigo', $request->codigo)->get()->first();
-   
-        for($i = 0; $i < 3; $i++){
-            $exemplar = new Exemplar();
-            $exemplar->id_livro = $exmp->id;
-            $exemplar->status = true;
-            $exemplar->observacao = 'Nenhuma Observação';
-            $exemplar->save();
+                for($i = 1; $i < $request->n_exemplares + 1; $i++){
+                    $exemplar = new Exemplar();
+                    $codigo_exemplar = "$request->codigo$i";
+                    $exemplar->codigo = $codigo_exemplar;
+                    $exemplar->id_livro = $exmp->id;
+                
+                    $exemplar->save();
+                };
+            \DB::commit();
+        }catch(\Exception $e){
+            \DB::rollback();
+            dd($e);
         }
-
-        return redirect()->route('auth.on.livro.cadastrar');
-
+        return redirect()->back();
     }
 
     /**
