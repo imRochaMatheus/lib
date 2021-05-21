@@ -39,6 +39,42 @@ class EmprestimoController extends Controller
         return view('layouts.consultarEmprestimo', $_SESSION);
     }
 
+    public function getAll(Request $request)
+    {
+        if($request->buscar_por == 1){
+            $emprestimos = DB::table('emprestimos')
+            ->join('funcionarios', 'emprestimos.id_funcionario','=', 'funcionarios.id')
+            ->join('estudantes', 'emprestimos.id_estudante','=', 'estudantes.id')->where('estudantes.matricula', $request->matricula)
+            ->join('emprestimo_contem_exemplar', 'emprestimos.id', '=', 'emprestimo_contem_exemplar.emprestimo_id')
+            ->join('exemplares', 'exemplares.codigo','=', 'emprestimo_contem_exemplar.codigo_exemplar')
+            ->join('livros', 'livros.id','=', 'exemplares.id_livro')
+            ->select('estudantes.matricula', 'emprestimos.id as codigo','emprestimos.data_emprestimo as emprestimo', 
+            'estudantes.nome as estudante', 'funcionarios.nome as funcionario', 'emprestimos.multa', 'emprestimo_contem_exemplar.status',
+            'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo')
+            ->get();
+
+            $params = array_merge(['emprestimos' => $emprestimos], $_SESSION);
+            return view('layouts.consultarEmprestimo', $params);
+        }else if($request->buscar_por == 2){
+            $emprestimos = DB::table('emprestimos')
+            ->join('funcionarios', 'emprestimos.id_funcionario','=', 'funcionarios.id')
+            ->join('estudantes', 'emprestimos.id_estudante','=', 'estudantes.id')
+            ->join('emprestimo_contem_exemplar', 'emprestimos.id', '=', 'emprestimo_contem_exemplar.emprestimo_id')
+            ->join('exemplares', 'exemplares.codigo','=', 'emprestimo_contem_exemplar.codigo_exemplar')->where('exemplares.codigo', $request->codigo)
+            ->join('livros', 'livros.id','=', 'exemplares.id_livro')
+            ->select('estudantes.matricula', 'emprestimos.id as codigo','emprestimos.data_emprestimo as emprestimo', 
+            'estudantes.nome as estudante', 'funcionarios.nome as funcionario', 'emprestimos.multa', 'emprestimo_contem_exemplar.status',
+            'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo')
+            ->get();
+
+            $params = array_merge(['emprestimos' => $emprestimos], $_SESSION);
+            return view('layouts.consultarEmprestimo', $params);
+        }else{
+            //página de falha
+        }
+       
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -120,13 +156,15 @@ class EmprestimoController extends Controller
 
     public function show(Request $request)
     {
-        //
-        
         $emprestimos = DB::table('emprestimos')
                     ->join('funcionarios', 'emprestimos.id_funcionario','=', 'funcionarios.id')
                     ->join('estudantes', 'emprestimos.id_estudante','=', 'estudantes.id')
-                    ->select('estudantes.id as id_estudante', 'emprestimos.id as id_emprestimo','emprestimos.data_emprestimo', 
-                    'estudantes.nome as nome_estudante','estudantes.matricula as matricula_estudante', 'funcionarios.id as id_funcionario','funcionarios.nome as nome_funcionario')
+                    ->join('emprestimo_contem_exemplar', 'emprestimos.id', '=', 'emprestimo_contem_exemplar.emprestimo_id')
+                    ->join('exemplares', 'exemplares.codigo','=', 'emprestimo_contem_exemplar.codigo_exemplar')
+                    ->join('livros', 'livros.id','=', 'exemplares.id_livro')
+                    ->select('estudantes.matricula', 'emprestimos.id as codigo','emprestimos.data_emprestimo as emprestimo', 
+                    'estudantes.nome as estudante', 'funcionarios.nome as funcionario', 'emprestimos.multa', 'emprestimo_contem_exemplar.status',
+                    'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo')
                     ->get();
 
         $params = array_merge(['emprestimos' => $emprestimos], $_SESSION);

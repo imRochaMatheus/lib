@@ -37,6 +37,7 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
 
         Route::get('/buscar-emprestimo', 'EmprestimoController@show')->name('auth.on.emprestimo.consultar');
         Route::get('/emprestimo/{erro?}', 'EmprestimoController@index')->name('auth.on.emprestimo.realizar');
+        Route::post('/buscar-emprestimo', 'EmprestimoController@getAll')->name('auth.on.emprestimo.consultar');
         Route::post('/emprestimo', 'EmprestimoController@create')->name('auth.on.emprestimo.realizar');
         Route::post('/devolucao', 'EmprestimoController@devolver')->name('auth.on.emprestimo.devolver');
         Route::post('/renovar', 'EmprestimoController@renovar')->name('auth.on.emprestimo.renovar');

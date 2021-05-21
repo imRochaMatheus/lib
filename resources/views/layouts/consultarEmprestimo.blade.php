@@ -1,6 +1,5 @@
 @extends('layouts.partials.master')
 @section('conteudo')
-
     <div class="col-md-12">
         <div class="row">
             <form id="buscar-emprestimo-form" class="col-md-6 offset-md-3 mb-4 cadastro" action="{{ route('auth.on.emprestimo.consultar') }}" method="POST">
@@ -9,13 +8,12 @@
                 <div class="row">
                     <div class="col-md-4 form-group">
                         <label for="buscar-por">Buscar por:</label>
-                        <select class="form-control" id="buscar-por" name="buscar-por" required>
+                        <select class="form-control" id="buscar-por" name="buscar_por" required>
                             <option value="1" selected>Matrícula</option>
                             <option value="2">Livro</option>
                         </select>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12 form-group matricula">
                         <label for="matricula">Matrícula:</label>
@@ -28,7 +26,6 @@
                         <small id="matricula-error" class="form-text">{{ $errors->has('matricula') ? $errors->first('matricula') : ''}}</small>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12 form-group codigo">
                         <label for="codigo">Código do Livro:</label>
@@ -60,12 +57,11 @@
                 <thead>
                     <tr>
                         <th scope="col">Código</th>
-                        <th scope="col">Título</th>
                         <th scope="col">Estudante</th>
                         <th scope="col">Matrícula</th>
                         <th scope="col">Funcionario</th>
                         <th scope="col">Empréstimo</th>
-                        <th scope="col">Limite</th>
+                        <th scope="col">Multa</th>
                         <th scope="col">Status</th>
                         <th scope="col">Ações</th>
                     </tr>
@@ -74,13 +70,13 @@
                     @if(isset($emprestimos) && count($emprestimos) > 0)
                         @foreach ($emprestimos as $item)
                             <tr>
-                                <td>{{$item->codigo_livro}}</td>
-                                <td>{{$item->titulo}}</td>
-                                <td>{{$item->nome_estudante}}</td>
-                                <td>{{$item->matricula_estudante}}</td>
-                                <td>{{$item->nome_funcionario}}</td>
-                                <td>{{$item->data_emprestimo}}</td>
-                                <td>{{$item->data_limite}}</td>
+                                
+                                <td>{{$item->codigo}}</td>
+                                <td>{{$item->estudante}}</td>
+                                <td>{{$item->matricula}}</td>
+                                <td>{{$item->funcionario}}</td>
+                                <td>{{$item->emprestimo}}</td>
+                                <td>{{$item->multa}}</td>
                                 @if ($item->status)
                                     <td class="status">
                                         <i class="fas fa-circle text-success" data-toggle="tooltip" title="Devolvido"></i>    
@@ -120,7 +116,6 @@
                                                         data-toggle="modal"
                                                         data-target="#modal-devolver"
                                                         data-codigo="{{$item->codigo}}"
-                                                        data-nome="{{$livro->titulo}}"
                                                     >
                                                         <i class="fas fa-reply"></i>
                                                     </a>
@@ -136,7 +131,6 @@
                                                         data-toggle="modal"
                                                         data-target="#modal-renovar"
                                                         data-codigo="{{$item->codigo}}"
-                                                        data-nome="{{$livro->titulo}}"
                                                     >
                                                         <i class="fas fa-exchange-alt"></i>
                                                     </a>
