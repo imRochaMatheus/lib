@@ -20,9 +20,9 @@ Route::get('/recuperar-senha', function() {
     return view('layouts.recuperarSenha');
 })->name('recuperarSenha');
 
-Route::prefix('auth')->middleware('autenticacao')->group(function(){
+Route::prefix('auth')/*->middleware('autenticacao')*/->group(function(){
 
-    Route::prefix('on')->middleware('autenticacao')->group(function(){
+    Route::prefix('on')/*->middleware('autenticacao')*/->group(function(){
 
         Route::get('/dashboard', 'FuncionarioController@index')->name('auth.on.dashboard');
 

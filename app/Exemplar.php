@@ -12,9 +12,7 @@ class Exemplar extends Model
     protected $fillable = 
     [
         'id_livro',
-        'status',
-        'observacao',
-        
+        'codigo',        
     ];
 
     public $timestamps = false;

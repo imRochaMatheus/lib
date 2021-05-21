@@ -16,6 +16,8 @@ class Estudante extends Model
         'id_usuario'
     ];
 
+    public $timestamps = false;
+
     public function usuario(){
         return $this->belongsTo(Usuario::class);
     }
