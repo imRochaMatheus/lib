@@ -46,84 +46,56 @@ class EmprestimoController extends Controller
      */
     public function create(Request $request)
     {
-
-        $estudante = new Estudante();
-        $livro = new Livro();
-        
-        $qtd = [];
         $flag = false;
-        $estudante = $estudante->where('matricula', $request->matricula)->get()->first();
-        
-        for($i = 1; $i < 6; $i++){
-            $codigo = "codigo$i";
-            $book = $livro->where('codigo', $request->$codigo)->get()->first();
-            if($book != null){ 
-                $exemplar = DB::table('exemplares')->where('id_livro', $book)->where('status', true)->first();
-                if($exemplar == null){
-                    return redirect()->back();
-                }
-                array_push($qtd, $i);
-                $flag = true;
-            }else{
-                array_push($qtd, null);
-            }
-        }
+        $volumes = [];
 
-        $dados_emprestimo = new Emprestimo();
-        if(isset($estudante->nome) && $flag){
-
-            $data = date('Y-m-d', strtotime($request->data_emprestimo)); 
-            $limite = date('Y-m-d', strtotime("+15 days",strtotime($data))); 
-            $emprestimo = new Emprestimo();
-            $emprestimo->matricula = $request->matricula;
-            $estudante = DB::table('estudantes')
-                    ->where('matricula', $emprestimo->matricula)->get('id');
-            $emprestimo->id_estudante = $estudante[0]->id;
-            $emprestimo->id_funcionario = $_SESSION['id'];
-            $emprestimo->data_emprestimo = $request->data_emprestimo;
-            $emprestimo->data_limite = $limite;
-            $dados_emprestimo = $emprestimo;
-            $emprestimo->save();
-            $flag = false;
+        $estudante = DB::table('estudantes')->where('matricula', $request->matricula)->get()->first();
+        if($estudante != null){
             
-        }else{	
-            $flag = false;
-            return redirect()->route('auth.on.emprestimo', ['erro' => '404']);
-            
-        };
-
-        for($i = 1; $i < sizeof($qtd); $i++){
-
-            $emp = new Emprestimo_contem_exemplar();
-            $codigo = "codigo$i";
-            $book = DB::table('livros')->where('codigo', $request->$codigo)->get()->first();
-            if($book != null){
-                $id_livro = $book->id; 
-                $exemplar = DB::table('exemplares')->where('id_livro', $id_livro)->where('status', true)->get()->first();
+            for($i = 1; $i < 6; $i++){
+                $codigo = "codigo$i";
+                $exemplar = DB::table('exemplares')->where('codigo', $request->$codigo)->get()->first();
                 if($exemplar != null){
-                    $id_exemplar = $exemplar->id;
-                    $emp->exemplar_id = $id_exemplar;
-                    $emprest_id = DB::table('emprestimos')->where('id_estudante',$dados_emprestimo->id_estudante)
-                                ->where('id_funcionario',$dados_emprestimo->id_funcionario)
-                                ->where('matricula', $request->matricula)
-                                ->where('data_emprestimo', $request->data_emprestimo)->get()->first();
-                    $emprestimo_id = $emprest_id->id;
-                    $emp->emprestimo_id = $emprestimo_id;
-                    $emp->status = false;
-                    $emp->data_devolucao = $request->data_emprestimo;
-                    DB::table('exemplares')->where('id', $id_exemplar)->update(['status' => false]);                
-                    $emp->save();
-                }
-                else{
-                    echo 'Não há mais exemplares disponíveis';
-                    return redirect()->back();
-                    
-                }
-            }else{
-                echo 'Sucesso';
-                return redirect()->back();
+                    $flag = true;
+                    array_push($volumes, $exemplar->codigo);
+                }             
             }
-        }   
+            if($flag){
+                try{
+                    \DB::beginTransaction();
+                       $emprestimo = new Emprestimo();
+                       $emprestimo->id_estudante = $estudante->id;
+                       $emprestimo->id_funcionario = $_SESSION['id'];
+                       $emprestimo->data_emprestimo = $request->data_emprestimo;
+                       $emprestimo->save();
+
+                       for($i = 0; $i < sizeof($volumes) ; $i++){
+                           
+                            $emprestimo_exemplar = new Emprestimo_contem_exemplar();
+                            $emprestimo_id = DB::table('emprestimos')->where('id_estudante', $estudante->id)
+                                                ->where('id_funcionario', $_SESSION['id'])
+                                                ->where('data_emprestimo', $request->data_emprestimo)
+                                                ->get();
+                            $emprestimo_exemplar->emprestimo_id = $emprestimo_id[0]->id;
+                            $data = date('Y-m-d', strtotime($request->data_emprestimo)); 
+                            $limite = date('Y-m-d', strtotime("+7 days",strtotime($data))); 
+                            $emprestimo_exemplar->data_limite = $limite;
+                            $emprestimo_exemplar->codigo_exemplar = $volumes[$i];
+                            $emprestimo_exemplar->data_devolucao = $limite; //Mudar
+                            $emprestimo_exemplar->save();
+                            $id_exemplar = DB::table('exemplares')->where('codigo', $volumes[$i])->first('id_livro');
+                            $id_livro = $id_exemplar->id_livro;
+                            $qtd_emprestimos = DB::table('livros')->where('id', $id_livro)->first('numero_de_emprestimos');
+                            DB::table('livros')->where('id', $id_livro)->update(['numero_de_emprestimos' => $qtd_emprestimos->numero_de_emprestimos +1]);
+                       }
+                    \DB::commit();
+                }catch(\Exception $e){
+                    \DB::rollback();
+                    dd($e);
+                }
+            }
+        }  
+       
     }
 
     /**
@@ -206,7 +178,7 @@ class EmprestimoController extends Controller
         });    
         
         return redirect()->back();
->>>>>>> front-end
+
     }
     
     /**
