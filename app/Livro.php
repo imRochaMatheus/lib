@@ -17,7 +17,7 @@ class Livro extends Model
         'volume',
         'descricao',
         'numero_de_paginas',
-        'numero_de_exe,plares',
+        'numero_de_exemplares',
     ];
 
     public $timestamps = false;

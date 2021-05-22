@@ -17,7 +17,7 @@ class CreateEmprestimoContemExemplarTable extends Migration
             $table->id();
             $table->unsignedBigInteger('emprestimo_id');
             $table->unsignedBigInteger('codigo_exemplar');
-            $table->date('data_limite');
+            $table->date('data_limite')->nullable();
             $table->date('data_devolucao')->nullable();
             $table->integer('renovacoes')->default(3);
             $table->boolean('status')->default(false);

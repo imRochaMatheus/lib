@@ -233,20 +233,20 @@
                             
                                     <div class="row">
                                         <div class="col-md-5">
-                                            <label for="codigo">Código:</label>
+                                            <label for="codigo" hidden>Código:</label>
                                         </div>
                                         <div class="col-md-5 from-group">
-                                            <label for="n_exemplares">Nº de Exemplares:</label>
+                                            <label for="n_exemplares" hidden>Nº de Exemplares:</label>
                                         </div>
                                     </div>
                             
                                     <div class="row">
                                         <div class="col-md-5 form-group">
-                                            <input type="text" class="form-control" name="codigo" id="codigo" autocomplete="off" aria-describedby="codigo-error" value="{{ old('codigo') }}" required>
+                                            <input type="text" class="form-control" name="codigo" id="codigo" autocomplete="off" aria-describedby="codigo-error" value="{{ old('codigo') }}" hidden>
                                             <small id="codigo-error" class="form-text">{{ $errors->has('codigo') ? $errors->first('codigo') : ''}}</small>
                                         </div>
                                         <div class="col-md-4 from-group">
-                                            <input type="number" min="1" class="form-control" name="n_exemplares" id="n_exemplares" autocomplete="off" aria-describedby="n_exemplares-error" value="{{ old('n_exemplares') }}" required>
+                                            <input type="number" min="1" class="form-control" name="n_exemplares" id="n_exemplares" autocomplete="off" aria-describedby="n_exemplares-error" value="{{ old('n_exemplares') }}" hidden>
                                             <small id="n_exemplares-error" class="form-text">{{ $errors->has('n_exemplares') ? $errors->first('n_exemplares') : ''}}</small>
                                         </div>
                                     </div>
