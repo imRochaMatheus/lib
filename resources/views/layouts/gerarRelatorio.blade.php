@@ -5,7 +5,7 @@
     @elseif($tipo == 'emprestimo')
         <form id="gerar-relatorio-form" class="col-md-6 cadastro" action="{{ route('auth.on.livro.consultar') }}" method="POST">
     @elseif($tipo == 'livro')
-        <form id="gerar-relatorio-form" class="col-md-6 cadastro" action="{{ route('auth.on.livro.consultar') }}" method="POST">
+        <form id="gerar-relatorio-form" class="col-md-6 cadastro" action="{{ route('auth.on.livro.relatorio') }}" method="POST">
     @endif
         @csrf
 

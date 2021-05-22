@@ -138,13 +138,6 @@
                                 </div>
                                 <div class="col-md-4">
                                     <p>
-                                        <span class="label">Exemplares:</span>
-                                        <br>
-                                        <span class="exemplares"></span>
-                                    </p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p>
                                         <span class="label">Empréstimos:</span>
                                         <br>
                                         <span class="emprestimos"></span>

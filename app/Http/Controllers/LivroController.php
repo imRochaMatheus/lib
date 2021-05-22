@@ -133,9 +133,15 @@ class LivroController extends Controller
      * @param  \App\Livro  $livro
      * @return \Illuminate\Http\Response
      */
-    public function show(Livro $livro)
+    public function relatorio(Request $request)
     {
-        //
+        
+        //$dateEmp = date('m', strtotime($request->data_emprestimo));
+        //dd($dateEmp);
+        //$dataEmprestimo = \DateTime::createFromFormat('d/m/Y', $request->data_emprestimo);
+        //dd($dataEmprestimo->format('Y'));
+     
+    
     }
 
     /**
@@ -156,9 +162,22 @@ class LivroController extends Controller
      * @param  \App\Livro  $livro
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Livro $livro)
+    public function update(Request $request)
     {
-        dd($request);
+        try{
+            \DB::beginTransaction();
+            DB::table('livros')->where('codigo', $request->codigo)->update([
+                'titulo' => $request->titulo, 'autor' => $request->autor, 
+                'editora' => $request->editora, 'edicao' => $request->edicao,
+                'volume' => $request->volulme, 'numero_de_paginas' => $request->numero_de_paginas,
+                'descricao' => $request->descricao, 'volume' => $request->volume
+            ]);
+            \DB::commit();
+        }catch(\Exception $e){
+            \DB::rollback();
+            dd($e);
+        }
+        return redirect()->back();
     }
 
     /**

@@ -10,6 +10,7 @@ use App\Exemplar;
 use App\Emprestimo_contem_exemplar;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class EmprestimoController extends Controller
 {
@@ -127,11 +128,16 @@ class EmprestimoController extends Controller
                     \DB::commit();
                 }catch(\Exception $e){
                     \DB::rollback();
-                    dd($e);
+                   
                 }
+                
+            }else{
+                return redirect()->back();
             }
-        }  
-       
+        }else{
+            return redirect()->route('auth.on.emprestimo.realizar', ['error' => 'Student is not Registered']);   
+        }
+        return redirect()->route('auth.on.emprestimo.realizar', ['sucess' => 'successfully registered']);  
     }
 
     /**

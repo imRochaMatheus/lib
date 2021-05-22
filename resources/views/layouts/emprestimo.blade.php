@@ -1,5 +1,6 @@
 @extends('layouts.partials.master')
 @section('conteudo')
+
     <form id="emprestimo-form" class="col-md-6 cadastro" action="{{ route('auth.on.emprestimo.realizar') }}" method="POST">
         @csrf
 

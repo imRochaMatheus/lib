@@ -1,5 +1,6 @@
 @extends('layouts.partials.master')
 @section('conteudo')
+
     <div class="col-md-12">
         <div class="row">
             <form id="buscar-emprestimo-form" class="col-md-6 offset-md-3 mb-4 cadastro" action="{{ route('auth.on.emprestimo.consultar') }}" method="POST">
