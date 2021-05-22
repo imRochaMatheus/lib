@@ -70,7 +70,7 @@
         @stack('scripts')
         <script type="text/javascript">
             $(function() {
-                let pathname = window.location.pathname
+                let pathname = window.location.pathname;
                 if(pathname == '/' || pathname == '/recuperar-senha') {
                     $('.main').css({
                         'margin': 0,
