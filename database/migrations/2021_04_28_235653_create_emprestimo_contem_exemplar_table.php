@@ -21,6 +21,7 @@ class CreateEmprestimoContemExemplarTable extends Migration
             $table->date('data_devolucao')->nullable();
             $table->integer('renovacoes')->default(3);
             $table->boolean('status')->default(false);
+            $table->timestamps();
 
             $table->foreign('codigo_exemplar')->references('codigo')->on('exemplares');
             $table->foreign('emprestimo_id')->references('id')->on('emprestimos');

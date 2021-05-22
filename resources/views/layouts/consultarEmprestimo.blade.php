@@ -72,7 +72,7 @@
                         @foreach ($emprestimos as $item)
                             <tr>
                                 
-                                <td>{{$item->codigo_exemplar}}</td>
+                                <td>{{$item->codigo}}</td>
                                 <td>{{$item->titulo}}</td>
                                 <td>{{$item->estudante}} ({{$item->matricula}})</td>
                                 <td>{{$item->funcionario}}</td>
@@ -116,7 +116,7 @@
                                                         aria-disabled="true"
                                                         data-toggle="modal"
                                                         data-target="#modal-devolver"
-                                                        data-codigo="{{$item->codigo_exemplar}}"
+                                                        data-codigo="{{$item->codigo}}"
                                                         data-titulo="{{$item->titulo}}"
                                                     >
                                                         <i class="fas fa-reply"></i>
@@ -132,7 +132,7 @@
                                                         aria-disabled="true"
                                                         data-toggle="modal"
                                                         data-target="#modal-renovar"
-                                                        data-codigo="{{$item->codigo_exemplar}}"
+                                                        data-codigo="{{$item->codigo}}"
                                                         data-titulo="{{$item->titulo}}"
                                                     >
                                                         <i class="fas fa-exchange-alt"></i>

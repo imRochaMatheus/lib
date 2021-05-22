@@ -14,6 +14,4 @@ class Emprestimo extends Model
         'id_funcionario',
         'id_estudante',
     ];
-
-    public $timestamps = false;
 }

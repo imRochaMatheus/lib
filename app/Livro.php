@@ -19,9 +19,6 @@ class Livro extends Model
         'numero_de_paginas',
         'numero_de_exemplares',
     ];
-
-    public $timestamps = false;
-
     public function exemplar()
     {
         return $this->hasMany( Exemplar::class);
