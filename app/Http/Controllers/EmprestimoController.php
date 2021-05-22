@@ -49,28 +49,40 @@ class EmprestimoController extends Controller
             ->join('emprestimo_contem_exemplar', 'emprestimos.id', '=', 'emprestimo_contem_exemplar.emprestimo_id')
             ->join('exemplares', 'exemplares.codigo','=', 'emprestimo_contem_exemplar.codigo_exemplar')
             ->join('livros', 'livros.id','=', 'exemplares.id_livro')
-            ->select('estudantes.matricula', 'emprestimos.id as codigo','emprestimos.data_emprestimo as emprestimo', 
+            ->select('estudantes.matricula', 'emprestimo_contem_exemplar.codigo_exemplar','emprestimos.data_emprestimo as emprestimo',
             'estudantes.nome as estudante', 'funcionarios.nome as funcionario', 'emprestimos.multa', 'emprestimo_contem_exemplar.status',
-            'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo')
+            'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo', 'emprestimo_contem_exemplar.data_limite')
             ->get();
 
+            foreach($emprestimos as $emprestimo) {
+                $emprestimo->emprestimo = (new \DateTime($emprestimo->emprestimo))->format('d/m/Y');
+                $emprestimo->data_limite = (new \DateTime($emprestimo->data_limite))->format('d/m/Y');
+            }
+
             $params = array_merge(['emprestimos' => $emprestimos], $_SESSION);
+
             return view('layouts.consultarEmprestimo', $params);
-        }else if($request->buscar_por == 2){
+        } else if($request->buscar_por == 2){
             $emprestimos = DB::table('emprestimos')
             ->join('funcionarios', 'emprestimos.id_funcionario','=', 'funcionarios.id')
             ->join('estudantes', 'emprestimos.id_estudante','=', 'estudantes.id')
             ->join('emprestimo_contem_exemplar', 'emprestimos.id', '=', 'emprestimo_contem_exemplar.emprestimo_id')
             ->join('exemplares', 'exemplares.codigo','=', 'emprestimo_contem_exemplar.codigo_exemplar')->where('exemplares.codigo', $request->codigo)
             ->join('livros', 'livros.id','=', 'exemplares.id_livro')
-            ->select('estudantes.matricula', 'emprestimos.id as codigo','emprestimos.data_emprestimo as emprestimo', 
+            ->select('estudantes.matricula', 'emprestimo_contem_exemplar.codigo_exemplar','emprestimos.data_emprestimo as emprestimo',
             'estudantes.nome as estudante', 'funcionarios.nome as funcionario', 'emprestimos.multa', 'emprestimo_contem_exemplar.status',
-            'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo')
+            'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo', 'emprestimo_contem_exemplar.data_limite')
             ->get();
 
+            foreach($emprestimos as $emprestimo) {
+                $emprestimo->emprestimo = (new \DateTime($emprestimo->emprestimo))->format('d/m/Y');
+                $emprestimo->data_limite = (new \DateTime($emprestimo->data_limite))->format('d/m/Y');
+            }
+
             $params = array_merge(['emprestimos' => $emprestimos], $_SESSION);
+
             return view('layouts.consultarEmprestimo', $params);
-        }else{
+        } else{
             //página de falha
         }
        
@@ -170,12 +182,17 @@ class EmprestimoController extends Controller
                     ->join('livros', 'livros.id','=', 'exemplares.id_livro')
                     ->select('estudantes.matricula', 'emprestimo_contem_exemplar.codigo_exemplar as codigo','emprestimos.data_emprestimo as emprestimo', 
                     'estudantes.nome as estudante', 'funcionarios.nome as funcionario', 'emprestimos.multa', 'emprestimo_contem_exemplar.status',
-                    'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo')
+                    'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo', 'emprestimo_contem_exemplar.data_limite')
                     ->get();
 
-        $params = array_merge(['emprestimos' => $emprestimos], $_SESSION);
-        return view('layouts.consultarEmprestimo', $params);
+        foreach($emprestimos as $emprestimo) {
+            $emprestimo->emprestimo = (new \DateTime($emprestimo->emprestimo))->format('d/m/Y');
+            $emprestimo->data_limite = (new \DateTime($emprestimo->data_limite))->format('d/m/Y');
+        }
 
+        $params = array_merge(['emprestimos' => $emprestimos], $_SESSION);
+
+        return view('layouts.consultarEmprestimo', $params);
     }
     
     public function devolver(Request $request)
@@ -186,7 +203,7 @@ class EmprestimoController extends Controller
             $emprestimo_contem_exemplar = new Emprestimo_contem_exemplar();
             $exemplar = $emprestimo_contem_exemplar->where('codigo_exemplar', $request->codigo_exemplar)->first();
             $exemplar->status = 1;
-            $exemplar->data_devolucao = (new DateTime('now'))->format('Y-m-d');
+            $exemplar->data_devolucao = (new \DateTime('now'))->format('Y-m-d');
             $exemplar->save();
     
             /* busca pelo empréstimo relacionado */
@@ -194,8 +211,8 @@ class EmprestimoController extends Controller
             $emprestimo = $emprestimo->where('id', $exemplar->id_emprestimo)->first();
     
             /* se em atraso, calcula a multa */
-            $data_limite = $exemplar->data_limite;
-            $data_atual = new DateTime('now');
+            $data_limite = new \DateTime($exemplar->data_limite);
+            $data_atual = new \DateTime('now');
             
             if($data_limite < $data_atual) {
                 $multa = $data_limite->diff($data_atual)->days;
@@ -203,7 +220,7 @@ class EmprestimoController extends Controller
                 $emprestimo->save();
             }
             DB::commit();
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             echo $e->getMessage();
             DB::rollback();
         }
@@ -213,16 +230,21 @@ class EmprestimoController extends Controller
 
     public function renovar(Request $request)
     {
-        DB::transaction(function() {
+        try {
+            DB::beginTransaction();
             $emprestimo_contem_exemplar = new Emprestimo_contem_exemplar();
             $exemplar = $emprestimo_contem_exemplar->where('codigo_exemplar', $request->codigo_exemplar)->first();
-            $exemplar->qtd_renovacoes = $exemplar->qtd_renovacoes - 1;
-            $exemplar->data_limite = $exemplar->data_limite->add(new DateInterval('P7D'));
+            $exemplar->renovacoes = $exemplar->renovacoes - 1;
+            $data_atual = new \DateTime('now');
+            $exemplar->data_limite = $data_atual->add(new \DateInterval('P7D'));
             $exemplar->save();
-        });    
+            DB::commit();
+        } catch(\Exception $e) {
+            echo $e->getMessage();
+            DB::rollback();
+        }  
         
         return redirect()->back();
-
     }
     
     /**

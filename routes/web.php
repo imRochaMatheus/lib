@@ -47,6 +47,8 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
         Route::get('/consultar-funcionario', 'FuncionarioController@searchIndex')->name('auth.on.funcionario.consultar');
         Route::post('/consultar-funcionario', 'FuncionarioController@searchIndex')->name('auth.on.funcionario.consultar');
 
+        Route::post('/alterar-permissao', 'UsuarioController@alterarPermissao')->name('auth.on.usuario.permissao');
+
         Route::get('/editar-perfil', function() {
             return view('layouts.editarPerfil', $_SESSION);
         })->name('auth.on.cadastro.editar');

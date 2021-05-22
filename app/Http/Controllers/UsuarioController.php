@@ -5,8 +5,27 @@ namespace App\Http\Controllers;
 use App\Usuario;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+
 class UsuarioController extends Controller
 {
+    public function alterarPermissao(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $usuario = new Usuario();
+            $usr = $usuario->where('id', $request->usuario_id)->first();
+            $usr->nivel_de_acesso = $request->acesso;
+            $usr->save();
+            DB::commit();
+        } catch(\Exception $e) {
+            echo $e->getMessage();
+            DB::rollback();
+        }
+
+        return redirect()->back();
+    }
+
     /**
      * Display a listing of the resource.
      *

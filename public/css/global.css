@@ -83,7 +83,7 @@ form.cadastro button:not(.adicionar-livro-button) {
     transition: background-color 0.2s, color 0.2s;
 }
 
-form.cadastro button:not(.search-button):not(.adicionar-livro-button) {
+form.cadastro button:not(.search-button):not(.adicionar-livro-button):not(.operacao-btn) {
     height: 3em;
 }
 
