@@ -25,14 +25,14 @@ class FuncionarioController extends Controller
             $funcionarios = DB::table('funcionarios')
             ->join('usuarios', 'funcionarios.id_usuario', '=', 'usuarios.id')
             ->join('cargos', 'funcionarios.cargo', '=', 'cargos.id')
-            ->select('funcionarios.matricula', 'usuarios.status', 'funcionarios.nome', 'cargos.nome AS cargo', 'usuarios.nivel_de_acesso')
+            ->select('usuarios.id', 'funcionarios.matricula', 'usuarios.status', 'funcionarios.nome', 'cargos.nome AS cargo', 'usuarios.nivel_de_acesso')
             ->get();
         } else {
             $funcionarios = DB::table('funcionarios')
             ->join('usuarios', 'funcionarios.id_usuario', '=', 'usuarios.id')
             ->join('cargos', 'funcionarios.cargo', '=', 'cargos.id')
             ->where('funcionarios.matricula', $request->matricula)
-            ->select('funcionarios.matricula', 'usuarios.status', 'funcionarios.nome', 'cargos.nome AS cargo', 'usuarios.nivel_de_acesso')
+            ->select('usuarios.id', 'funcionarios.matricula', 'usuarios.status', 'funcionarios.nome', 'cargos.nome as cargo', 'usuarios.nivel_de_acesso')
             ->get();            
         }
 

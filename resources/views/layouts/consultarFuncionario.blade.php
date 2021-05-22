@@ -59,7 +59,7 @@
                                                 aria-disabled="true"
                                                 data-toggle="modal"
                                                 data-target="#modal-alterar-permissao"
-                                                data-id-usuario="1"
+                                                data-id-usuario="{{$funcionario->id}}"
                                             >
                                                 <i class="fas fa-key"></i>
                                             </a>
@@ -86,12 +86,12 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <form id="alterar-permissao-form" class="col-md-12 cadastro" method="POST">
-                                    @csrf
-
+                    <form id="alterar-permissao-form" class="col-md-12 cadastro" action={{ route('auth.on.usuario.permissao') }} method="POST">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <input type="hidden" id="usuario_id" name="usuario_id">
                                     <div class="col-md-5 form-group">
                                         <label for="acesso">Nível de Acesso:</label>
                                         <select class="form-control" id="acesso" name="acesso" required>
@@ -100,13 +100,13 @@
                                             <option value="3">Estudante</option>
                                         </select>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn operacao-btn">ALTERAR</button>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn operacao-btn">ALTERAR</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -115,4 +115,19 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/consultar.css') }}">
+@endpush
+
+@push('scripts')
+    <script type="text/javascript">
+        $(function() {
+            $('#modal-alterar-permissao').on('show.bs.modal', function (event) {
+                let button = $(event.relatedTarget);
+                let modal = $(this);
+
+                let id = button.data('id-usuario');
+
+                modal.find('input[name="usuario_id"]').val(id);
+            });
+        });
+    </script>
 @endpush

@@ -99,12 +99,10 @@
                 });
             }
         }); 
-
-        $('#cargo').parent().hide();
         
         $('#acesso').change(function() {
             console.log(this.value)
-            if(this.value === '2') {
+            if(this.value !== '3') {
                 $('#cargo').parent().show();
             } else {
                 $('#cargo').parent().hide();

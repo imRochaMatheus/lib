@@ -56,12 +56,12 @@
             <table id="emprestimo-table" class="col-md-12 table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">Código</th>
+                        <th scope="col">Exemplar</th>
+                        <th scope="col">Título</th>
                         <th scope="col">Estudante</th>
-                        <th scope="col">Matrícula</th>
-                        <th scope="col">Funcionario</th>
+                        <th scope="col">Funcionário</th>
                         <th scope="col">Empréstimo</th>
-                        <th scope="col">Multa</th>
+                        <th scope="col">Limite</th>
                         <th scope="col">Status</th>
                         <th scope="col">Ações</th>
                     </tr>
@@ -71,12 +71,12 @@
                         @foreach ($emprestimos as $item)
                             <tr>
                                 
-                                <td>{{$item->codigo}}</td>
-                                <td>{{$item->estudante}}</td>
-                                <td>{{$item->matricula}}</td>
+                                <td>{{$item->codigo_exemplar}}</td>
+                                <td>{{$item->titulo}}</td>
+                                <td>{{$item->estudante}} ({{$item->matricula}})</td>
                                 <td>{{$item->funcionario}}</td>
                                 <td>{{$item->emprestimo}}</td>
-                                <td>{{$item->multa}}</td>
+                                <td>{{$item->data_limite}}</td>
                                 @if ($item->status)
                                     <td class="status">
                                         <i class="fas fa-circle text-success" data-toggle="tooltip" title="Devolvido"></i>    
@@ -115,7 +115,8 @@
                                                         aria-disabled="true"
                                                         data-toggle="modal"
                                                         data-target="#modal-devolver"
-                                                        data-codigo="{{$item->codigo}}"
+                                                        data-codigo="{{$item->codigo_exemplar}}"
+                                                        data-titulo="{{$item->titulo}}"
                                                     >
                                                         <i class="fas fa-reply"></i>
                                                     </a>
@@ -130,7 +131,8 @@
                                                         aria-disabled="true"
                                                         data-toggle="modal"
                                                         data-target="#modal-renovar"
-                                                        data-codigo="{{$item->codigo}}"
+                                                        data-codigo="{{$item->codigo_exemplar}}"
+                                                        data-titulo="{{$item->titulo}}"
                                                     >
                                                         <i class="fas fa-exchange-alt"></i>
                                                     </a>
@@ -154,6 +156,8 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <form id="devolver-form" action="{{ route('auth.on.emprestimo.devolver') }}" method="POST">
+                        @csrf
+
                         <input type="hidden" id="codigo_exemplar" name="codigo_exemplar">
                         <div class="modal-header">
                             <h4 class="modal-title">Devolver Livro</h4>
@@ -176,6 +180,8 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <form id="renovar-form" action="{{ route('auth.on.emprestimo.renovar') }}" method="POST">
+                        @csrf
+                        
                         <input type="hidden" id="codigo_exemplar" name="codigo_exemplar">
                         <div class="modal-header">
                             <h4 class="modal-title">Renovar Livro</h4>
@@ -221,10 +227,10 @@
                 let modal = $(this);
 
                 let codigo = button.data('codigo');
-                let nome = button.data('nome');
+                let titulo = button.data('titulo');
 
-                modal.find('.livro').text(`[${codigo}] ${nome}`);
-                modal.find('input[name="codigo-exemplar"]').val(codigo);
+                modal.find('.livro').text(`[${codigo}] ${titulo}`);
+                modal.find('input[name="codigo_exemplar"]').val(codigo);
             });
 
             $('#modal-renovar').on('show.bs.modal', function (event) {
@@ -232,10 +238,10 @@
                 let modal = $(this);
 
                 let codigo = button.data('codigo');
-                let nome = button.data('nome');
+                let titulo = button.data('titulo');
 
-                modal.find('.livro').text(`[${codigo}] ${nome}`);
-                modal.find('input[name="codigo-exemplar"]').val(codigo);
+                modal.find('.livro').text(`[${codigo}] ${titulo}`);
+                modal.find('input[name="codigo_exemplar"]').val(codigo);
             });
 
         });
