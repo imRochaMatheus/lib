@@ -34,6 +34,8 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
 
         Route::get('/cadastro-livro', 'LivroController@index')->name('auth.on.livro.cadastrar');
         Route::post('/cadastro-livro', 'LivroController@create')->name('auth.on.livro.cadastrar');
+        Route::post('/cadastro-livro', 'LivroController@update')->name('auth.on.livro.editar');
+        Route::post('/relatorio-livro', 'LivroController@relatorio')->name('auth.on.livro.relatorio');
 
         Route::get('/buscar-emprestimo', 'EmprestimoController@show')->name('auth.on.emprestimo.consultar');
         Route::get('/emprestimo/{erro?}', 'EmprestimoController@index')->name('auth.on.emprestimo.realizar');

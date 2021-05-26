@@ -15,11 +15,7 @@ class Estudante extends Model
         'telefone',
         'id_usuario'
     ];
-
-    public $timestamps = false;
-
     public function usuario(){
         return $this->belongsTo(Usuario::class);
-    }
-    
+    }  
 }

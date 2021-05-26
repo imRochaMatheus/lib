@@ -15,9 +15,6 @@ class Funcionario extends Model
         'cargo',
         'usuario_id'
     ];
-
-    public $timestamps = false;
-
     public function usuario(){
         return $this->belongsTo(Usuario::class);
     }

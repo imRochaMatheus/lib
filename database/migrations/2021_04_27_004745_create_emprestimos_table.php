@@ -20,6 +20,7 @@ class CreateEmprestimosTable extends Migration
             $table->unsignedBigInteger('id_funcionario');
             $table->datetime('data_emprestimo');
             $table->double('multa')->default(0);
+            $table->timestamps();
 
             $table->foreign('id_estudante')->references('id')->on('estudantes');
             $table->foreign('id_funcionario')->references('id')->on('funcionarios');

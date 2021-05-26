@@ -10,6 +10,7 @@ use App\Exemplar;
 use App\Emprestimo_contem_exemplar;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class EmprestimoController extends Controller
 {
@@ -168,11 +169,16 @@ class EmprestimoController extends Controller
                     \DB::commit();
                 }catch(\Exception $e){
                     \DB::rollback();
-                    dd($e);
+                   
                 }
+                
+            }else{
+                return redirect()->back();
             }
-        }  
-       
+        }else{
+            return redirect()->route('auth.on.emprestimo.realizar', ['error' => 'Student is not Registered']);   
+        }
+        return redirect()->route('auth.on.emprestimo.realizar', ['sucess' => 'successfully registered']);  
     }
 
     /**
@@ -203,7 +209,7 @@ class EmprestimoController extends Controller
                     ->join('emprestimo_contem_exemplar', 'emprestimos.id', '=', 'emprestimo_contem_exemplar.emprestimo_id')
                     ->join('exemplares', 'exemplares.codigo','=', 'emprestimo_contem_exemplar.codigo_exemplar')
                     ->join('livros', 'livros.id','=', 'exemplares.id_livro')
-                    ->select('estudantes.matricula', 'emprestimo_contem_exemplar.codigo_exemplar','emprestimos.data_emprestimo as emprestimo',
+                    ->select('estudantes.matricula', 'emprestimo_contem_exemplar.codigo_exemplar as codigo','emprestimos.data_emprestimo as emprestimo', 
                     'estudantes.nome as estudante', 'funcionarios.nome as funcionario', 'emprestimos.multa', 'emprestimo_contem_exemplar.status',
                     'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo', 'emprestimo_contem_exemplar.data_limite')
                     ->get();
