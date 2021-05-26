@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class UsuarioController extends Controller
 {
+    public function index()
+    {
+        return view('layouts.editarPerfil', $_SESSION);
+    }
+
     public function alterarPermissao(Request $request)
     {
         try {
@@ -26,79 +31,25 @@ class UsuarioController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function editarFoto(Request $request)
     {
-        //
-    }
+        if($request->hasFile('foto')) {
+            $image = $request->file('foto');
+            $destination_path = 'images/' . $request->usuario_id . '/';
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+            $storage_path = \Storage::disk('local')->put($destination_path, $image);
+            dd($storage_path);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Usuario  $usuario
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Usuario $usuario)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Usuario  $usuario
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Usuario $usuario)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Usuario  $usuario
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Usuario $usuario)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Usuario  $usuario
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Usuario $usuario)
-    {
-        //
+            try {
+                DB::beginTransaction();
+                $usuario = new Usuario();
+                $usuario->foto = $storage_path;
+                $usuario->save();
+                DB::commit();
+            } catch(\Exception $e) {
+                echo $e->getMessage();
+                DB::rollback();
+            }
+        }
     }
 }

@@ -87,6 +87,35 @@ class EmprestimoController extends Controller
        
     }
 
+    public function gerarRelatorio(Request $request)
+    {
+        $mes = $request->mes;
+        $ano = $request->ano;
+
+        $emprestimos = DB::table('emprestimos')
+            ->join('estudantes', 'emprestimos.id_estudante', '=', 'estudantes.id')
+            ->join('funcionarios', 'emprestimos.id_funcionario','=', 'funcionarios.id')
+            ->join('emprestimo_contem_exemplar', 'emprestimos.id', '=', 'emprestimo_contem_exemplar.emprestimo_id')
+            ->join('exemplares', 'emprestimo_contem_exemplar.codigo_exemplar', '=', 'exemplares.codigo')
+            ->join('livros', 'exemplares.id_livro', '=', 'livros.id')
+            ->select('emprestimos.data_emprestimo', 'estudantes.nome as estudante_nome', 'estudantes.matricula as estudante_matricula',
+                     'funcionarios.nome as funcionario_nome', 'funcionarios.matricula as funcionario_matricula', 'emprestimo_contem_exemplar.codigo_exemplar',
+                     'livros.titulo', 'livros.autor', 'livros.editora', 'livros.edicao', 'livros.volume'
+                    )
+            ->get();
+
+        foreach($emprestimos as $emprestimo) {
+            $emprestimo->data_emprestimo = (new \DateTime($emprestimo->data_emprestimo))->format('d/m/Y');
+        }
+
+        $pdf = \PDF::loadView('layouts.relatorios.relatorioEmprestimo', compact('emprestimos'))
+                    ->setPaper('a4', 'landscape')
+                    ->stream('relatorio-emprestimo.pdf', array('Attachment' => false));
+                    //->download('relatorio-emprestimo.pdf');    
+                    
+        return $pdf;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
