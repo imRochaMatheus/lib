@@ -21,12 +21,14 @@ class LivroController extends Controller
 
     public function searchIndex(Request $request)
     {
+ 
         if(!empty($request->livros)){
 
             $livros = DB::table('livros')
             ->where('codigo', $request->livros)
             ->select('codigo', 'titulo', 'autor', 'editora', 'edicao', 'volume','numero_de_paginas','numero_de_emprestimos', 'descricao')
             ->get();
+            
             
             return view('layouts.consultarLivro', $_SESSION, ['livros' => $livros, 'action' => 1]); 
 
@@ -61,6 +63,7 @@ class LivroController extends Controller
      */
     public function create(Request $request)
     {
+        dd($request);
         $regras = 
         [
             'codigo' => 'required|unique:livros|numeric',

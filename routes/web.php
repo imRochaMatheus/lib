@@ -62,3 +62,7 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
         Route::get('/painel', 'EstudanteController@index')->name('auth.estudante.painel');
     });
 });
+
+Route::fallback(function() {
+    return redirect()->route('auth.on.dashboard');
+});

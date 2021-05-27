@@ -12,4 +12,5 @@ class Usuario extends Model
         'nivel_de_acesso',
         'status'
     ];
+
 }
