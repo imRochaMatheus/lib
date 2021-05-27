@@ -10,11 +10,12 @@ use App\Estudante;
 use App\Cargo;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class LoginController extends Controller
 {
-    //
-    public function index(){
+    public function index()
+    {
         return view('layouts.login');
     }
 
@@ -45,6 +46,12 @@ class LoginController extends Controller
 
             $_SESSION['email'] = $usuario->email;
             $_SESSION['acesso'] = $usuario->nivel_de_acesso;
+            
+            if($usuario->foto) {
+                $_SESSION['foto'] = $usuario->foto;
+            } else {
+                $_SESSION['foto'] = 'images/avatar.png';
+            }
 
             switch ($usuario->nivel_de_acesso){
                 case 1:
@@ -105,7 +112,8 @@ class LoginController extends Controller
         }
     }
 
-    public function sair(){
+    public function sair()
+    {
 
         session_start();
         session_destroy();

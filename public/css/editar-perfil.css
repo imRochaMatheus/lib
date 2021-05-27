@@ -1,6 +1,12 @@
+#editar-perfil-form .foto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #editar-perfil-form img {
-    width: inherit;
-    height: inherit;
+    width: 324px;
+    height: 324px;
     border-radius: 100%;
 }
 

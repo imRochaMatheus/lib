@@ -1,19 +1,20 @@
 @extends('layouts.partials.master')
 @section('conteudo')
     
-    <form id="editar-perfil-form" class="col-md-6 cadastro" action="{{ route('auth.on.livro.cadastrar') }}" method="POST">
+    <form id="editar-perfil-form" class="col-md-6 cadastro" action="{{ route('auth.on.usuario.editar') }}" method="POST" enctype="multipart/form-data">
         @csrf
        
         <div class="row">
-            <div class="col-md-6 offset-md-3 form-group">
-                <img id="foto-atual" src="{{ asset('images/avatar.png') }}">
+            <div class="col-md-12 form-group foto">
+                <img id="foto-atual" src="{{ asset($foto) }}">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-8 offset-md-2 form-group">
                 <label for="foto" aria-hidden="true" hidden>Foto:</label>
-                <input type="file" id="foto" name="foto" accept="image/*">
+                <input type="file" id="foto" name="foto" accept="image/*" required>
+                <input type="hidden" id="usuario_id" name="usuario_id" value={{$id}}>
             </div>
         </div>
 

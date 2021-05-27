@@ -14,8 +14,8 @@
         </div>
         <div class="sidebar-header">
             <div class="user-icon">
-                <a href="{{ route('auth.on.cadastro.editar') }}">
-                    <img src="{{ asset('images/avatar.png') }}">
+                <a href="{{ route('auth.on.usuario.editar') }}">
+                    <img src="{{ asset($foto) }}">
                     <div class="thumb-editar">
                         <i class="fas fa-camera"></i>
                     </div>

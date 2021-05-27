@@ -49,14 +49,15 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
 
         Route::post('/alterar-permissao', 'UsuarioController@alterarPermissao')->name('auth.on.usuario.permissao');
 
-        Route::get('/editar-perfil', function() {
-            return view('layouts.editarPerfil', $_SESSION);
-        })->name('auth.on.cadastro.editar');
+        Route::get('/editar-perfil', 'UsuarioController@index')->name('auth.on.usuario.editar');
+        Route::post('/editar-perfil', 'UsuarioController@editarFoto')->name('auth.on.usuario.editar');
 
         Route::get('/gerar-relatorio/{tipo}', function($tipo) {
             $params = array_merge($_SESSION, ['tipo' => $tipo]);
             return view('layouts.gerarRelatorio', $params);
         })->name('auth.on.relatorio.gerar');
+
+        Route::post('/pdf', 'EmprestimoController@gerarRelatorio')->name('auth.on.pdf');
     });
     Route::prefix('estudante')/*->middleware('')*/->group(function(){
         Route::get('/painel', 'EstudanteController@index')->name('auth.estudante.painel');
