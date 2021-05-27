@@ -50,7 +50,7 @@ class LoginController extends Controller
             $_SESSION['acesso'] = $usuario->nivel_de_acesso;
             
             if($usuario->foto) {
-                $_SESSION['foto'] = Storage::url($usuario->foto);
+                $_SESSION['foto'] = $usuario->foto;
             } else {
                 $_SESSION['foto'] = 'images/avatar.png';
             }

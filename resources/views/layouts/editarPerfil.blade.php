@@ -5,7 +5,7 @@
         @csrf
        
         <div class="row">
-            <div class="col-md-6 offset-md-3 form-group">
+            <div class="col-md-12 form-group foto">
                 <img id="foto-atual" src="{{ asset($foto) }}">
             </div>
         </div>

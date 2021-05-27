@@ -33,23 +33,28 @@ class UsuarioController extends Controller
 
     public function editarFoto(Request $request)
     {
-        if($request->hasFile('foto')) {
-            $image = $request->file('foto');
-            $destination_path = 'images/' . $request->usuario_id . '/';
+        if($request->hasFile('foto') && $request->file('foto')->isValid()) {
+            $extensao = $request->foto->extension();
+            $nome = "{$request->usuario_id}.{$extensao}";
+            $storage_path = "storage/profile_photos/{$nome}";
 
-            $storage_path = \Storage::disk('local')->put($destination_path, $image);
-            dd($storage_path);
+            $upload = $request->foto->storeAs('profile_photos', $nome);
 
             try {
                 DB::beginTransaction();
                 $usuario = new Usuario();
-                $usuario->foto = $storage_path;
-                $usuario->save();
+                $usr = $usuario->where('id', $request->usuario_id)->first();
+                $usr->foto = $storage_path;
+                $usr->save();
                 DB::commit();
+
+                $_SESSION['foto'] = $storage_path;
             } catch(\Exception $e) {
                 echo $e->getMessage();
                 DB::rollback();
             }
+
+            return redirect()->back();
         }
     }
 }
