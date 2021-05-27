@@ -14,9 +14,7 @@ class Exemplar extends Model
         'id_livro',
         'codigo',        
     ];
-
-    public $timestamps = false;
-
+    
     public function livro()
     {
         return $this->belongsTo(Livro::class);

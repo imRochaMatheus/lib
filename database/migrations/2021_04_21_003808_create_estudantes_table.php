@@ -21,6 +21,7 @@ class CreateEstudantesTable extends Migration
             $table->integer('matricula')->unique()->require;
             $table->unsignedBigInteger('id_usuario');
             $table->string('telefone', 25);
+            $table->timestamps();
             $table->foreign('id_usuario')->references('id')->on('usuarios');
 
         });

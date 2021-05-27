@@ -1,5 +1,6 @@
 @extends('layouts.partials.master')
 @section('conteudo')
+
     <div class="col-md-12">
         <div class="row">
             <form id="buscar-emprestimo-form" class="col-md-6 offset-md-3 mb-4 cadastro" action="{{ route('auth.on.emprestimo.consultar') }}" method="POST">
@@ -71,7 +72,7 @@
                         @foreach ($emprestimos as $item)
                             <tr>
                                 
-                                <td>{{$item->codigo_exemplar}}</td>
+                                <td>{{$item->codigo}}</td>
                                 <td>{{$item->titulo}}</td>
                                 <td>{{$item->estudante}} ({{$item->matricula}})</td>
                                 <td>{{$item->funcionario}}</td>
@@ -115,7 +116,7 @@
                                                         aria-disabled="true"
                                                         data-toggle="modal"
                                                         data-target="#modal-devolver"
-                                                        data-codigo="{{$item->codigo_exemplar}}"
+                                                        data-codigo="{{$item->codigo}}"
                                                         data-titulo="{{$item->titulo}}"
                                                     >
                                                         <i class="fas fa-reply"></i>
@@ -131,7 +132,7 @@
                                                         aria-disabled="true"
                                                         data-toggle="modal"
                                                         data-target="#modal-renovar"
-                                                        data-codigo="{{$item->codigo_exemplar}}"
+                                                        data-codigo="{{$item->codigo}}"
                                                         data-titulo="{{$item->titulo}}"
                                                     >
                                                         <i class="fas fa-exchange-alt"></i>

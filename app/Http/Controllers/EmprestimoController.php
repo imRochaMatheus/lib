@@ -10,6 +10,7 @@ use App\Exemplar;
 use App\Emprestimo_contem_exemplar;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class EmprestimoController extends Controller
 {
@@ -87,6 +88,35 @@ class EmprestimoController extends Controller
        
     }
 
+    public function gerarRelatorio(Request $request)
+    {
+        $mes = $request->mes;
+        $ano = $request->ano;
+
+        $emprestimos = DB::table('emprestimos')
+            ->join('estudantes', 'emprestimos.id_estudante', '=', 'estudantes.id')
+            ->join('funcionarios', 'emprestimos.id_funcionario','=', 'funcionarios.id')
+            ->join('emprestimo_contem_exemplar', 'emprestimos.id', '=', 'emprestimo_contem_exemplar.emprestimo_id')
+            ->join('exemplares', 'emprestimo_contem_exemplar.codigo_exemplar', '=', 'exemplares.codigo')
+            ->join('livros', 'exemplares.id_livro', '=', 'livros.id')
+            ->select('emprestimos.data_emprestimo', 'estudantes.nome as estudante_nome', 'estudantes.matricula as estudante_matricula',
+                     'funcionarios.nome as funcionario_nome', 'funcionarios.matricula as funcionario_matricula', 'emprestimo_contem_exemplar.codigo_exemplar',
+                     'livros.titulo', 'livros.autor', 'livros.editora', 'livros.edicao', 'livros.volume'
+                    )
+            ->get();
+
+        foreach($emprestimos as $emprestimo) {
+            $emprestimo->data_emprestimo = (new \DateTime($emprestimo->data_emprestimo))->format('d/m/Y');
+        }
+
+        $pdf = \PDF::loadView('layouts.relatorios.relatorioEmprestimo', compact('emprestimos'))
+                    ->setPaper('a4', 'landscape')
+                    ->stream('relatorio-emprestimo.pdf', array('Attachment' => false));
+                    //->download('relatorio-emprestimo.pdf');    
+                    
+        return $pdf;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -139,11 +169,16 @@ class EmprestimoController extends Controller
                     \DB::commit();
                 }catch(\Exception $e){
                     \DB::rollback();
-                    dd($e);
+                   
                 }
+                
+            }else{
+                return redirect()->back();
             }
-        }  
-       
+        }else{
+            return redirect()->route('auth.on.emprestimo.realizar', ['error' => 'Student is not Registered']);   
+        }
+        return redirect()->route('auth.on.emprestimo.realizar', ['sucess' => 'successfully registered']);  
     }
 
     /**
@@ -174,7 +209,7 @@ class EmprestimoController extends Controller
                     ->join('emprestimo_contem_exemplar', 'emprestimos.id', '=', 'emprestimo_contem_exemplar.emprestimo_id')
                     ->join('exemplares', 'exemplares.codigo','=', 'emprestimo_contem_exemplar.codigo_exemplar')
                     ->join('livros', 'livros.id','=', 'exemplares.id_livro')
-                    ->select('estudantes.matricula', 'emprestimo_contem_exemplar.codigo_exemplar','emprestimos.data_emprestimo as emprestimo',
+                    ->select('estudantes.matricula', 'emprestimo_contem_exemplar.codigo_exemplar as codigo','emprestimos.data_emprestimo as emprestimo', 
                     'estudantes.nome as estudante', 'funcionarios.nome as funcionario', 'emprestimos.multa', 'emprestimo_contem_exemplar.status',
                     'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo', 'emprestimo_contem_exemplar.data_limite')
                     ->get();

@@ -18,7 +18,8 @@ class CreateUsuariosTable extends Migration
             $table->string('email', 255)->unique()->require;
             $table->string('senha')->require;
             $table->integer('nivel_de_acesso')->require;
-            $table->boolean('status')->default(true);       
+            $table->boolean('status')->default(true);   
+            $table->string('foto')->nullable();    
             $table->timestamps();
         });
     }

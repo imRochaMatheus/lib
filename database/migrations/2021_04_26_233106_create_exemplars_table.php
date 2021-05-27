@@ -18,6 +18,7 @@ class CreateExemplarsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('codigo')->unique();
             $table->unsignedBigInteger('id_livro');
+            $table->timestamps();
             $table->foreign('id_livro')->references('id')->on('livros');
         });
     }
