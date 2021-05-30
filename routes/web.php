@@ -33,7 +33,7 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
         Route::post('/consultar-livro', 'LivroController@getAll')->name('auth.on.livro.consultar');
 
         Route::get('/cadastro-livro', 'LivroController@index')->name('auth.on.livro.cadastrar');
-        Route::post('/cadastro-livro', 'LivroController@create')->name('auth.on.livro.cadastrar');
+        Route::post('/cadastrar-livro', 'LivroController@create')->name('auth.on.livro.cadastrar');
         Route::post('/cadastro-livro', 'LivroController@update')->name('auth.on.livro.editar');
         Route::post('/relatorio-livro', 'LivroController@relatorio')->name('auth.on.livro.relatorio');
 
@@ -57,7 +57,8 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
             return view('layouts.gerarRelatorio', $params);
         })->name('auth.on.relatorio.gerar');
 
-        Route::post('/pdf', 'EmprestimoController@gerarRelatorio')->name('auth.on.pdf');
+        Route::post('/pdf-emprestimos', 'EmprestimoController@gerarRelatorio')->name('auth.on.pdf');
+        Route::post('/pdf-livros', 'LivroController@gerarRelatorio')->name('auth.on.livro.pdf');
     });
     Route::prefix('estudante')/*->middleware('')*/->group(function(){
         Route::get('/painel', 'EstudanteController@index')->name('auth.estudante.painel');

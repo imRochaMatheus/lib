@@ -56,6 +56,30 @@ class LivroController extends Controller
         return redirect()->route('auth.on.livro.consultar', ['livros' => $request->codigo]);
     }
 
+
+    public function gerarRelatorio(Request $request){
+
+        $dataInicio = \DateTime::createFromFormat('Y-m-d', $request->dataInicial);
+        $dataFim = \DateTime::createFromFormat('Y-m-d', $request->dataFinal);
+        
+        $livros = DB::table('livros')->where('livros.created_at', '>=', $dataInicio)
+            ->where('livros.created_at', '<=', $dataFim)
+            ->get();
+
+       
+        for($i = 0; $i < count($livros); $i++) {
+            $livros[$i]->created_at = (new \DateTime($livros[$i]->created_at))->format('d/m/Y');
+            $livros[$i]->updated_at = (new \DateTime($livros[$i]->updated_at))->format('d/m/Y');
+        }
+
+        $pdf = \PDF::loadView('layouts.relatorios.relatorioLivro', compact('livros'))
+                    ->setPaper('a4', 'landscape')
+                    ->stream('relatorio-livros.pdf', array('Attachment' => false));
+                    //->download('relatorio-emprestimo.pdf');    
+                    
+        return $pdf;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -63,7 +87,6 @@ class LivroController extends Controller
      */
     public function create(Request $request)
     {
-        dd($request);
         $regras = 
         [
             'codigo' => 'required|unique:livros|numeric',

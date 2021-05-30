@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
     <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-            <title>Relatório de Empréstimos</title>
+            <title>Relatório de Livros</title>
 
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -35,66 +34,55 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="h2 titulo">Relatório de Empréstimos</h2>
+                    <h2 class="h2 titulo">Relatório de Livros</h2>
                 </div>
             </div>
             <div class="row table-responsive">
                 <table class="col-md-12 table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Data Empréstimo</th>
-                            <th scope="col">Data Limite</th>
-                            <th scope="col">Estudante</th>
-                            <th scope="col">Funcionário</th>
-                            <th scope="col">Exemplar</th>
+                            <th scope="col">Código Livro</th>
                             <th scope="col">Título</th>
                             <th scope="col">Autor</th>
                             <th scope="col">Editora</th>
                             <th scope="col">Edição</th>
                             <th scope="col">Volume</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">N/ Exemplares</th>
+                            <th scope="col">Registro</th>
+                            <th scope="col">Última atualização</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if(isset($emprestimos) && count($emprestimos) > 0)
-                            @foreach ($emprestimos as $emprestimo)
+                        @if(isset($livros) && count($livros) > 0)
+                            @foreach ($livros as $livro)
                                 <tr>                            
                                     <td>
-                                        {{$emprestimo->data_emprestimo}}
+                                        {{$livro->codigo}}
                                     </td>
                                     <td>
-                                        {{$emprestimo->data_limite}}
+                                        {{$livro->titulo}} <br>                                    
                                     </td>
                                     <td>
-                                        {{$emprestimo->estudante_nome}} <br>
-                                        <strong class="matricula">{{$emprestimo->estudante_matricula}}</strong>
+                                        {{$livro->autor}}<br>
                                     </td>
                                     <td>
-                                        {{$emprestimo->funcionario_nome}}<br>
-                                        <strong class="matricula">{{$emprestimo->funcionario_matricula}}</strong>
+                                        {{$livro->editora}}
                                     </td>
                                     <td>
-                                        {{$emprestimo->codigo_exemplar}}
+                                        {{$livro->edicao}}ª
                                     </td>
                                     <td>
-                                        {{$emprestimo->titulo}}
+                                        {{$livro->volume}}
                                     </td>
                                     <td>
-                                        {{$emprestimo->autor}}
+                                        {{$livro->numero_de_exemplares}}
                                     </td>
                                     <td>
-                                        {{$emprestimo->editora}}
+                                        {{$livro->created_at}}
                                     </td>
                                     <td>
-                                        {{$emprestimo->edicao}}ª
+                                        {{$livro->updated_at}}
                                     </td>
-                                    <td>
-                                        {{$emprestimo->volume}}
-                                    </td>
-                                    <td>
-                                        {{$emprestimo->status ? 'Devolvido' : 'Pendente'}}
-                                    </td> 
-                                 
                                 </tr>
                             @endforeach
                         @else

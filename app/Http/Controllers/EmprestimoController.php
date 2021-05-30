@@ -90,10 +90,13 @@ class EmprestimoController extends Controller
 
     public function gerarRelatorio(Request $request)
     {
-        $mes = $request->mes;
-        $ano = $request->ano;
+       
 
-        $emprestimos = DB::table('emprestimos')
+        $dataInicio = \DateTime::createFromFormat('Y-m-d', $request->dataInicial);
+        $dataFim = \DateTime::createFromFormat('Y-m-d', $request->dataFinal);
+        
+        $emprestimos = DB::table('emprestimos')->where('emprestimos.created_at', '>=', $dataInicio)
+            ->where('emprestimos.created_at', '<=', $dataFim)
             ->join('estudantes', 'emprestimos.id_estudante', '=', 'estudantes.id')
             ->join('funcionarios', 'emprestimos.id_funcionario','=', 'funcionarios.id')
             ->join('emprestimo_contem_exemplar', 'emprestimos.id', '=', 'emprestimo_contem_exemplar.emprestimo_id')
@@ -101,12 +104,13 @@ class EmprestimoController extends Controller
             ->join('livros', 'exemplares.id_livro', '=', 'livros.id')
             ->select('emprestimos.data_emprestimo', 'estudantes.nome as estudante_nome', 'estudantes.matricula as estudante_matricula',
                      'funcionarios.nome as funcionario_nome', 'funcionarios.matricula as funcionario_matricula', 'emprestimo_contem_exemplar.codigo_exemplar',
-                     'livros.titulo', 'livros.autor', 'livros.editora', 'livros.edicao', 'livros.volume'
+                     'emprestimo_contem_exemplar.data_limite', 'emprestimo_contem_exemplar.status','livros.titulo', 'livros.autor', 'livros.editora', 'livros.edicao', 'livros.volume'
                     )
             ->get();
 
         foreach($emprestimos as $emprestimo) {
             $emprestimo->data_emprestimo = (new \DateTime($emprestimo->data_emprestimo))->format('d/m/Y');
+            $emprestimo->data_limite = (new \DateTime($emprestimo->data_limite))->format('d/m/Y');
         }
 
         $pdf = \PDF::loadView('layouts.relatorios.relatorioEmprestimo', compact('emprestimos'))
