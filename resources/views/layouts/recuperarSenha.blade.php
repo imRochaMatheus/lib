@@ -4,14 +4,14 @@
         <div class="form-main">
             <div class="recuperar-senha-form-img"></div>
             <div class="recuperar-senha-form">
-                <form id="recuperar-senha-form" action="{{route('login')}}" method="POST">
+                <form id="recuperar-senha-form" action="{{route('recuperarSenha')}}" method="POST">
                     @csrf
 
                     <div class="form-group">
-                        <label for="matricula" aria-hidden="true" hidden>Matrícula:</label>
-                        <input type="text" id="matricula" name="matricula" placeholder="Informa a sua matrícula..." required />
+                        <label for="email" aria-hidden="true" hidden>Email:</label>
+                        <input type="email" id="email" name="email" placeholder="Informe seu email..." required />
                         <i class="fas fa-user"></i>
-                        {{ $errors->has('matricula') ? $errors->first('matricula') : ''}}
+                        {{ $errors->has('email') ? $errors->first('email') : ''}}
                     </div>
                 
                     <button type="submit" class="form-btn">RECUPERAR SENHA</button>
