@@ -99,7 +99,7 @@
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="9">Nenhum registro encontrado</td>
+                                <td colspan="12">Nenhum registro encontrado</td>
                             </tr>
                         @endif
                     </tbody>
