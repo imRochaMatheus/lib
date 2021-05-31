@@ -34,7 +34,8 @@ class LoginController extends Controller
     }
 
     public function autenticar(Request $request){
-    
+        
+        
         $regras = [
             'email' => 'email',
             'password' => 'required',
