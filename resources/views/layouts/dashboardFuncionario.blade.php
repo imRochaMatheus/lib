@@ -1,3 +1,4 @@
+
 @extends('layouts.partials.master')
 @section('conteudo')
     <div class="col-md-12">

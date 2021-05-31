@@ -16,9 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'LoginController@index')->name('login');
 Route::post('/', 'LoginController@autenticar')->name('login');
 Route::get('/logout', 'LoginController@sair')->name('logout');
-Route::get('/recuperar-senha', function() {
-    return view('layouts.recuperarSenha');
-})->name('recuperarSenha');
+Route::get('/recuperar-senha', 'UsuarioController@recuperarSenhaIndex')->name('recuperarSenha');
+Route::post('/recuperar-senha', 'UsuarioController@recuperarSenha')->name('recuperarSenha');
 
 Route::prefix('auth')->middleware('autenticacao')->group(function(){
 
@@ -49,7 +48,7 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
 
         Route::post('/alterar-permissao', 'UsuarioController@alterarPermissao')->name('auth.on.usuario.permissao');
 
-        Route::get('/editar-perfil', 'UsuarioController@index')->name('auth.on.usuario.editar');
+        Route::get('/editar-perfil', 'UsuarioController@editarPerfil')->name('auth.on.usuario.editar');
         Route::post('/editar-perfil', 'UsuarioController@editarFoto')->name('auth.on.usuario.editar');
 
         Route::get('/gerar-relatorio/{tipo}', function($tipo) {
