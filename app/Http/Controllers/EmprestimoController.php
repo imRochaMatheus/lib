@@ -152,7 +152,6 @@ class EmprestimoController extends Controller
                        $emprestimo->save();
 
                        for($i = 0; $i < sizeof($volumes) ; $i++){
-                           
                             $emprestimo_exemplar = new Emprestimo_contem_exemplar();
                             $emprestimo_id = DB::table('emprestimos')->where('id_estudante', $estudante->id)
                                                 ->where('id_funcionario', $_SESSION['id'])
@@ -172,10 +171,8 @@ class EmprestimoController extends Controller
                        }
                     \DB::commit();
                 }catch(\Exception $e){
-                    \DB::rollback();
-                   
+                    \DB::rollback(); 
                 }
-                
             }else{
                 return redirect()->back();
             }
@@ -224,7 +221,6 @@ class EmprestimoController extends Controller
         }
 
         $params = array_merge(['emprestimos' => $emprestimos], $_SESSION);
-
         return view('layouts.consultarEmprestimo', $params);
     }
     
