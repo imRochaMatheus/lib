@@ -124,19 +124,19 @@ class EmprestimoController extends Controller
      */
     public function create(Request $request)
     {
-        $flag = false;
+        $flag = true;
         $volumes = [];
 
         $estudante = DB::table('estudantes')->where('matricula', $request->matricula)->get()->first();
-        if($estudante != null){
-            
+        if($estudante != null){ 
             for($i = 1; $i < 6; $i++){
                 $codigo = "codigo$i";
                 $exemplar = DB::table('exemplares')->where('codigo', $request->$codigo)->get()->first();
-                if($exemplar != null){
-                    $flag = true;
-                    array_push($volumes, $exemplar->codigo);
+                if($exemplar == null){
+                    $flag = false;
+                    break;
                 }             
+                array_push($volumes, $exemplar->codigo);
             }
             if($flag){
                 try{
@@ -159,7 +159,7 @@ class EmprestimoController extends Controller
                             $limite = date('Y-m-d', strtotime("+2 days",strtotime($data))); 
                             $emprestimo_exemplar->data_limite = $limite;
                             $emprestimo_exemplar->codigo_exemplar = $volumes[$i];
-                            $emprestimo_exemplar->data_devolucao = $limite; //Mudar
+                            //$emprestimo_exemplar->data_devolucao = $limite; //Mudar
                             $emprestimo_exemplar->save();
                             $id_exemplar = DB::table('exemplares')->where('codigo', $volumes[$i])->first('id_livro');
                             $id_livro = $id_exemplar->id_livro;
@@ -169,16 +169,17 @@ class EmprestimoController extends Controller
                     \DB::commit();
                 }catch(\Exception $e){
                     \DB::rollback();
-                   
-                }
-                
-            }else{
-                return redirect()->back();
+                    echo $e->getMessage();
+
+                    return redirect()->back()->with('message', 'Não foi possível realizar o empréstimo.');
+                }                
+            } else {
+                return redirect()->back()->with('message', 'Exemplar ' . $request->$codigo . ' não encontrado.');
             }
-        }else{
-            return redirect()->route('auth.on.emprestimo.realizar', ['error' => 'Student is not Registered']);   
+        } else {
+            return redirect()->back()->with('message', 'Estudante não cadastrado.');
         }
-        return redirect()->route('auth.on.emprestimo.realizar', ['sucess' => 'successfully registered']);  
+        return redirect()->back()->with('message', 'Empréstimo realizado com sucesso.');
     }
 
     /**
@@ -237,7 +238,7 @@ class EmprestimoController extends Controller
     
             /* busca pelo empréstimo relacionado */
             $emprestimo = new Emprestimo();
-            $emprestimo = $emprestimo->where('id', $exemplar->id_emprestimo)->first();
+            $emprestimo = $emprestimo->where('id', $exemplar->emprestimo_id)->first();
     
             /* se em atraso, calcula a multa */
             $data_limite = new \DateTime($exemplar->data_limite);
@@ -250,11 +251,13 @@ class EmprestimoController extends Controller
             }
             DB::commit();
         } catch(\Exception $e) {
-            echo $e->getMessage();
             DB::rollback();
+            echo $e->getMessage();
+
+            return redirect()->back()->with('message', 'Não foi possível realizar a devolução do exemplar.');
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Exemplar devolvido com sucesso.');
     }
 
     public function renovar(Request $request)
@@ -269,11 +272,13 @@ class EmprestimoController extends Controller
             $exemplar->save();
             DB::commit();
         } catch(\Exception $e) {
-            echo $e->getMessage();
             DB::rollback();
+            echo $e->getMessage();
+
+            return redirect()->back()->with('message', 'Não foi possível realizar a renovação do exemplar.');
         }  
         
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Exemplar renovado com sucesso por mais 7 dias.');
     }
     
     /**

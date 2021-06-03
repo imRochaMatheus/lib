@@ -43,6 +43,9 @@
                     </nav>
                 @endunless
                 <main class="content">
+                    @if(session()->has('message'))
+                        @include('layouts.partials.notifications')
+                    @endif
                     <div class="container-fluid p-0">
                         @yield('conteudo')
                     </div>

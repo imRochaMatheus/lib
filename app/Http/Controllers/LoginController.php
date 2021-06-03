@@ -20,9 +20,7 @@ class LoginController extends Controller
     }
 
     public function autenticar(Request $request)
-    {
-    
-        
+    {   
         $regras = [
             'email' => 'email',
             'password' => 'required',
@@ -42,7 +40,7 @@ class LoginController extends Controller
 
         $usuario = $user->where('email', $email)->where('senha', $senha)->get()->first();
 
-        if(isset($usuario->email) && $usuario->email != ''){
+        if(isset($usuario->email) && $usuario->email != '') {
             
             session_start();
 
@@ -97,20 +95,15 @@ class LoginController extends Controller
                 break;
             }
 
-            if($_SESSION['acesso'] == 1){
+            if($_SESSION['acesso'] == 1) {
                 return redirect()->route('auth.on.dashboard');
-
-            }else if($_SESSION['acesso'] == 2){
-
+            } else if($_SESSION['acesso'] == 2) {
                 return redirect()->route('auth.on.dashboard');
-            }else if($_SESSION['acesso'] == 3){
-    
+            } else {
                 return redirect()->route('auth.estudante.painel');
-            }else{
-                //erro
             }
-        }else{
-            return redirect()->route('login');
+        } else {
+            return redirect()->back()->with('message', 'Usuário e/ou senha incorretos. Tente novamente.');
         }
     }
 

@@ -21,11 +21,13 @@ class UsuarioController extends Controller
             $usr->save();
             DB::commit();
         } catch(\Exception $e) {
-            echo $e->getMessage();
             DB::rollback();
+            echo $e->getMessage();
+
+            return redirect()->back()->with('message', 'Não foi possível alterar a permissão');
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Permissão alterada com sucesso.');
     }
 
     public function editarPerfil()
@@ -36,7 +38,13 @@ class UsuarioController extends Controller
     public function editarFoto(Request $request)
     {
         if($request->hasFile('foto') && $request->file('foto')->isValid()) {
+            $extensoes_permitidas = ['png', 'jpg', 'jpeg'];
             $extensao = $request->foto->extension();
+
+            if(!in_array($extensao, $extensoes_permitidas)) {
+                return redirect()->back()->with('message', 'Formato inválido.');
+            }
+
             $nome = "{$request->usuario_id}.{$extensao}";
             $storage_path = "storage/profile_photos/{$nome}";
 
@@ -52,11 +60,17 @@ class UsuarioController extends Controller
 
                 $_SESSION['foto'] = $storage_path;
             } catch(\Exception $e) {
-                echo $e->getMessage();
                 DB::rollback();
+                echo $e->getMessage();
+
+                return redirect()->back()->with('message', 'Não foi possível alterar a foto de perfil.');
             }
 
-            return redirect()->back();
+            return redirect()->back()->with('message', 'Foto de perfil alterada com sucesso.');
+        } elseif(!$request->hasFile('foto')) {
+            return redirect()->back()->with('message', 'Foto não informada.');
+        } else {
+            return redirect()->back()->with('message', 'Foto inválida.');
         }
     }
 
@@ -73,7 +87,7 @@ class UsuarioController extends Controller
         $usr = $usuario->where('email', $email)->first();
 
         if ($usr === NULL) {
-            return redirect()->back()->withErrors(['message', 'E-mail não cadastrado. Tente novamente.']);
+            return redirect()->back()->with('message', 'E-mail não cadastrado. Tente novamente.');
         }
 
         try {
@@ -85,7 +99,7 @@ class UsuarioController extends Controller
             echo $e->getMessage();
             DB::rollback();
 
-            return redirect()->back()->withErrors(['message', 'Não foi possível completar a operação.']);
+            return redirect()->back()->with('message', 'Não foi possível completar a operação');
         }
 
         try {
@@ -93,7 +107,7 @@ class UsuarioController extends Controller
         } catch(\Exception $e) {
             echo $e->getMessage();
 
-            return redirect()->back()->withErrors(['message', 'E-mail de recuperação de senha não enviado']);
+            return redirect()->back()->with('message', 'E-mail de recuperação de senha não enviado. Tente novamente mais tarde.');
         }
 
         return redirect()->back()->with('message', 'Senha resetada. Por favor, verifique seu e-mail');
