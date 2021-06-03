@@ -31,6 +31,7 @@ class CreateExemplarsTable extends Migration
     public function down()
     {
         $table->dropForeign('exemplares_id_livro_foreign');
+        
         Schema::dropIfExists('exemplars');
     }
 }

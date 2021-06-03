@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Estudante;
+use App\Usuario;
+use App\Emprestimo;
+use App\Flight;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class EstudanteController extends Controller
 {
@@ -15,6 +21,28 @@ class EstudanteController extends Controller
     public function index()
     {   
         return view('layouts.dashboardEstudante',$_SESSION);
+    }
+    public function searchIndex(Request $request)
+    {
+        if(empty($request->matricula)) {
+            $estudantes = DB::table('estudantes')
+            ->join('usuarios', 'estudantes.id_usuario', '=', 'usuarios.id')
+            ->select('usuarios.id', 'estudantes.matricula', 'usuarios.status', 'estudantes.nome', 'usuarios.nivel_de_acesso')
+            ->get();
+        } else {
+            $estudantes = DB::table('estudantes')
+            ->join('usuarios', 'estudantes.id_usuario', '=', 'usuarios.id')
+            ->where('estudantes.matricula', $request->matricula)
+            ->select('usuarios.id', 'estudantes.matricula', 'usuarios.status', 'estudantes.nome', 'usuarios.nivel_de_acesso')
+            ->get();            
+        }
+
+        foreach($estudantes as $estudante) {
+                $estudante->nivel_de_acesso = 'Estudante';
+            }
+                
+        $params = array_merge($_SESSION, ['estudantes' => $estudantes]);
+        return view('layouts.consultarEstudante', $params); 
     }
 
     /**
@@ -78,8 +106,20 @@ class EstudanteController extends Controller
      * @param  \App\Estudante  $estudante
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Estudante $estudante)
+    public function destroy(Request $request)
     {
-        //
+        $user = DB::table('usuarios')->where('id', $request->usuario_id)->first();
+        $estudante = DB::table('estudantes')->where('id_usuario', $request->usuario_id)->first();
+        $emprestimo = DB::table('emprestimos')->where('id_estudante', $estudante->id)->first();
+
+        if($emprestimo == null)
+        {
+            DB::table('estudantes')->where('id_usuario', $request->usuario_id)->delete();
+            DB::table('usuarios')->where('id', $request->usuario_id)->delete();
+            return redirect()->route('auth.on.estudante.consultar', ['msg'=>'Sucesso ao deletar registro']);
+        }else
+        {
+            return redirect()->route('auth.on.estudante.consultar', ['msg'=>'Não foi possível excluir o registro de estudante']);
+        }
     }
 }

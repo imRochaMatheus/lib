@@ -106,7 +106,7 @@ class LoginController extends Controller
                     $fnc = new Funcionario();
                     $crg = new Cargo();
                     $funcionario = $fnc->where('email', $email)->get()->first();
-                    $cargo = $crg->where('id', $admin->cargo)->get()->first();
+                    $cargo = $crg->where('id', $funcionario->cargo)->get()->first();
                     $nome = $funcionario->nome;
                     $nome = explode(" ", $nome);
                     $_SESSION['nome'] = $nome[0];

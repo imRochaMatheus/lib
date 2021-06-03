@@ -2,10 +2,14 @@
 
 namespace App;
 
+
 use Illuminate\Database\Eloquent\Model;
 
 class Funcionario extends Model
 {
+
+    protected $dates = ['deleted_at'];
+    
     protected $fillable = [
         'nome',
         'email',
@@ -18,4 +22,5 @@ class Funcionario extends Model
     public function usuario(){
         return $this->belongsTo(Usuario::class);
     }
+
 }

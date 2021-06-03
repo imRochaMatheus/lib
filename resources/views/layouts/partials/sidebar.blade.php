@@ -62,9 +62,6 @@
                         <div class="sidebar-submenu">
                             <ul>
                                 <li>
-                                    <a href="{{ route('auth.on.relatorio.gerar', ['tipo' => 'devolucao']) }}">Devolução</a>
-                                </li>
-                                <li>
                                     <a href="{{ route('auth.on.relatorio.gerar', ['tipo' => 'emprestimo']) }}">Empréstimo</a>
                                 </li>
                                 <li>
@@ -74,7 +71,7 @@
                         </div>
                     </li>
                 @endif
-                @if(isset($acesso) && $acesso == 1)
+                @if(isset($acesso) && $acesso != 3)
                     <li class="sidebar-dropdown">
                         <a href="#">
                             <i class="fas fa-users"></i>
@@ -82,12 +79,18 @@
                         </a>
                         <div class="sidebar-submenu">
                             <ul>
+                                @if(isset($acesso) && $acesso == 1)
+                                    <li>
+                                        <a href="{{ route('auth.on.cadastro') }}">Cadastrar</a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="{{ route('auth.on.funcionario.consultar') }}">Conceder Permissão</a>
+                                    </li>
+                                @endif
                                 <li>
-                                    <a href="{{ route('auth.on.cadastro') }}">Cadastrar</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('auth.on.funcionario.consultar') }}">Conceder Permissão</a>
-                                </li>
+                                    <a href="{{ route('auth.on.estudante.consultar') }}">Buscar Estudantes</a>
+                                </li>    
                             </ul>
                         </div>
                     </li>

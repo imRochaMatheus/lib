@@ -46,6 +46,10 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
         Route::get('/consultar-funcionario', 'FuncionarioController@searchIndex')->name('auth.on.funcionario.consultar');
         Route::post('/consultar-funcionario', 'FuncionarioController@searchIndex')->name('auth.on.funcionario.consultar');
 
+        Route::get('/consultar-estudante/{msg?}', 'EstudanteController@searchIndex')->name('auth.on.estudante.consultar');
+        Route::post('/consultar-estudante', 'EstudanteController@searchIndex')->name('auth.on.estudante.consultar');
+        Route::post('/deletar-estudante', 'EstudanteController@destroy')->name('auth.on.estudante.deletar');
+
         Route::post('/alterar-permissao', 'UsuarioController@alterarPermissao')->name('auth.on.usuario.permissao');
 
         Route::get('/editar-perfil', 'UsuarioController@editarPerfil')->name('auth.on.usuario.editar');

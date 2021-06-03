@@ -52,7 +52,7 @@ class CadastroController extends Controller
             $usuario = new Usuario();
             
             $usuario->email = $request->email;
-            $usuario->senha = base64_encode($request->senha);
+            $usuario->senha = $request->senha;
             $usuario->nivel_de_acesso = $request->acesso;
 
             $usuario->save();               

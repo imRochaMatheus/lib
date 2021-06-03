@@ -2,11 +2,15 @@
 
 namespace App;
 
+
 use Illuminate\Database\Eloquent\Model;
 
 class Livro extends Model
 {
     //
+
+    protected $dates = ['deleted_at'];
+    
     protected $fillable = 
     [
         'codigo',
@@ -23,4 +27,6 @@ class Livro extends Model
     {
         return $this->hasMany( Exemplar::class);
     }
+
+
 }
