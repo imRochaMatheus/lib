@@ -137,9 +137,12 @@ class LivroController extends Controller
             \DB::commit();
         }catch(\Exception $e){
             \DB::rollback();
-            dd($e);
+            echo $e->getMessage();
+
+            return redirect()->back()->with('message', 'Não foi possível cadastrar o livro.');
         }
-        return redirect()->back();
+        
+        return redirect()->back()->with('message', 'Livro cadastrado com sucesso.');
     }
 
     /**
@@ -201,9 +204,12 @@ class LivroController extends Controller
             \DB::commit();
         }catch(\Exception $e){
             \DB::rollback();
-            dd($e);
+            echo $e->getMessage();
+
+            return redirect()->back()->with('message', 'Não foi possível editar o livro.');
         }
-        return redirect()->back();
+        
+        return redirect()->back()->with('message', 'Livro editado com sucesso.');
     }
 
     /**

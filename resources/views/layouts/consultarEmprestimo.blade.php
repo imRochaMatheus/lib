@@ -75,7 +75,7 @@
                                 
                                 <td>{{$item->codigo}}</td>
                                 <td>{{$item->titulo}}</td>
-                                <td>{{$item->estudante}} ({{$item->matricula}})</td>
+                                <td>{{$item->estudante}}<br>(<span class="text-muted">{{$item->matricula}}</span>)</td>
                                 <td>{{$item->funcionario}}</td>
                                 <td>{{$item->emprestimo}}</td>
                                 <td>{{$item->data_limite}}</td>
@@ -160,7 +160,7 @@
                     <form id="devolver-form" action="{{ route('auth.on.emprestimo.devolver') }}" method="POST">
                         @csrf
 
-                        <input type="hidden" id="codigo_exemplar" name="codigo_exemplar">
+                        <input type="hidden" name="codigo_exemplar">
                         <div class="modal-header">
                             <h4 class="modal-title">Devolver Livro</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -184,7 +184,7 @@
                     <form id="renovar-form" action="{{ route('auth.on.emprestimo.renovar') }}" method="POST">
                         @csrf
                         
-                        <input type="hidden" id="codigo_exemplar" name="codigo_exemplar">
+                        <input type="hidden" name="codigo_exemplar">
                         <div class="modal-header">
                             <h4 class="modal-title">Renovar Livro</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">

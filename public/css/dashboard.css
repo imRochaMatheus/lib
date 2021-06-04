@@ -50,4 +50,5 @@ a.block-link {
     background-color: var(--white);
     min-height: 20em;
     max-height: 20em;
+    padding: 2em;
 }
