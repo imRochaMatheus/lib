@@ -39,7 +39,6 @@ class CreateFuncionariosTable extends Migration
     {
 
         $table->dropForeign('funcionarios_id_usuario_foreign');
-        
         Schema::dropIfExists('funcionarios');
     
     }

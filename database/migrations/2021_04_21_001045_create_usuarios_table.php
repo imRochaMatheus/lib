@@ -21,6 +21,7 @@ class CreateUsuariosTable extends Migration
             $table->boolean('status')->default(true);   
             $table->string('foto')->nullable();    
             $table->timestamps();
+         
         });
     }
     /**

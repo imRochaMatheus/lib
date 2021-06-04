@@ -21,8 +21,6 @@ class CadastroController extends Controller
     }
 
     public function create(Request $request){
-   
-
         $regras = 
         [
             'nome' => 'required',
@@ -75,7 +73,7 @@ class CadastroController extends Controller
                 $usuario = new Usuario();
                 
                 $usuario->email = $request->email;
-                $usuario->senha = $request->senha;
+                $usuario->senha = base64_encode($request->senha);
                 $usuario->nivel_de_acesso = $request->acesso;
     
                 $usuario->save();               

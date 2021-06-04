@@ -4,9 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Estudante extends Model
 {
     //
+ 
+    protected $dates = ['deleted_at'];
+    
     protected $fillable = 
     [
         'nome',
@@ -18,4 +22,6 @@ class Estudante extends Model
     public function usuario(){
         return $this->belongsTo(Usuario::class);
     }  
+
+    
 }

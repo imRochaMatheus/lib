@@ -221,7 +221,7 @@
                     <div class="modal-body">
                         <div class="container-fluid">
                             <div class="row">
-                                <form id="editar-livro-form" class="col-md-12 cadastro" action="{{ route('auth.on.livro.cadastrar') }}" method="POST">
+                                <form id="editar-livro-form" class="col-md-12 cadastro" action="{{ route('auth.on.livro.editar') }}" method="POST">
                                     @csrf
                             
                                     <div class="row">

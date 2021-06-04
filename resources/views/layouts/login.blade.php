@@ -9,20 +9,32 @@
 
                     <div class="form-group">
                         <label for="email" aria-hidden="true" hidden>Email</label>
-                        <input type="email" id="email" name="email" placeholder="Email" required />
+                        @if(isset($cookies->email) && $cookies->email != '')
+                            <input type="email" id="email" name="email" placeholder="Email" value={{$cookies->email}} required />
+                        @else
+                            <input type="email" id="email" name="email" placeholder="Email" required />
+                        @endif
                         <i class="fas fa-envelope"></i>
                         {{ $errors->has('email') ? $errors->first('email') : ''}}
                     </div>
                     <div class="form-group">
                         <label for="password" aria-hidden="true" hidden>Senha</label>
-                        <input type="password" id="password" name="password" placeholder="Senha" required />
+                        @if(isset($cookies->email) && $cookies->email != '')
+                            <input type="password" id="password" name="password" placeholder="Senha" value={{$cookies->senha}} required />
+                        @else
+                            <input type="password" id="password" name="password" placeholder="Senha" required />
+                        @endif
                         <i class="fas fa-lock"></i>
                         <i class="fas fa-eye show-pwd"></i>
                         {{ $errors->has('password') ? $errors->first('password') : ''}}
                     </div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="connected" name="connected">
-                        <label class="custom-control-label" for="connected">Manter-me conectado</label>
+                        @if(isset($cookies->checked) && $cookies->checked == 'checked'){
+                            <input type="checkbox" class="custom-control-input" id="connected" name="connected" checked>
+                        @else
+                            <input type="checkbox" class="custom-control-input" id="connected" name="connected" >
+                        @endif
+                        <label class="custom-control-label" for="connected">Lembrar-se</label>
                     </div>
                     <button type="submit" class="form-btn">ENTRAR</button>
                     <div class="forgot-pwd">

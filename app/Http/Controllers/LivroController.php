@@ -21,12 +21,14 @@ class LivroController extends Controller
 
     public function searchIndex(Request $request)
     {
+ 
         if(!empty($request->livros)){
 
             $livros = DB::table('livros')
             ->where('codigo', $request->livros)
             ->select('codigo', 'titulo', 'autor', 'editora', 'edicao', 'volume','numero_de_paginas','numero_de_emprestimos', 'descricao')
             ->get();
+            
             
             return view('layouts.consultarLivro', $_SESSION, ['livros' => $livros, 'action' => 1]); 
 
@@ -52,6 +54,30 @@ class LivroController extends Controller
         $request->validate($regras, $feedback);
 
         return redirect()->route('auth.on.livro.consultar', ['livros' => $request->codigo]);
+    }
+
+
+    public function gerarRelatorio(Request $request){
+
+        $dataInicio = \DateTime::createFromFormat('Y-m-d', $request->dataInicial);
+        $dataFim = \DateTime::createFromFormat('Y-m-d', $request->dataFinal);
+        
+        $livros = DB::table('livros')->where('livros.created_at', '>=', $dataInicio)
+            ->where('livros.created_at', '<=', $dataFim)
+            ->get();
+
+       
+        for($i = 0; $i < count($livros); $i++) {
+            $livros[$i]->created_at = (new \DateTime($livros[$i]->created_at))->format('d/m/Y');
+            $livros[$i]->updated_at = (new \DateTime($livros[$i]->updated_at))->format('d/m/Y');
+        }
+
+        $pdf = \PDF::loadView('layouts.relatorios.relatorioLivro', compact('livros'))
+                    ->setPaper('a4', 'landscape')
+                    ->stream('relatorio-livros.pdf', array('Attachment' => false));
+                    //->download('relatorio-emprestimo.pdf');    
+                    
+        return $pdf;
     }
 
     /**

@@ -46,6 +46,10 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
         Route::get('/consultar-funcionario', 'FuncionarioController@searchIndex')->name('auth.on.funcionario.consultar');
         Route::post('/consultar-funcionario', 'FuncionarioController@searchIndex')->name('auth.on.funcionario.consultar');
 
+        Route::get('/consultar-estudante/{msg?}', 'EstudanteController@searchIndex')->name('auth.on.estudante.consultar');
+        Route::post('/consultar-estudante', 'EstudanteController@searchIndex')->name('auth.on.estudante.consultar');
+        Route::post('/deletar-estudante', 'EstudanteController@destroy')->name('auth.on.estudante.deletar');
+
         Route::post('/alterar-permissao', 'UsuarioController@alterarPermissao')->name('auth.on.usuario.permissao');
 
         Route::get('/editar-perfil', 'UsuarioController@editarPerfil')->name('auth.on.usuario.editar');
@@ -56,9 +60,14 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
             return view('layouts.gerarRelatorio', $params);
         })->name('auth.on.relatorio.gerar');
 
-        Route::post('/pdf', 'EmprestimoController@gerarRelatorio')->name('auth.on.pdf');
+        Route::post('/pdf-emprestimos', 'EmprestimoController@gerarRelatorio')->name('auth.on.pdf');
+        Route::post('/pdf-livros', 'LivroController@gerarRelatorio')->name('auth.on.livro.pdf');
     });
     Route::prefix('estudante')/*->middleware('')*/->group(function(){
         Route::get('/painel', 'EstudanteController@index')->name('auth.estudante.painel');
     });
+});
+
+Route::fallback(function() {
+    return redirect()->route('auth.on.dashboard');
 });
