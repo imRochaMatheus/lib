@@ -13,6 +13,8 @@
     --white: #FFF;
     --white-medium: #EBF2F5;
     --dark:  rgba(0, 0, 0, 0.5);
+    --red: #ee5253;
+    --green: #10ac84;
 }
 
 body {
@@ -63,7 +65,8 @@ form.cadastro label {
 #cadastro-usuario-form input, #cadastro-usuario-form select,
 #buscar-emprestimo-form input, #buscar-emprestimo-form select,
 #buscar-livro-form input,
-#alterar-permissao-form select {
+#alterar-permissao-form select,
+#editar-livro-form input {
     outline: none;
     box-shadow: none;
 

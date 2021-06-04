@@ -16,7 +16,77 @@ class FuncionarioController extends Controller
      */
     public function index()
     {
-        return view('layouts.dashboardFuncionario', $_SESSION);
+        $meses = [
+            '01' => 'Jan',
+            '02' => 'Fev',
+            '03' => 'Mar',
+            '04' => 'Abr',
+            '05' => 'Maio',
+            '06' => 'Jun',
+            '07' => 'Jul',
+            '08' => 'Ago',
+            '09' => 'Set',
+            '10' => 'Out',
+            '11' => 'Nov',
+            '12' => 'Dez'
+        ];
+
+        $data_atual = new \DateTime('now');
+        $mes_atual = $data_atual->format('m');
+
+        $labels = [];
+        $numero_de_emprestimos_por_mes = [];
+        foreach ($meses as $key => $value) {
+            if ($key > $mes_atual) break;
+            
+            array_push($labels, $meses[$key]);
+            $numero_de_emprestimos = DB::table('emprestimos')->whereMonth('data_emprestimo', $key)->count();
+            array_push($numero_de_emprestimos_por_mes, $numero_de_emprestimos);
+        }
+
+        $devolucoes = DB::table('emprestimo_contem_exemplar')->where('status', 1)->count();
+        $atrasados = DB::table('emprestimo_contem_exemplar')
+            ->where('status', 0)
+            ->whereDate('data_limite', '<', $data_atual->format('Y-m-d'))
+            ->whereDate('data_devolucao', NULL)
+            ->count();
+        $emprestados = DB::table('emprestimo_contem_exemplar')
+            ->where('status', 0)
+            ->whereDate('data_limite', '>=', $data_atual->format('Y-m-d'))
+            ->whereDate('data_devolucao', NULL)
+            ->count();
+
+        $bar = app()->chartjs
+            ->name('emprestimosPorMes')
+            ->type('bar')
+            ->size(['width' => 300, 'height' => 170])
+            ->labels($labels)
+            ->datasets([
+                [
+                    "label" => "Número de Empréstimos",
+                    'backgroundColor' => ['#FFD666'],
+                    'data' => $numero_de_emprestimos_por_mes
+                ]
+            ])
+            ->options([]);
+
+        $pie = app()->chartjs
+            ->name('emprestimos')
+            ->type('pie')
+            ->size(['width' => 400, 'height' => 170])
+            ->labels(['Devolvido ', 'Em Atraso ', 'Emprestado'])
+            ->datasets([
+                [
+                    'backgroundColor' => ['#15C3D6', '#17D6EB', '#96FEFF'],
+                    'hoverBackgroundColor' => ['#15C3D6', '#17D6EB', '#96FEFF'],
+                    'data' => [$devolucoes, $atrasados, $emprestados]
+                ]
+            ])
+            ->options([]);
+        
+        $params = array_merge($_SESSION, compact('bar'), compact('pie'));
+
+        return view('layouts.dashboardFuncionario', $params);
     }
 
     public function searchIndex(Request $request)

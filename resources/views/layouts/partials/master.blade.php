@@ -43,6 +43,9 @@
                     </nav>
                 @endunless
                 <main class="content">
+                    @if(session()->has('message'))
+                        @include('layouts.partials.notifications')
+                    @endif
                     <div class="container-fluid p-0">
                         @yield('conteudo')
                     </div>
@@ -66,6 +69,9 @@
 
         <!-- jQuery Mask Plugin -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous"></script>
+
+        <!-- Chart JS library -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
 
         @stack('scripts')
         <script type="text/javascript">
