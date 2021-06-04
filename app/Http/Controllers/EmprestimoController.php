@@ -135,11 +135,15 @@ class EmprestimoController extends Controller
         if($estudante != null){ 
             for($i = 1; $i < 6; $i++){
                 $codigo = "codigo$i";
-                $exemplar = DB::table('exemplares')->where('codigo', $request->$codigo)->get()->first();
-                if($exemplar != null){
-                    $flag = true;
-                    array_push($volumes, $exemplar->codigo);
-                }              
+                if(!Empty($request->$codigo)){
+                    $exemplar = DB::table('exemplares')->where('codigo', $request->$codigo)->get()->first();
+                    if($exemplar != null){
+                        $flag = true;
+                        array_push($volumes, $exemplar->codigo);
+                    }else{
+                        return redirect()->back()->with('message', 'Exemplar ' . $request->$codigo . ' não encontrado.');
+                    }      
+                }
             }
             if($flag){
                 try{
