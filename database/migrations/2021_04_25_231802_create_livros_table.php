@@ -22,6 +22,7 @@ class CreateLivrosTable extends Migration
             $table->string('editora', 255)->required;
             $table->integer('edicao')->required;
             $table->integer('volume')->default(1);
+            $table->string('foto')->nullable();    
             $table->integer('numero_de_paginas')->nullable;
             $table->integer('numero_de_emprestimos')->default(0);
             $table->integer('numero_de_exemplares')->default(0);
