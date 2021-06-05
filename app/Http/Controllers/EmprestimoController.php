@@ -56,9 +56,12 @@ class EmprestimoController extends Controller
             if($request->matricula != NULL) {
                 $emprestimos = $emprestimos->where('estudantes.matricula', $request->matricula);
             }
-            $emprestimos = $emprestimos->get();
+                $emprestimos = $emprestimos->get();
         } else {
-            $emprestimos = $emprestimos->where('exemplares.codigo', $request->codigo)->get();
+            if($request->codigo != NULL) {
+                $emprestimos = $emprestimos->where('emprestimo_contem_exemplar.codigo_exemplar', $request->codigo);
+            } 
+                $emprestimos = $emprestimos->get();      
         }
 
         foreach($emprestimos as $emprestimo) {
@@ -194,6 +197,8 @@ class EmprestimoController extends Controller
 
     public function show(Request $request)
     {
+        //dd($_SESSION);
+        $acesso = $_SESSION['acesso'];
         $emprestimos = DB::table('emprestimos')
                     ->join('funcionarios', 'emprestimos.id_funcionario','=', 'funcionarios.id')
                     ->join('estudantes', 'emprestimos.id_estudante','=', 'estudantes.id')
@@ -202,9 +207,13 @@ class EmprestimoController extends Controller
                     ->join('livros', 'livros.id','=', 'exemplares.id_livro')
                     ->select('estudantes.matricula', 'emprestimo_contem_exemplar.codigo_exemplar as codigo','emprestimos.data_emprestimo as emprestimo', 
                     'estudantes.nome as estudante', 'funcionarios.nome as funcionario', 'emprestimos.multa', 'emprestimo_contem_exemplar.status',
-                    'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo', 'emprestimo_contem_exemplar.data_limite')
-                    ->get();
+                    'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo', 'emprestimo_contem_exemplar.data_limite');
 
+        if($acesso == 3){
+            $emprestimos = $emprestimos->where('id_estudante', $_SESSION['id']);
+        }
+        $emprestimos = $emprestimos->get();
+       
         foreach($emprestimos as $emprestimo) {
             $emprestimo->emprestimo = (new \DateTime($emprestimo->emprestimo))->format('d/m/Y');
             $emprestimo->data_limite = (new \DateTime($emprestimo->data_limite))->format('d/m/Y');

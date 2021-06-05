@@ -10,7 +10,7 @@
                     <div class="col-md-12 form-group">
                         <label for="codigo-livro">Código do Livro:</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="codigo" id="codigo-livro" autocomplete="off" aria-describedby="codigo-error" value="{{ old('codigo') }}" required>
+                            <input type="text" class="form-control" name="codigo" id="codigo-livro" autocomplete="off" aria-describedby="codigo-error" value="{{ old('codigo') }}" >
                             <div class="input-group-append">
                                 <button class="btn search-button" type="submit"><i class="fas fa-search"></i></button>
                             </div>

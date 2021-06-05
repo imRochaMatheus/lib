@@ -21,7 +21,6 @@ class LivroController extends Controller
 
     public function searchIndex(Request $request)
     {
- 
         if(!empty($request->livros)){
 
             $livros = DB::table('livros')
@@ -40,19 +39,6 @@ class LivroController extends Controller
 
     public function getAll(Request $request)
     {
-        $regras = 
-        [
-            'codigo' => 'required|numeric'
-        ];
-
-        $feedback = 
-        [
-            'required' => 'O campo :attribute é obrigatório',
-            'numeric' => 'Utilize apenas números',
-        ];
-
-        $request->validate($regras, $feedback);
-
         return redirect()->route('auth.on.livro.consultar', ['livros' => $request->codigo]);
     }
 

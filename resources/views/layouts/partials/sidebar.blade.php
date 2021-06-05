@@ -42,9 +42,15 @@
                     </a>
                     <div class="sidebar-submenu">
                         <ul>
-                            <li>
-                                <a href="{{ route('auth.on.emprestimo.consultar') }}">Empréstimo</a>
-                            </li>
+                            @if ($acesso != 3 )
+                                 <li>
+                                    <a href="{{ route('auth.on.emprestimo.consultar') }}">Empréstimo</a>
+                                </li>
+                            @else
+                                <li>
+                                    <a href="{{ route('auth.on.emprestimo.consultar') }}">Meus Empréstimos</a>
+                                </li>
+                            @endif
                             <li>
                                 <a href="{{ route('auth.on.livro.consultar') }}">Livro</a>
                             </li>
