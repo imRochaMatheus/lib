@@ -110,7 +110,9 @@ class EstudanteController extends Controller
     {
         $user = DB::table('usuarios')->where('id', $request->usuario_id)->first();
         $estudante = DB::table('estudantes')->where('id_usuario', $request->usuario_id)->first();
-        $emprestimo = DB::table('emprestimos')->where('id_estudante', $estudante->id)->first();
+        $emprestimo = DB::table('emprestimos')->where('id_estudante', $estudante->id)
+        ->join('emprestimo_contem_exemplar', 'emprestimos.id', '=', 'emprestimo_contem_exemplar.emprestimo_id')
+        ->where('status', false)->first();
 
         if($emprestimo == null)
         {

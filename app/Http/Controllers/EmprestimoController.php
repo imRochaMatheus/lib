@@ -137,11 +137,11 @@ class EmprestimoController extends Controller
                 $codigo = "codigo$i";
                 if(!Empty($request->$codigo)){
                     $exemplar = DB::table('exemplares')->where('codigo', $request->$codigo)->get()->first();
-                    if($exemplar != null){
+                    if($exemplar != null && $exemplar->status != false){
                         $flag = true;
                         array_push($volumes, $exemplar->codigo);
                     }else{
-                        return redirect()->back()->with('message', 'Exemplar ' . $request->$codigo . ' não encontrado.');
+                        return redirect()->back()->with('message', 'Exemplar ' . $request->$codigo . ' não encontrado e/ou disponível.');
                     }      
                 }
             }
@@ -162,11 +162,13 @@ class EmprestimoController extends Controller
                                                 ->get();
                             $emprestimo_exemplar->emprestimo_id = $emprestimo_id[0]->id;
                             $data = date('Y-m-d', strtotime($request->data_emprestimo)); 
-                            $limite = date('Y-m-d', strtotime("+2 days",strtotime($data))); 
+                            $limite = date('Y-m-d', strtotime("+ 7days",strtotime($data))); 
                             $emprestimo_exemplar->data_limite = $limite;
                             $emprestimo_exemplar->codigo_exemplar = $volumes[$i];
-                            //$emprestimo_exemplar->data_devolucao = $limite; //Mudar
                             $emprestimo_exemplar->save();
+                            DB::table('exemplares')->where('codigo', $emprestimo_exemplar->codigo_exemplar)
+                            ->update(['status' => false]);
+
                             $id_exemplar = DB::table('exemplares')->where('codigo', $volumes[$i])->first('id_livro');
                             $id_livro = $id_exemplar->id_livro;
                             $qtd_emprestimos = DB::table('livros')->where('id', $id_livro)->first('numero_de_emprestimos');
@@ -236,10 +238,13 @@ class EmprestimoController extends Controller
             DB::beginTransaction();
             /* devolve o exemplar */
             $emprestimo_contem_exemplar = new Emprestimo_contem_exemplar();
-            $exemplar = $emprestimo_contem_exemplar->where('codigo_exemplar', $request->codigo_exemplar)->first();
+            $exemplar = $emprestimo_contem_exemplar->where('codigo_exemplar', $request->codigo_exemplar)
+            ->where('status', false)->first();
             $exemplar->status = 1;
             $exemplar->data_devolucao = (new \DateTime('now'))->format('Y-m-d');
             $exemplar->save();
+            DB::table('exemplares')->where('codigo', $exemplar->codigo_exemplar)
+            ->update(['status'=>true]);
     
             /* busca pelo empréstimo relacionado */
             $emprestimo = new Emprestimo();
@@ -270,9 +275,10 @@ class EmprestimoController extends Controller
         try {
             DB::beginTransaction();
             $emprestimo_contem_exemplar = new Emprestimo_contem_exemplar();
-            $exemplar = $emprestimo_contem_exemplar->where('codigo_exemplar', $request->codigo_exemplar)->first();
+            $exemplar = $emprestimo_contem_exemplar->where('codigo_exemplar', $request->codigo_exemplar)
+            ->where('status', false)->first();
             $exemplar->renovacoes = $exemplar->renovacoes - 1;
-            $data_atual = new \DateTime('now');
+            $data_atual = new \DateTime($exemplar->data_limite);
             $exemplar->data_limite = $data_atual->add(new \DateInterval('P7D'));
             $exemplar->save();
             DB::commit();
