@@ -114,14 +114,12 @@ class EstudanteController extends Controller
         ->join('emprestimo_contem_exemplar', 'emprestimos.id', '=', 'emprestimo_contem_exemplar.emprestimo_id')
         ->where('status', false)->first();
 
-        if($emprestimo == null)
-        {
+        if($emprestimo == null) {
             DB::table('estudantes')->where('id_usuario', $request->usuario_id)->delete();
             DB::table('usuarios')->where('id', $request->usuario_id)->delete();
-            return redirect()->route('auth.on.estudante.consultar', ['msg'=>'Sucesso ao deletar registro']);
-        }else
-        {
-            return redirect()->route('auth.on.estudante.consultar', ['msg'=>'Não foi possível excluir o registro de estudante']);
+            return redirect()->back()->with('message', 'Sucesso ao deletar registro');
+        } else {
+            return redirect()->back()->with('message', 'Não foi possível excluir o registro de estudante');
         }
     }
 }

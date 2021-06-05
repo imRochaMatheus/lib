@@ -42,11 +42,9 @@
                     </a>
                     <div class="sidebar-submenu">
                         <ul>
-                            @if(isset($acesso) && $acesso != 3)
-                                <li>
-                                    <a href="{{ route('auth.on.emprestimo.consultar') }}">Empréstimo</a>
-                                </li>
-                            @endisset
+                            <li>
+                                <a href="{{ route('auth.on.emprestimo.consultar') }}">Empréstimo</a>
+                            </li>
                             <li>
                                 <a href="{{ route('auth.on.livro.consultar') }}">Livro</a>
                             </li>

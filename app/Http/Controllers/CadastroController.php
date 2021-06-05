@@ -88,8 +88,7 @@ class CadastroController extends Controller
                     'email' => $request->email,
                 ]);
         }
-        //CRIAR PAGINA DE SUCESSO AO CADASTRAR
         
-        return redirect()->route('auth.on.dashboard');
+        return redirect()->back()->with('message', 'Usuário cadastrado com sucesso.')
     }
 }

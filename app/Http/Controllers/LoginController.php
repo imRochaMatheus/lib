@@ -34,7 +34,7 @@ class LoginController extends Controller
     }
 
     public function autenticar(Request $request)
-    {   
+    {          
         $regras = [
             'email' => 'email',
             'password' => 'required',
@@ -65,8 +65,7 @@ class LoginController extends Controller
                 Cookie::queue(Cookie::forget('CookieSenha'));
                 Cookie::queue(Cookie::forget('CookieLembrete'));
 
-            }
-            
+            }            
 
             session_start();
 
@@ -77,13 +76,8 @@ class LoginController extends Controller
                 $_SESSION['foto'] = $usuario->foto;
             } else {
                 $_SESSION['foto'] = 'images/avatar.png';
-            }
+            }        
 
-            
-
-            
-
-           
             switch ($usuario->nivel_de_acesso){
                 case 1:
                     $usuario_id = DB::table('funcionarios')->where('email', $usuario->email)->get('id');

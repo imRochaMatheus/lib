@@ -48,7 +48,8 @@
     color: var(--yellow);
 }
 
-.modal .modal-content .modal-body .livro {
+.modal .modal-content .modal-body .livro,
+.modal .modal-content .modal-body .estudante-nome {
     font-weight: 600;
     color: var(--blue);
 }
