@@ -81,28 +81,44 @@
                                                 <i class="fas fa-search-plus"></i>
                                             </a>
                                         </li>
-                                        @if(isset($acesso) && $acesso != 3)
-                                            <li data-toggle="tooltip" title="Editar">
-                                                <a 
-                                                    href="#"
-                                                    class="btn btn-link"
-                                                    role="button"
-                                                    aria-disabled="true"
-                                                    data-toggle="modal"
-                                                    data-target="#modal-editar"
-                                                    data-codigo="{{$livro->codigo}}"
-                                                    data-emprestimos="{{$livro->numero_de_emprestimos}}"
-                                                    data-nome="{{$livro->titulo}}"
-                                                    data-autor="{{$livro->autor}}"
-                                                    data-editora="{{$livro->editora}}"
-                                                    data-edicao="{{$livro->edicao}}"
-                                                    data-volume="{{$livro->volume}}"
-                                                    data-paginas="{{$livro->numero_de_paginas}}"
-                                                    data-descricao="{{$livro->descricao}}"
-                                                >
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                            </li>
+                                        @if(isset($acesso))
+                                            @if($acesso == 1)
+                                                <li data-toggle="tooltip" title="Editar">
+                                                    <a 
+                                                        href="#"
+                                                        class="btn btn-link"
+                                                        role="button"
+                                                        aria-disabled="true"
+                                                        data-toggle="modal"
+                                                        data-target="#modal-editar"
+                                                        data-codigo="{{$livro->codigo}}"
+                                                        data-emprestimos="{{$livro->numero_de_emprestimos}}"
+                                                        data-nome="{{$livro->titulo}}"
+                                                        data-autor="{{$livro->autor}}"
+                                                        data-editora="{{$livro->editora}}"
+                                                        data-edicao="{{$livro->edicao}}"
+                                                        data-volume="{{$livro->volume}}"
+                                                        data-paginas="{{$livro->numero_de_paginas}}"
+                                                        data-descricao="{{$livro->descricao}}"
+                                                    >
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                </li>
+                                            @elseif($acesso == 3)
+                                                <li data-toggle="tooltip" title="Comentar">
+                                                    <a 
+                                                        href="#"
+                                                        class="btn btn-link"
+                                                        role="button"
+                                                        aria-disabled="true"
+                                                        data-toggle="modal"
+                                                        data-target="#modal-comentar"
+                                                        data-codigo="{{$livro->codigo}}"
+                                                    >
+                                                        <i class="far fa-comments"></i>
+                                                    </a>
+                                                </li>
+                                            @endif
                                         @endif
                                     </ul>
                                 </td>
@@ -299,6 +315,34 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="modal-comentar" tabindex="-1" role="dialog" aria-labelledby="modal-comentar" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <form id="comentar-livro-form" class="col-md-12 cadastro" method="POST">
+                                    @csrf
+
+                                    <input type="hidden" name="codigo">
+                            
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <label for="comentario">Comentário:</label>
+                                            <textarea class="form-control" name="comentario" id="comentario" maxlength="256" aria-describedby="comentario-error" value="{{ old('comentario') }}" required></textarea>
+                                            <small id="comentario-error" class="form-text">{{ $errors->has('comentario') ? $errors->first('comentario') : ''}}</small>
+                                        </div>
+                                    </div>   
+                            
+                                    <button type="submit" class="btn btn-block mt-4">COMENTAR</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -360,6 +404,15 @@
                 modal.find('input[name="volume"]').val(volume);
                 modal.find('input[name="numero_de_paginas"]').val(paginas);
                 modal.find('textarea[name="descricao"]').val(descricao);
+            });
+
+            $('#modal-comentar').on('show.bs.modal', function (event) {
+                let button = $(event.relatedTarget);
+                let modal = $(this);
+
+                let codigo = button.data('codigo');
+
+                modal.find('input[name="codigo"]').val(codigo);
             });
         });
     </script>

@@ -19,6 +19,8 @@ Route::get('/logout', 'LoginController@sair')->name('logout');
 Route::get('/recuperar-senha', 'UsuarioController@recuperarSenhaIndex')->name('recuperarSenha');
 Route::post('/recuperar-senha', 'UsuarioController@recuperarSenha')->name('recuperarSenha');
 
+Route::get('/dashboard','UsuarioController@dashboard')->middleware('auth');
+
 Route::prefix('auth')->middleware('autenticacao')->group(function(){
 
     Route::prefix('on')->middleware('autenticacao')->group(function(){

@@ -46,7 +46,7 @@ body, input, button, textarea {
     opacity: 1;
 }
 
-form.cadastro:not(#editar-livro-form):not(#alterar-permissao-form) {
+form.cadastro:not(#editar-livro-form):not(#alterar-permissao-form):not(#comentar-livro-form) {
     padding: 1.5em;
     
     background-color: var(--white);

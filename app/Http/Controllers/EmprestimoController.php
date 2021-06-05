@@ -42,56 +42,38 @@ class EmprestimoController extends Controller
 
     public function getAll(Request $request)
     {
-        if($request->buscar_por == 1){
-            $emprestimos = DB::table('emprestimos')
-            ->join('funcionarios', 'emprestimos.id_funcionario','=', 'funcionarios.id')
-            ->join('estudantes', 'emprestimos.id_estudante','=', 'estudantes.id')->where('estudantes.matricula', $request->matricula)
-            ->join('emprestimo_contem_exemplar', 'emprestimos.id', '=', 'emprestimo_contem_exemplar.emprestimo_id')
-            ->join('exemplares', 'exemplares.codigo','=', 'emprestimo_contem_exemplar.codigo_exemplar')
-            ->join('livros', 'livros.id','=', 'exemplares.id_livro')
-            ->select('estudantes.matricula', 'emprestimo_contem_exemplar.codigo_exemplar','emprestimos.data_emprestimo as emprestimo',
-            'estudantes.nome as estudante', 'funcionarios.nome as funcionario', 'emprestimos.multa', 'emprestimo_contem_exemplar.status',
-            'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo', 'emprestimo_contem_exemplar.data_limite')
-            ->get();
-
-            foreach($emprestimos as $emprestimo) {
-                $emprestimo->emprestimo = (new \DateTime($emprestimo->emprestimo))->format('d/m/Y');
-                $emprestimo->data_limite = (new \DateTime($emprestimo->data_limite))->format('d/m/Y');
-            }
-
-            $params = array_merge(['emprestimos' => $emprestimos], $_SESSION);
-
-            return view('layouts.consultarEmprestimo', $params);
-        } else if($request->buscar_por == 2){
-            $emprestimos = DB::table('emprestimos')
+        $emprestimos = DB::table('emprestimos')
             ->join('funcionarios', 'emprestimos.id_funcionario','=', 'funcionarios.id')
             ->join('estudantes', 'emprestimos.id_estudante','=', 'estudantes.id')
             ->join('emprestimo_contem_exemplar', 'emprestimos.id', '=', 'emprestimo_contem_exemplar.emprestimo_id')
-            ->join('exemplares', 'exemplares.codigo','=', 'emprestimo_contem_exemplar.codigo_exemplar')->where('exemplares.codigo', $request->codigo)
+            ->join('exemplares', 'exemplares.codigo','=', 'emprestimo_contem_exemplar.codigo_exemplar')
             ->join('livros', 'livros.id','=', 'exemplares.id_livro')
-            ->select('estudantes.matricula', 'emprestimo_contem_exemplar.codigo_exemplar','emprestimos.data_emprestimo as emprestimo',
+            ->select('estudantes.matricula', 'emprestimo_contem_exemplar.codigo_exemplar as codigo','emprestimos.data_emprestimo as emprestimo',
             'estudantes.nome as estudante', 'funcionarios.nome as funcionario', 'emprestimos.multa', 'emprestimo_contem_exemplar.status',
-            'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo', 'emprestimo_contem_exemplar.data_limite')
-            ->get();
+            'emprestimo_contem_exemplar.renovacoes as qtd_renovacoes', 'livros.titulo', 'emprestimo_contem_exemplar.data_limite');
 
-            foreach($emprestimos as $emprestimo) {
-                $emprestimo->emprestimo = (new \DateTime($emprestimo->emprestimo))->format('d/m/Y');
-                $emprestimo->data_limite = (new \DateTime($emprestimo->data_limite))->format('d/m/Y');
+        if($request->buscar_por == 1){
+            if($request->matricula != NULL) {
+                $emprestimos = $emprestimos->where('estudantes.matricula', $request->matricula);
             }
-
-            $params = array_merge(['emprestimos' => $emprestimos], $_SESSION);
-
-            return view('layouts.consultarEmprestimo', $params);
-        } else{
-            //página de falha
+            $emprestimos = $emprestimos->get();
+        } else {
+            $emprestimos = $emprestimos->where('exemplares.codigo', $request->codigo)->get();
         }
+
+        foreach($emprestimos as $emprestimo) {
+            $emprestimo->emprestimo = (new \DateTime($emprestimo->emprestimo))->format('d/m/Y');
+            $emprestimo->data_limite = (new \DateTime($emprestimo->data_limite))->format('d/m/Y');
+        }
+
+        $params = array_merge(['emprestimos' => $emprestimos], $_SESSION);
+
+        return view('layouts.consultarEmprestimo', $params);
        
     }
 
     public function gerarRelatorio(Request $request)
     {
-       
-
         $dataInicio = \DateTime::createFromFormat('Y-m-d', $request->dataInicial);
         $dataFim = \DateTime::createFromFormat('Y-m-d', $request->dataFinal);
         
@@ -128,19 +110,22 @@ class EmprestimoController extends Controller
      */
     public function create(Request $request)
     {
-        $flag = true;
+        $flag = false;
         $volumes = [];
 
         $estudante = DB::table('estudantes')->where('matricula', $request->matricula)->get()->first();
         if($estudante != null){ 
             for($i = 1; $i < 6; $i++){
                 $codigo = "codigo$i";
-                $exemplar = DB::table('exemplares')->where('codigo', $request->$codigo)->get()->first();
-                if($exemplar == null){
-                    $flag = false;
-                    break;
-                }             
-                array_push($volumes, $exemplar->codigo);
+                if(!Empty($request->$codigo)){
+                    $exemplar = DB::table('exemplares')->where('codigo', $request->$codigo)->get()->first();
+                    if($exemplar != null){
+                        $flag = true;
+                        array_push($volumes, $exemplar->codigo);
+                    }else{
+                        return redirect()->back()->with('message', 'Exemplar ' . $request->$codigo . ' não encontrado.');
+                    }      
+                }
             }
             if($flag){
                 try{
