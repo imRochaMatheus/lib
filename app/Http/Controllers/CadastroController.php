@@ -89,6 +89,6 @@ class CadastroController extends Controller
                 ]);
         }
         
-        return redirect()->back()->with('message', 'Usuário cadastrado com sucesso.')
+        return redirect()->back()->with('message', 'Usuário cadastrado com sucesso.');
     }
 }

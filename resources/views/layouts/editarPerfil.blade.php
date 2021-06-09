@@ -11,7 +11,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-8 offset-md-2 form-group">
+            <div class="col-md-8 offset-md-1 form-group">
                 <label for="foto" aria-hidden="true" hidden>Foto:</label>
                 <input type="file" id="foto" name="foto" accept="image/*" required>
                 <input type="hidden" id="usuario_id" name="usuario_id" value={{$id}}>

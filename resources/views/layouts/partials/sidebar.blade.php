@@ -42,18 +42,19 @@
                     </a>
                     <div class="sidebar-submenu">
                         <ul>
+                            <li>
+                                <a href="{{ route('auth.on.livro.consultar') }}">Livros</a>
+                            </li>
                             @if ($acesso != 3 )
                                  <li>
-                                    <a href="{{ route('auth.on.emprestimo.consultar') }}">Empréstimo</a>
+                                    <a href="{{ route('auth.on.emprestimo.consultar') }}">Empréstimos</a>
                                 </li>
                             @else
                                 <li>
                                     <a href="{{ route('auth.on.emprestimo.consultar') }}">Meus Empréstimos</a>
                                 </li>
                             @endif
-                            <li>
-                                <a href="{{ route('auth.on.livro.consultar') }}">Livro</a>
-                            </li>
+                            
                         </ul>
                     </div>
                 </li>
@@ -66,11 +67,15 @@
                         <div class="sidebar-submenu">
                             <ul>
                                 <li>
-                                    <a href="{{ route('auth.on.relatorio.gerar', ['tipo' => 'emprestimo']) }}">Empréstimo</a>
+                                    <a href="{{ route('auth.on.relatorio.gerar', ['tipo' => 'livro']) }}">Livros</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('auth.on.relatorio.gerar', ['tipo' => 'livro']) }}">Livro</a>
+                                    <a href="{{ route('auth.on.relatorio.gerar', ['tipo' => 'Estudante']) }}">Estudantes</a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('auth.on.relatorio.gerar', ['tipo' => 'emprestimo']) }}">Empréstimos</a>
+                                </li>
+                               
                             </ul>
                         </div>
                     </li>
