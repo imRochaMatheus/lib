@@ -54,18 +54,18 @@ a.block-link {
 }
 
 #carrosel-comentarios {
-    background-color: var(--yellow);
+    background-color: var(--brown);
     border-radius: 0.3em;
 }
 
 #comentarios .carousel-control-prev i,
 #comentarios .carousel-control-next i {
     font-size: 3em;
-    color: var(--brown);
+    color: var(--yellow);
 }
 
 #comentarios .carousel-indicators li {
-    background-color: var(--brown);
+    background-color: var(--yellow);
     width: 1em;
     height: 1em;
     border-radius: 50%;
