@@ -61,11 +61,10 @@ class LivroController extends Controller
         $pdf = \PDF::loadView('layouts.relatorios.relatorioLivro', compact('livros'))
                     ->setPaper('a4', 'landscape')
                     ->stream('relatorio-livros.pdf', array('Attachment' => false));
-                    //->download('relatorio-emprestimo.pdf');    
-                    
+                    //->download('relatorio-emprestimo.pdf');              
         return $pdf;
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *

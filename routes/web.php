@@ -32,6 +32,7 @@ Route::prefix('auth')->middleware('autenticacao')->group(function(){
 
         Route::get('/consultar-livro/{livro?}', 'LivroController@searchIndex')->name('auth.on.livro.consultar');
         Route::post('/consultar-livro', 'LivroController@getAll')->name('auth.on.livro.consultar');
+        Route::post('/comentar', 'ComentarioController@create')->name('auth.on.livro.comentar');
 
         Route::get('/cadastro-livro', 'LivroController@index')->name('auth.on.livro.cadastrar');
         Route::post('/cadastro-livro', 'LivroController@create')->name('auth.on.livro.cadastrar');

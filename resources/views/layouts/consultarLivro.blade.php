@@ -322,7 +322,7 @@
                     <div class="modal-body">
                         <div class="container-fluid">
                             <div class="row">
-                                <form id="comentar-livro-form" class="col-md-12 cadastro" method="POST">
+                                <form id="comentar-livro-form" class="col-md-12 cadastro" method="POST" action="{{ route('auth.on.livro.comentar') }}">
                                     @csrf
 
                                     <input type="hidden" name="codigo">

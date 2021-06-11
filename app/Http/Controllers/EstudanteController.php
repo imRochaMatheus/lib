@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Estudante;
 use App\Usuario;
+use App\Livro;
 use App\Emprestimo;
+use App\Comentario;
 use App\Flight;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +22,16 @@ class EstudanteController extends Controller
      */
     public function index()
     {   
+        $comentarios = DB::table('comentarios')->get();
+        if($comentarios != null){
+            foreach ($comentarios as $key => $coment) {
+                $coment->foto = DB::table('livros')
+                ->where('codigo', $coment->codigo_livro)
+                ->first('foto')->foto;
+            }
+            $params = array_merge(['comentarios' => $comentarios], $_SESSION);
+            return view('layouts.dashboardEstudante',$params);
+        }
         return view('layouts.dashboardEstudante',$_SESSION);
     }
     public function searchIndex(Request $request)
