@@ -144,7 +144,7 @@ class EmprestimoController extends Controller
                                                 ->get();
                             $emprestimo_exemplar->emprestimo_id = $emprestimo_id[0]->id;
                             $data = date('Y-m-d', strtotime($request->data_emprestimo)); 
-                            $limite = date('Y-m-d', strtotime("+2 days",strtotime($data))); 
+                            $limite = date('Y-m-d', strtotime("+7 days",strtotime($data))); 
                             $emprestimo_exemplar->data_limite = $limite;
                             $emprestimo_exemplar->codigo_exemplar = $volumes[$i];
                             //$emprestimo_exemplar->data_devolucao = $limite; //Mudar
