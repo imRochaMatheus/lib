@@ -71,6 +71,34 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-8 form-group">
+                <label for="foto">Foto:</label><br>
+                <input type="file" id="foto" name="foto" accept="image/*" required style="color: var(--brown);">
+            </div>
+            <div class="col-md-4 form-group foto">
+                <img id="foto-atual" src="{{ asset('images/books.png') }}" width="100">
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-block mt-4">CADASTRAR</button>
     </form>
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+        $(function() {
+            $('#foto').change(function() {
+                if(this.files && this.files[0]) {
+                    let reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('#foto-atual').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+    </script>
+@endpush

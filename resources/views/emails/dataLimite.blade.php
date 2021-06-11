@@ -4,13 +4,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
         <style type="text/css">
-            .table tbody td,
-            .table thead th {
+            table tbody td,
+            table thead th {
                 text-align: center;
                 vertical-align: middle;
             },
 
-            .table thead th {
+            table thead th {
                 color: #8D734B;
                 background-color: #FFD666;
                 border-color: #FFD666;
@@ -26,49 +26,19 @@
         <p>Evite bloqueios e multas. Renove ou realize a devolução dos exemplares antes do fim do prazo.</p>
         <p>Fim do prazo: <strong>{{ $emprestimos[0]->data_limite }}</strong>.</p>
 
-        <table>
-            <thead>
-                <tr>
-                    <th scope="col">Data Empréstimo</th>
-                    <th scope="col">Data Limite</th>
-                    <th scope="col">Exemplar</th>
-                    <th scope="col">Título</th>
-                    <th scope="col">Autor</th>
-                    <th scope="col">Editora</th>
-                    <th scope="col">Edição</th>
-                    <th scope="col">Volume</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($emprestimos as $emprestimo)
-                    <tr>                            
-                        <td>
-                            {{$emprestimo->data_emprestimo}}
-                        </td>
-                        <td>
-                            {{$emprestimo->data_limite}}
-                        </td>
-                        <td>
-                            {{$emprestimo->codigo}}
-                        </td>
-                        <td>
-                            {{$emprestimo->titulo}}
-                        </td>
-                        <td>
-                            {{$emprestimo->autor}}
-                        </td>
-                        <td>
-                            {{$emprestimo->editora}}
-                        </td>
-                        <td>
-                            {{$emprestimo->edicao}}ª
-                        </td>
-                        <td>
-                            {{$emprestimo->volume}}
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+        @foreach ($emprestimos as $emprestimo)
+            <p>
+                <strong>Data Empréstimo</strong>: {{ $emprestimo->data_emprestimo }}<br>
+                <strong>Data Limite</strong>: {{ $emprestimo->data_limite }}<br>
+                <strong>Exemplar</strong>: {{ $emprestimo->codigo }}<br>
+                <strong>Título</strong>: {{ $emprestimo->titulo }}<br>
+                <strong>Autor</strong>: {{ $emprestimo->autor }}<br>
+                <strong>Editora</strong>: {{ $emprestimo->editora }}<br>
+                <strong>Edição</strong>: {{ $emprestimo->edicao }}ª<br>
+                <strong>Volume</strong>: {{ $emprestimo->volume }}
+            </p>
+        @endforeach
+
+        <p>Este é um e-mail automático. Por favor, não responda. Em caso de dúvidas, entre em contato com a administração</p>
     </body>
 </html>
