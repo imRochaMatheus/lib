@@ -1,7 +1,7 @@
 @extends('layouts.partials.master')
 @section('conteudo')
     
-    <form id="cadastro-livro-form" class="col-md-6 cadastro" action="{{ route('auth.on.livro.cadastrar') }}" method="POST">
+    <form id="cadastro-livro-form" class="col-md-6 cadastro" action="{{ route('auth.on.livro.cadastrar') }}" method="POST" enctype="multipart/form-data">
         @csrf
        
         <div class="row">
@@ -70,7 +70,6 @@
                 <small id="descricao-error" class="form-text">{{ $errors->has('descricao') ? $errors->first('descricao') : ''}}</small>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-8 form-group">
                 <label for="foto">Foto:</label><br>

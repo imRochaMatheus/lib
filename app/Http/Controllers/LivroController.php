@@ -27,8 +27,7 @@ class LivroController extends Controller
             ->where('codigo', $request->livros)
             ->select('codigo', 'titulo', 'autor', 'editora', 'edicao', 'volume','numero_de_paginas','numero_de_emprestimos', 'descricao')
             ->get();
-            
-            
+
             return view('layouts.consultarLivro', $_SESSION, ['livros' => $livros, 'action' => 1]); 
 
         }else{
@@ -93,8 +92,21 @@ class LivroController extends Controller
         ];
 
         $request->validate($regras, $feedback);
+
+        if($request->hasFile('foto') && $request->file('foto')->isValid()) {
+            $extensoes_permitidas = ['png', 'jpg', 'jpeg'];
+            $extensao = $request->foto->extension();
+
+            if(!in_array($extensao, $extensoes_permitidas)) {
+                return redirect()->back()->with('message', 'Formato inválido.');
+            }
+
+            $nome = "{$request->codigo}.{$extensao}";
+            $storage_path = "storage/profile_photos/{$nome}";
+
+            $upload = $request->foto->storeAs('profile_photos', $nome);
         
-    
+
         try{
             \DB::beginTransaction();
                 $livro = new Livro();
@@ -105,7 +117,7 @@ class LivroController extends Controller
                 $livro->editora = $request->editora;
                 $livro->edicao = $request->edicao;
                 $livro->volume = $request->volume;
-                $livro->foto = $request->foto;
+                $livro->foto = $storage_path;
                 $livro->descricao = $request->descricao;
                 $livro->numero_de_paginas = $request->numero_de_paginas;
                 $livro->numero_de_exemplares = $request->n_exemplares;
@@ -128,6 +140,9 @@ class LivroController extends Controller
 
             return redirect()->back()->with('message', 'Não foi possível cadastrar o livro.');
         }
+    }else{
+        return redirect()->back()->with('message', 'Problema na foto');
+    }
         
         return redirect()->back()->with('message', 'Livro cadastrado com sucesso.');
     }
