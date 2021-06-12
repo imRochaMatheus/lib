@@ -93,6 +93,7 @@ class LivroController extends Controller
         ];
 
         $request->validate($regras, $feedback);
+        
     
         try{
             \DB::beginTransaction();
@@ -104,6 +105,7 @@ class LivroController extends Controller
                 $livro->editora = $request->editora;
                 $livro->edicao = $request->edicao;
                 $livro->volume = $request->volume;
+                $livro->foto = $request->foto;
                 $livro->descricao = $request->descricao;
                 $livro->numero_de_paginas = $request->numero_de_paginas;
                 $livro->numero_de_exemplares = $request->n_exemplares;

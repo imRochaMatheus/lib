@@ -1,3 +1,4 @@
+
 @extends('layouts.partials.master')
 @section('conteudo')
     <div class="col-md-12">
@@ -25,44 +26,44 @@
                     <div class="col-md-12">
                         <div id="carrosel-comentarios" class="carousel slide" data-ride="carousel">
                             <ol class="carousel-indicators">
-                                <li data-target="#carrosel-comentarios" data-slide-to="0" class="active"></li>
-                                <li data-target="#carrosel-comentarios" data-slide-to="1"></li>
-                                <li data-target="#carrosel-comentarios" data-slide-to="2"></li>
+                                @for ($i = 0; $i < count($comentarios); $i++)
+                                    @if ($i == 0)
+                                        <li data-target="#carrosel-comentarios" data-slide-to="{{$i}}" class="active"></li>
+                                    @else
+                                        <li data-target="#carrosel-comentarios" data-slide-to="{{$i}}"></li>
+                                    @endif
+                                @endfor
                             </ol>
-
                             <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <div class="carousel-item-content">
-                                        <div class="carousel-image">
-                                            <img class="d-block" src="{{ asset('images/o-nome-do-vento.jpg') }}" alt="First slide">
+                                {{$flag = false}}
+                                @foreach ($comentarios as $coment)
+                                    @if (!$flag)
+                                    <?php 
+                                        $flag = true;
+                                    ?>
+                                        <div class="carousel-item active">
+                                            <div class="carousel-item-content">
+                                                <div class="carousel-image">
+                                                    <img class="d-block" src="{{ asset($coment->foto)}}" alt="First slide">
+                                                </div>
+                                                <div class="carousel-comment">
+                                                    <p>{{$coment->comentario}}</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="carousel-comment">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non est sed elit malesuada semper. Sed a odio nec dui dignissim pharetra. Phasellus consectetur, neque vehicula bibendum porta, neque sapien mollis elit, nec lacinia enim libero non sem. Morbi maximus luctus velit, in varius neque.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="carousel-item-content">
-                                        <div class="carousel-image">
-                                            <img class="d-block" src="{{ asset('images/hp.jpg') }}" alt="First slide">
-                                        </div>
-                                        <div class="carousel-comment">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non est sed elit malesuada semper. Sed a odio nec dui dignissim pharetra. Phasellus consectetur, neque vehicula bibendum porta, neque sapien mollis elit, nec lacinia enim libero non sem. Morbi maximus luctus velit, in varius neque.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="carousel-item-content">
-                                        <div class="carousel-image">
-                                            <img class="d-block" src="{{ asset('images/pj.jpg') }}" alt="First slide">
-                                        </div>
-                                        <div class="carousel-comment">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non est sed elit malesuada semper.
-                                            Sed a odio nec dui dignissim pharetra.
-                                            Phasellus consectetur, neque vehicula bibendum porta, neque sapien mollis elit, nec lacinia enim libero non sem. Morbi maximus luctus velit, in varius neque.</p>
+                                    @else
+                                    <div class="carousel-item">
+                                        <div class="carousel-item-content">
+                                            <div class="carousel-image">
+                                                <img class="d-block" src="{{ asset($coment->foto)}}" alt="First slide">
+                                            </div>
+                                            <div class="carousel-comment">
+                                                <p>{{$coment->comentario}}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                    @endif            
+                                @endforeach
                             </div>
                             <a class="carousel-control-prev" href="#carrosel-comentarios" role="button" data-slide="prev">
                                 <i class="fas fa-arrow-left" aria-hidden="true"></i>
