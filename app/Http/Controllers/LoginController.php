@@ -76,12 +76,13 @@ class LoginController extends Controller
                 $_SESSION['foto'] = $usuario->foto;
             } else {
                 $_SESSION['foto'] = 'images/avatar.png';
-            }        
+            }
+
+            $_SESSION['id'] = $usuario->id;
 
             switch ($usuario->nivel_de_acesso){
                 case 1:
                     $usuario_id = DB::table('funcionarios')->where('email', $usuario->email)->get('id');
-                    $_SESSION['id'] = $usuario_id[0]->id;
                     $adm = new Funcionario();
                     $crg = new Cargo();
                     $admin = $adm->where('email', $email)->get()->first();
@@ -95,7 +96,6 @@ class LoginController extends Controller
                 break;
                 case 2:
                     $usuario_id = DB::table('funcionarios')->where('email', $usuario->email)->get('id');
-                    $_SESSION['id'] = $usuario_id[0]->id;
                     $fnc = new Funcionario();
                     $crg = new Cargo();
                     $funcionario = $fnc->where('email', $email)->get()->first();
@@ -108,7 +108,6 @@ class LoginController extends Controller
                 break;
                 case 3:
                     $estudante_id = DB::table('estudantes')->where('email', $usuario->email)->get('id');
-                    $_SESSION['id'] = $estudante_id[0]->id;
                     $std = new Estudante();
                     $estudante = $std->where('email', $email)->get()->first();
                     $nome = $estudante->nome;

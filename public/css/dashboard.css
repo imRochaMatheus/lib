@@ -80,8 +80,13 @@ a.block-link {
 
 #comentarios .carousel-item .carousel-item-content .carousel-image {
     margin-right: 1em;
+    background-color: black;
 }
 
 #comentarios .carousel-item .carousel-item-content .carousel-image img {
     width: 10em;
+}
+
+#comentarios .carousel-item .carousel-item-content .carousel-comment .blockquote-footer {
+    color: var(--white);
 }

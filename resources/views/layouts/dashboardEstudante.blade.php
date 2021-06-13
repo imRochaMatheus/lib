@@ -25,7 +25,7 @@
                                 <div class="card-content">
                                     <div class="card-content-info">
                                         <h5 class="card-title"><strong>Consultar Livro</strong></h5>
-                                        <p class="card-text">Venha conhecer todo o nosso acervo bibliográfico!</p>
+                                        <p class="card-text">Venha conhecer todo o nosso acervo bibliográfico.</p>
                                     </div>
                                     <div class="card-content-img">
                                         <i class="fas fa-book"></i>
@@ -44,7 +44,7 @@
                                 <div class="card-content">
                                     <div class="card-content-info">
                                         <h5 class="card-title"><strong>Consultar Empréstimos</strong></h5>
-                                        <p class="card-text">Fique por dentro dos prazos de devolução e evite multas!</p>
+                                        <p class="card-text">Fique por dentro dos prazos de devolução e evite multas.</p>
                                     </div>
                                     <div class="card-content-img">
                                         <i class="fas fa-search"></i>
@@ -61,7 +61,7 @@
                                 <div class="card-content">
                                     <div class="card-content-info">
                                         <h5 class="card-title"><strong>Renovar</strong></h5>
-                                        <p class="card-text">Não deu tempo de estudar tudo? Que tal passar mais um tempinho com ele ?</p>
+                                        <p class="card-text">Não deu tempo de estudar tudo? Que tal passar mais um tempinho com ele?</p>
                                     </div>
                                     <div class="card-content-img">
                                         <i class="fas fa-exchange-alt"></i>
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </section>
-        @if (isset($comentarios))
+        @if(isset($comentarios) && count($comentarios) > 0)
             <section id="comentarios">
                 <div class="row mb-4">
                     <div class="col-md-12">
@@ -89,32 +89,38 @@
                             </ol>
                             <div class="carousel-inner">
                                 {{$flag = false}}
-                                @foreach ($comentarios as $coment)
-                                    @if (!$flag)
-                                    <?php 
-                                        $flag = true;
-                                    ?>
+                                @foreach($comentarios as $coment)
+                                    @if(!$flag)
+                                        <?php 
+                                            $flag = true;
+                                        ?>
                                         <div class="carousel-item active">
                                             <div class="carousel-item-content">
                                                 <div class="carousel-image">
                                                     <img class="d-block" src="{{ asset($coment->foto)}}" alt="First slide">
                                                 </div>
                                                 <div class="carousel-comment">
-                                                    <p>{{$coment->comentario}}</p>
+                                                    <blockquote>
+                                                        <p class="mb-0">{{ $coment->comentario }}</p>
+                                                        <footer class="blockquote-footer">Larissa Machado</footer>
+                                                    </blockquote>
                                                 </div>
                                             </div>
                                         </div>
                                     @else
-                                    <div class="carousel-item">
-                                        <div class="carousel-item-content">
-                                            <div class="carousel-image">
-                                                <img class="d-block" src="{{ asset($coment->foto)}}" alt="First slide">
-                                            </div>
-                                            <div class="carousel-comment">
-                                                <p>{{$coment->comentario}}</p>
+                                        <div class="carousel-item">
+                                            <div class="carousel-item-content">
+                                                <div class="carousel-image">
+                                                    <img class="d-block" src="{{ asset($coment->foto)}}" alt="First slide">
+                                                </div>
+                                                <div class="carousel-comment">
+                                                    <blockquote>
+                                                        <p class="mb-0">{{ $coment->comentario }}</p>
+                                                        <footer class="blockquote-footer">Larissa Machado</footer>
+                                                    </blockquote>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                     @endif            
                                 @endforeach
                             </div>
