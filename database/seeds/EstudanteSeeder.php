@@ -39,8 +39,16 @@ class EstudanteSeeder extends Seeder
         $estudante = new Estudante();
         $estudante->nome = 'Gabriel Mendes';
         $estudante->email = 'mendes@contato.com.br';
-        $estudante->matricula = '40028955';
+        $estudante->matricula = '40028966';
         $estudante->id_usuario = 5;
+        $estudante->telefone = '71999998888';
+        $estudante->save();
+
+        $estudante = new Estudante();
+        $estudante->nome = 'Emily Menezes';
+        $estudante->email = 'emily@contato.com.br';
+        $estudante->matricula = '40028999';
+        $estudante->id_usuario = 7;
         $estudante->telefone = '71999998888';
         $estudante->save();
     }
