@@ -78,6 +78,7 @@
                                                 data-volume="{{$livro->volume}}"
                                                 data-paginas="{{$livro->numero_de_paginas}}"
                                                 data-descricao="{{$livro->descricao}}"
+                                                data-foto="{{asset($livro->foto)}}"
                                             >
                                                 <i class="fas fa-search-plus"></i>
                                             </a>
@@ -90,7 +91,7 @@
                                                 aria-disabled="true"
                                                 data-toggle="modal"
                                                 data-target="#modal-visualizar-comentarios"
-                                                data-comentarios="{{$livro->descricao}}"
+                                                data-comentarios="{{ $livro->comentario }}"
                                             >
                                                 <i class="far fa-comments"></i>
                                             </a>
@@ -158,38 +159,45 @@
                     </div>
                     <div class="modal-body">
                         <div class="container-fluid">
-                            <div class="row">
+                            <div class="row mb-2">
                                 <div class="col-md-4">
-                                    <p>
-                                        <span class="label">Código:</span>
-                                        <br>
-                                        <span class="codigo"></span>
-                                    </p>
+                                    <img class="book-img" src="" width="140">
                                 </div>
-                                <div class="col-md-4">
-                                    <p>
-                                        <span class="label">Empréstimos:</span>
-                                        <br>
-                                        <span class="emprestimos"></span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p>
-                                        <span class="label">Nome:</span>
-                                        <br>
-                                        <span class="nome"></span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p>
-                                        <span class="label">Autor:</span>
-                                        <br>
-                                        <span class="autor"></span>
-                                    </p>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p>
+                                                <span class="label">Código:</span>
+                                                <br>
+                                                <span class="codigo"></span>
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>
+                                                <span class="label">Empréstimos:</span>
+                                                <br>
+                                                <span class="emprestimos"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p>
+                                                <span class="label">Nome:</span>
+                                                <br>
+                                                <span class="nome"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p>
+                                                <span class="label">Autor:</span>
+                                                <br>
+                                                <span class="autor"></span>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -393,6 +401,7 @@
                 let volume = button.data('volume');
                 let paginas = button.data('paginas');
                 let descricao = button.data('descricao');
+                let foto = button.data('foto');
 
                 modal.find('.modal-title').text(`[${codigo}] ${nome}`);
                 modal.find('.codigo').text(codigo);
@@ -405,6 +414,7 @@
                 modal.find('.volume').text(volume);
                 modal.find('.paginas').text(paginas);
                 modal.find('.descricao').text(descricao);
+                modal.find('.book-img').attr('src', foto);
             });
 
             $('#modal-editar').on('show.bs.modal', function (event) {
@@ -445,19 +455,32 @@
                 let button = $(event.relatedTarget);
                 let modal = $(this);
 
-                //let comentarios = button.data('comentarios');
+                let comentarios = button.data('comentarios');
+
                 let todosComentarios = '';
-                let comentarios = [1, 2];
+                if (comentarios.length === 0) {
+                    todosComentarios += `
+                        <div class="row">
+                            <div class="col-md-12">
+                                <blockquote>
+                                    <p>
+                                        Ainda não há comentários para esse livro.
+                                    </p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    `;
+                }
+
                 for(let i = 0; i < comentarios.length; i++) {
                     todosComentarios += `
                         <div class="row">
                             <div class="col-md-12">
                                 <blockquote>
                                     <p class="mb-0">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                                        Fusce sed purus vitae est porttitor pulvinar.
+                                        ${comentarios[i].comentario}
                                     </p>
-                                    <footer class="blockquote-footer">Larissa Machado</footer>
+                                    <footer class="blockquote-footer">${comentarios[i].nome}</footer>
                                 </blockquote>
                             </div>
                         </div>

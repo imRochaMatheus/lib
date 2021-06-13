@@ -21,9 +21,9 @@ class ComentarioController extends Controller
             \DB::beginTransaction();
     
                 $registroComentario = DB::table('comentarios')
-                ->where('usuario_id', $_SESSION['id'])
-                ->where('codigo_livro', $request->codigo)
-                ->first();
+                    ->where('usuario_id', $_SESSION['id'])
+                    ->where('codigo_livro', $request->codigo)
+                    ->first();
 
                 $comentario = new Comentario();
                 $comentario->codigo_livro = $request->codigo;
@@ -45,6 +45,6 @@ class ComentarioController extends Controller
 
             return redirect()->back()->with('message', 'Não foi possível salvar o comentário');
         }
-        return redirect()->back()->with('message', 'Obrigado por comentar !');
+        return redirect()->back()->with('message', 'Obrigado por comentar!');
     }
 }

@@ -28,22 +28,24 @@ class LivroController extends Controller
             ->where('codigo', $request->livros)
             ->join('comentarios', 'comentarios.codigo_livro', '=', 'livros.codigo')
             ->join('estudantes', 'comentarios.usuario_id', '=', 'estudantes.id')
-            ->select('codigo', 'titulo', 'autor', 'editora', 'edicao', 'volume','numero_de_paginas','numero_de_emprestimos', 'descricao', 'comentario', 'estudantes.nome')
+            ->select('codigo', 'titulo', 'autor', 'editora', 'edicao', 'volume','numero_de_paginas','numero_de_emprestimos', 'descricao', 'comentario', 'foto', 'estudantes.nome')
             ->get();
 
             return view('layouts.consultarLivro', $_SESSION, ['livros' => $livros, 'action' => 1]); 
 
         }else{
-            $livros = DB::table('livros')
-            ->get()->all();
+            $livros = DB::table('livros')->get()->all();
 
-            foreach ($livros as $key => $livro) {
-                if( Comentario::where('codigo_livro', $livro->codigo)->first()){
-                    $livro->comentario = DB::table('comentarios')->where('codigo_livro',$livro->codigo)
+            for($i = 0; $i < count($livros); $i++) {
+                $comentarios = DB::table('comentarios')
                     ->join('estudantes', 'comentarios.usuario_id', '=', 'estudantes.id_usuario')
-                    ->select('comentario', 'nome')->get()->all();
-                }
+                    ->where('comentarios.codigo_livro', $livros[$i]->codigo)
+                    ->select('comentarios.comentario', 'estudantes.nome')
+                    ->get()
+                    ->all();
+                $livros[$i]->comentario = json_encode($comentarios);
             }
+
             return view('layouts.consultarLivro', $_SESSION, ['livros' => $livros]); 
         }
     }
