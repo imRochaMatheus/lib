@@ -82,3 +82,7 @@ a.novo-emprestimo:hover, a.novo-exemplar:hover {
     font-weight: 700;
     color: var(--blue);
 }
+
+#modal-visualizar-comentarios .blockquote-footer {
+    color: var(--brown);
+}

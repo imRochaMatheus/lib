@@ -81,6 +81,19 @@
                                                 <i class="fas fa-search-plus"></i>
                                             </a>
                                         </li>
+                                        <li data-toggle="tooltip" title="Visualizar comentários">
+                                            <a 
+                                                href="#"
+                                                class="btn btn-link"
+                                                role="button"
+                                                aria-disabled="true"
+                                                data-toggle="modal"
+                                                data-target="#modal-visualizar-comentarios"
+                                                data-comentarios={{$livro->descricao}}
+                                            >
+                                                <i class="far fa-comments"></i>
+                                            </a>
+                                        </li>
                                         @if(isset($acesso))
                                             @if($acesso == 1)
                                                 <li data-toggle="tooltip" title="Editar">
@@ -115,7 +128,7 @@
                                                         data-target="#modal-comentar"
                                                         data-codigo="{{$livro->codigo}}"
                                                     >
-                                                        <i class="far fa-comments"></i>
+                                                        <i class="far fa-comment"></i>
                                                     </a>
                                                 </li>
                                             @endif
@@ -343,6 +356,18 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="modal-visualizar-comentarios" tabindex="-1" role="dialog" aria-labelledby="modal-visualizar-comentarios" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -413,6 +438,38 @@
                 let codigo = button.data('codigo');
 
                 modal.find('input[name="codigo"]').val(codigo);
+            });
+
+            $('#modal-visualizar-comentarios').on('show.bs.modal', function (event) {
+                let button = $(event.relatedTarget);
+                let modal = $(this);
+
+                //let comentarios = button.data('comentarios');
+                let todosComentarios = '';
+
+                let comentarios = [1, 2]
+
+                for(let i = 0; i < comentarios.length; i++) {
+                    todosComentarios += `
+                        <div class="row">
+                            <div class="col-md-12">
+                                <blockquote>
+                                    <p class="mb-0">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                        Fusce sed purus vitae est porttitor pulvinar.
+                                    </p>
+                                    <footer class="blockquote-footer">Larissa Machado</footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    `;
+
+                    if (i < comentarios.length - 1) {
+                        todosComentarios += '<hr>'
+                    }
+                }
+
+                modal.find('.container-fluid').html(todosComentarios);
             });
         });
     </script>
