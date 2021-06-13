@@ -19,5 +19,29 @@ class EstudanteSeeder extends Seeder
         $estudante->id_usuario = 2;
         $estudante->telefone = '71999998888';
         $estudante->save();
+
+        $estudante = new Estudante();
+        $estudante->nome = 'Kaio Rian';
+        $estudante->email = 'kaio@contato.com.br';
+        $estudante->matricula = '40028944';
+        $estudante->id_usuario = 3;
+        $estudante->telefone = '71999998888';
+        $estudante->save();
+
+        $estudante = new Estudante();
+        $estudante->nome = 'Gracielle Belmonte';
+        $estudante->email = 'gracielle@contato.com.br';
+        $estudante->matricula = '40028955';
+        $estudante->id_usuario = 4;
+        $estudante->telefone = '71999998888';
+        $estudante->save();
+
+        $estudante = new Estudante();
+        $estudante->nome = 'Gabriel Mendes';
+        $estudante->email = 'mendes@contato.com.br';
+        $estudante->matricula = '40028955';
+        $estudante->id_usuario = 5;
+        $estudante->telefone = '71999998888';
+        $estudante->save();
     }
 }

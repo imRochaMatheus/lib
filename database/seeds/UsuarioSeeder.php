@@ -25,5 +25,33 @@ class UsuarioSeeder extends Seeder
         $usuario->nivel_de_acesso = '3';
         $usuario->status = true;
         $usuario->save();
+
+        $usuario = new Usuario();
+        $usuario->email = 'kaio@contato.com.br';
+        $usuario->senha = 12345678;
+        $usuario->nivel_de_acesso = '3';
+        $usuario->status = true;
+        $usuario->save();
+
+        $usuario = new Usuario();
+        $usuario->email = 'gracielle@contato.com.br';
+        $usuario->senha = 12345678;
+        $usuario->nivel_de_acesso = '3';
+        $usuario->status = true;
+        $usuario->save();
+
+        $usuario = new Usuario();
+        $usuario->email = 'mendes@contato.com.br';
+        $usuario->senha = 12345678;
+        $usuario->nivel_de_acesso = '3';
+        $usuario->status = true;
+        $usuario->save();
+
+        $usuario = new Usuario();
+        $usuario->email = 'cristiana@contato';
+        $usuario->senha = 12345678;
+        $usuario->nivel_de_acesso = '1';
+        $usuario->status = true;
+        $usuario->save();
     }
 }

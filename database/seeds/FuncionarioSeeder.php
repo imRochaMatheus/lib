@@ -20,5 +20,14 @@ class FuncionarioSeeder extends Seeder
         $funcionario->telefone = '71999998888';
         $funcionario->cargo = '1';
         $funcionario->save();
+
+        $funcionario = new Funcionario();
+        $funcionario->nome = 'Cristiana Pereira Bispo';
+        $funcionario->email = 'cristiana@contato.com.br';
+        $funcionario->matricula = '40028966';
+        $funcionario->id_usuario = '6';
+        $funcionario->telefone = '71999998888';
+        $funcionario->cargo = '1';
+        $funcionario->save();
     }
 }
