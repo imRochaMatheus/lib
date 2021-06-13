@@ -1,3 +1,4 @@
+
 @extends('layouts.partials.master')
 @section('conteudo')
 
@@ -89,7 +90,7 @@
                                                 aria-disabled="true"
                                                 data-toggle="modal"
                                                 data-target="#modal-visualizar-comentarios"
-                                                data-comentarios={{$livro->descricao}}
+                                                data-comentarios="{{$livro->descricao}}"
                                             >
                                                 <i class="far fa-comments"></i>
                                             </a>
@@ -446,9 +447,7 @@
 
                 //let comentarios = button.data('comentarios');
                 let todosComentarios = '';
-
-                let comentarios = [1, 2]
-
+                let comentarios = [1, 2];
                 for(let i = 0; i < comentarios.length; i++) {
                     todosComentarios += `
                         <div class="row">

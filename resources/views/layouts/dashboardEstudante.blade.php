@@ -102,7 +102,7 @@
                                                 <div class="carousel-comment">
                                                     <blockquote>
                                                         <p class="mb-0">{{ $coment->comentario }}</p>
-                                                        <footer class="blockquote-footer">Larissa Machado</footer>
+                                                        <footer class="blockquote-footer">{{$coment->nome_estudante}}</footer>
                                                     </blockquote>
                                                 </div>
                                             </div>
@@ -116,7 +116,7 @@
                                                 <div class="carousel-comment">
                                                     <blockquote>
                                                         <p class="mb-0">{{ $coment->comentario }}</p>
-                                                        <footer class="blockquote-footer">Larissa Machado</footer>
+                                                        <footer class="blockquote-footer">{{$coment->nome_estudante}}</footer>
                                                     </blockquote>
                                                 </div>
                                             </div>

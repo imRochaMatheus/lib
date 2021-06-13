@@ -28,6 +28,10 @@ class EstudanteController extends Controller
                 $coment->foto = DB::table('livros')
                 ->where('codigo', $coment->codigo_livro)
                 ->first('foto')->foto;
+
+                $coment->nome_estudante = DB::table('estudantes')
+                ->where('id_usuario', $coment->usuario_id)
+                ->first()->nome;
             }
             $params = array_merge(['comentarios' => $comentarios], $_SESSION);
             return view('layouts.dashboardEstudante',$params);

@@ -81,6 +81,8 @@ class UsuarioController extends Controller
 
     public function recuperarSenha(Request $request)
     {
+
+        
         $email = $request->email;
 
         $usuario = new Usuario();
@@ -101,7 +103,7 @@ class UsuarioController extends Controller
 
             return redirect()->back()->with('message', 'Não foi possível completar a operação');
         }
-
+        //dd(Mail::to($usr->email)->send(new EsqueciSenhaEmail($usr)));
         try {
             Mail::to($usr->email)->send(new EsqueciSenhaEmail($usr));
         } catch(\Exception $e) {

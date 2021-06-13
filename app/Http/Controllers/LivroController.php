@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Livro;
 use App\Exemplar;
+use App\Comentario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -25,13 +26,24 @@ class LivroController extends Controller
 
             $livros = DB::table('livros')
             ->where('codigo', $request->livros)
-            ->select('codigo', 'titulo', 'autor', 'editora', 'edicao', 'volume','numero_de_paginas','numero_de_emprestimos', 'descricao')
+            ->join('comentarios', 'comentarios.codigo_livro', '=', 'livros.codigo')
+            ->join('estudantes', 'comentarios.usuario_id', '=', 'estudantes.id')
+            ->select('codigo', 'titulo', 'autor', 'editora', 'edicao', 'volume','numero_de_paginas','numero_de_emprestimos', 'descricao', 'comentario', 'estudantes.nome')
             ->get();
 
             return view('layouts.consultarLivro', $_SESSION, ['livros' => $livros, 'action' => 1]); 
 
         }else{
-            $livros = DB::table('livros')->get()->all();
+            $livros = DB::table('livros')
+            ->get()->all();
+
+            foreach ($livros as $key => $livro) {
+                if( Comentario::where('codigo_livro', $livro->codigo)->first()){
+                    $livro->comentario = DB::table('comentarios')->where('codigo_livro',$livro->codigo)
+                    ->join('estudantes', 'comentarios.usuario_id', '=', 'estudantes.id_usuario')
+                    ->select('comentario', 'nome')->get()->all();
+                }
+            }
             return view('layouts.consultarLivro', $_SESSION, ['livros' => $livros]); 
         }
     }
