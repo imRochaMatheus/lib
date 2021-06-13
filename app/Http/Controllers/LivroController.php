@@ -102,9 +102,9 @@ class LivroController extends Controller
             }
 
             $nome = "{$request->codigo}.{$extensao}";
-            $storage_path = "storage/profile_photos/{$nome}";
+            $storage_path = "storage/books/{$nome}";
 
-            $upload = $request->foto->storeAs('profile_photos', $nome);
+            $upload = $request->foto->storeAs('books', $nome);
         
 
         try{
@@ -148,45 +148,6 @@ class LivroController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Livro  $livro
-     * @return \Illuminate\Http\Response
-     */
-    public function relatorio(Request $request)
-    {
-        
-        //$dateEmp = date('m', strtotime($request->data_emprestimo));
-        //dd($dateEmp);
-        //$dataEmprestimo = \DateTime::createFromFormat('d/m/Y', $request->data_emprestimo);
-        //dd($dataEmprestimo->format('Y'));
-     
-    
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Livro  $livro
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Livro $livro)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -212,16 +173,5 @@ class LivroController extends Controller
         }
         
         return redirect()->back()->with('message', 'Livro editado com sucesso.');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Livro  $livro
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Livro $livro)
-    {
-        //
     }
 }
